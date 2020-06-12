@@ -1,0 +1,37 @@
+<div class="area data-info">
+	<form class="edit-form" action="{{=$.uripath||''}}/edit.submit" method="POST">
+		{{%var v=$._page_info_;}}
+[[?$.idName]]
+		<dl><dt>[[=$.idComment||$.idName||'']]</dt><dd><input type="text" name="[[=$.idName||'']]" value="{{=v.[[=$.idName||'']]||''}}" readonly="readonly"/></dd><em id="_error_[[=$.idName||'']]_"></em></dl>
+[[?]]
+[[~$.list:v:i]]
+	[[?v.name!=$.idName]]
+		[[?v.hide]]<!--[[?]]
+		[[?v.type=='text'||v.type=='longtext']]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><textarea name="[[=v.name||'']]"[[?v.notnull]] required="true"[[?]]>{{=v.[[=v.name||'']]||''}}</textarea></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+		[[??v.type=='tinyint']]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><select class="tinyint" tinyint="[[=$.name||'']]$[[=v.name||'']]" name="[[=v.name||'']]" data="{{=v.[[=v.name||'']]||''}}"></select></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+		[[??v.isNumber]]
+			[[?v.unit]]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input type="number" name="[[=v.name||'']]" value="{{=v.[[=v.name||'']]||''}}"[[?v.notnull]] required="required"[[?]][[?v.type=='int'||v.type=='bigint']] min="0" pattern="[0-9]+"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/><i>[[=v.unit]]</i></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+			[[??]]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input type="number" name="[[=v.name||'']]" value="{{=v.[[=v.name||'']]||''}}"[[?v.notnull]] required="required"[[?]][[?v.type=='int'||v.type=='bigint']] min="0" pattern="[0-9]+"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+			[[?]]
+		[[??v.type=='date']]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input type="date" name="[[=v.name||'']]" value="{{=v.[[=v.name||'']]||''}}"[[?v.notnull]] required="required"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+		[[??v.type=='time']]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input type="time" name="[[=v.name||'']]" value="{{=v.[[=v.name||'']]||''}}"[[?v.notnull]] required="required"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+		[[??v.type=='datetime'||v.type=='timestamp']]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input type="datetime-local" name="[[=v.name||'']]" value="{{=v.[[=v.name||'']]||''}}"[[?v.notnull]] required="required"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+		[[??]]
+		<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input type="text" name="[[=v.name||'']]" value="{{=v.[[=v.name||'']]||''}}"[[?v.notnull]] required="required"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd><em id="_error_[[=v.name||'']]_"></em></dl>
+		[[?]]
+		[[?v.hide]]-->[[?]]
+	[[?]]
+[[~]]
+		<center>
+			<input type="submit" value="✔ 保存"/>
+			<input type="button" value="⏎ 返回" onclick="history.back();"/>
+		</center>
+	</form>
+</div>

@@ -1,0 +1,1 @@
+print($.server.i18n(null,"ok load charset : {1}","UTF-8"));

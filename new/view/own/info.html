@@ -1,0 +1,9 @@
+<div class="area data-info">
+	{{%var v=$._page_info_;}}
+[[~$.list:v:i]]
+	<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input[[?v.type=='tinyint']] class="tinyint" tinyint="[[=$.name||'']]$[[=v.name||'']]"[[?]] type="text" value="{{=v.[[?v.name=='createUser']]createUserLogin[[??v.name=='modifyUser']]modifyUserLogin[[??]][[=v.name||'']][[?]]||''}}" readonly="readonly"/></dd></dl>
+[[~]]
+	<center>
+		<input type="button" value="⏎ 返回" onclick="history.back();"/>
+	</center>
+</div>

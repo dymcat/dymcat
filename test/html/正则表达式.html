@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>正则表达式</title>
+<meta charset="UTF-8"/>
+</head>
+<body>
+Java的replaceAll和replaceFirst被替换字符串中不能包含$
+JS的replace被替换字符串中不能包含$&，$`，$'，$1，$2，$3，$4，$5，$6，$7，$8，$9
+</body>
+<script>
+	document.writeln("all the trees listlessly, lazily stood there.".replace(/(\b\w*(\w)\2{1,}\w*\b)/g,"[$1]"));//匹配有连续两个及以上相同字母的单词
+	
+	var str="123abc456def789";
+	var reg=/(\w\d).*(\w\d)/;
+	reg.test(str);//reg.exec(str);
+	
+	document.writeln(RegExp.$0);
+	document.writeln(RegExp.$1);
+	document.writeln(RegExp.$2);
+	document.writeln(RegExp.$3);
+	
+	document.writeln(RegExp["$&"]);//document.writeln(RegExp.lastMatch);
+	document.writeln(RegExp["$`"]);//document.writeln(RegExp.leftContext);
+	document.writeln(RegExp["$'"]);//document.writeln(RegExp.rightContext);
+	document.writeln(RegExp["$+"]);//document.writeln(RegExp.lastParen);
+	document.writeln(RegExp["$_"]);//document.writeln(RegExp.$_);document.writeln(RegExp.input);
+	
+	document.writeln(str.replace(reg,"<$0>"));
+	document.writeln(str.replace(reg,"<$1>"));
+	document.writeln(str.replace(reg,"<$2>"));
+	document.writeln(str.replace(reg,"<$3>"));
+	
+	document.writeln(str.replace(reg,"<$&>"));
+	document.writeln(str.replace(reg,"<$`>"));
+	document.writeln(str.replace(reg,"<$'>"));
+	document.writeln(str.replace(reg,"<$+>"));
+	document.writeln(str.replace(reg,"<$_>"));
+	
+	document.writeln(str.replace(/(\d+)(?=\w+)/g,"<$1>"));//匹配后面有字母的数字
+	document.writeln(str.replace(/(?<=\w+)(\d+)/g,"<$1>"));//匹配前面有字母的数字
+	
+	document.writeln(str.replace(/(\d+)(?!\w+)/g,"<$1>"));//匹配后面没有字母的数字
+	document.writeln(str.replace(/(?<!\w+)(\d+)/g,"<$1>"));//匹配前面没有字母的数字
+	//(?:)	忽略这个捕获组
+	
+	document.body.innerHTML=document.body.innerHTML.replace(/[\r\n]/g,"<br/>");
+</script>
+</html>

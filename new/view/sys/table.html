@@ -1,0 +1,32 @@
+<form method="POST"><table class="data-list tb"><tbody>
+	<tr>
+		<th style="white-space:nowrap;text-align:right;min-width:80px;"><label style="display:block;">
+			<input type="checkbox" style="float:left;"/>
+			<div style="padding-top:5px;">序号</div>
+		</label></th>
+[[~$.list:v:i]]
+		<th class="order" by="tb.[[=v.name||'']]" sort="[[?v.isTime]]desc[[??]]asc[[?]]">[[=v.comment||v.name||'']]</th>
+[[~]]
+		<th align="right" style="white-space:nowrap;">
+			<a class="btn" title="查询" onclick="var $t=$('#{{=$.queryId||''}}');if($t.is(':visible')){$t.slideUp();}else{$t.slideDown();}">✈</a>
+			<a class="btn" title="添加" onclick="location.href='{{=$.uripath||''}}/add.html';">✚</a>
+			<a class="btn" title="移除" idName="[[=$.idName||'']]" uri="{{=$.uripath||''}}/drop.submit">━</a>
+		</th>
+	</tr>
+	{{~$._page_list_:v:i}}
+	<tr>
+		<td align="right"><label style="display:block;">
+			<input type="checkbox" style="float:left;" name="[[=$.idName||'']]" value="{{=v.[[=$.idName||'']]||''}}"/>
+			<div style="padding-top:5px;">{{=i+1}}</div>
+		</label></td>
+[[~$.list:v:i]]
+		<td[[?v.type=='tinyint']] class="tinyint" tinyint="[[=$.name||'']]$[[=v.name||'']]"[[?]]>{{=v.[[?v.name=='createUser']]createUserLogin[[??v.name=='modifyUser']]modifyUserLogin[[??]][[=v.name||'']][[?]]||''}}</td>
+[[~]]
+		<td align="right" style="white-space:nowrap;">
+			<a class="btn" title="详情" onclick="location.href='{{=$.uripath||''}}/info/{{=v.[[=$.idName||'']]||''}}.html';">☷</a>
+			<a class="btn" title="编辑" onclick="location.href='{{=$.uripath||''}}/edit/{{=v.[[=$.idName||'']]||''}}.html';">✎</a>
+			<a class="btn" title="删除" onclick="if(confirmDropItem()){location.href='{{=$.uripath||''}}/drop/{{=v.[[=$.idName||'']]||''}}.submit';}">✖</a>
+		</td>
+	</tr>
+	{{~}}
+</tbody></table></form>

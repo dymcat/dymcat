@@ -1,0 +1,60 @@
+/*
+name:"字段"
+,type:"tinyint|int|bigint|float|double|decimal|char|varchar|text|longtext|year|date|time|datetime|timestamp"
+,length:指定decimal|char|varchar类型的最大长度，decima时默认值=18，char时默认值=32，varchar时默认值=255
+,range:指定decimal类型的最大小数位数，默认值=2
+,primary:true	#包含unique+notnull#
+,unique:true
+,notnull:true
+,value:1|''|"now()"|"uuid()"
+,comment:"标题"
+,unit:指定int|bigint类型数据的单位，如：厘米|千克|次|元
+,hide:true	#不显示在添加和编辑页面#
+*/
+/*
+tinyint		小非负整数类型，范围：0到255，用于关联数据字典项，该字典项数据请在@/script/tinyint.js文件中配置
+int			常用整数类型，范围：-2147683648到2147683647
+bigint		大整数类型，范围：-9223373036854775808到9223373036854775807
+float		常用小数类型，范围：-340282356779733661637539395458142568448到340282356779733661637539395458142568447
+double		范围更广的小数类型，可以存储308位任意正负数
+decimal		以字符串存储的小数类型，性能较差，但是能够保证精度完整不丢失，涉及金额业务时，建议使用
+char		固定长度字符串类型，最多可存储255个字符，该类型会浪费未被填满的空间，但是易于分词索引，涉及模糊查询，建议使用
+varchar		可变长度字符串类型，最多可存储65535个字符，该类型适合存储一般少量字符串
+text		存储大量字符串的类型，最多可存储65535个字符
+longtext	存储几乎无上限长度字符串的类型，最多可存储4294967295个字符
+year		年份类型
+date		年月日类型
+time		时分秒类型
+datetime	年月日时分秒类型
+timestamp	自带国际化处理功能的年月日时分秒类型
+*/
+[
+	{name:"saveTime",type:"datetime",notnull:true,value:"now()",comment:"保存时间",hide:true}
+	,{name:"user",type:"varchar",length:36,unique:true,notnull:true,comment:"用户"}
+	,{name:"nation",type:"tinyint",comment:"民族"}
+	,{name:"blood",type:"tinyint",comment:"血型"}
+	,{name:"zodiac",type:"tinyint",comment:"生肖"}
+	,{name:"constellation",type:"tinyint",comment:"星座"}
+	,{name:"character",type:"tinyint",comment:"性格"}
+	,{name:"marital",type:"tinyint",comment:"婚况"}
+	,{name:"height",type:"int",comment:"身高",unit:"厘米"}
+	,{name:"weight",type:"int",comment:"体重",unit:"千克"}
+	,{name:"habit",type:"varchar",comment:"习惯"}
+	,{name:"hobby",type:"varchar",comment:"爱好"}
+	,{name:"pet",type:"tinyint",comment:"宠物"}
+	,{name:"city",type:"char",comment:"城市"}
+	,{name:"school",type:"char",comment:"学校"}
+	,{name:"education",type:"tinyint",comment:"学历"}
+	,{name:"company",type:"char",comment:"公司"}
+	,{name:"vocation",type:"char",comment:"职业"}
+	,{name:"income",type:"int",comment:"收入"}
+	,{name:"house",type:"tinyint",comment:"房产"}
+	,{name:"car",type:"tinyint",comment:"汽车"}
+	,{name:"address",type:"varchar",comment:"地址"}
+	,{name:"position",type:"varchar",comment:"位置"}
+	,{name:"postal",type:"char",comment:"邮编"}
+	,{name:"weibo",type:"char",comment:"微博"}
+	,{name:"wechat",type:"char",comment:"微信"}
+	,{name:"qq",type:"char",comment:"QQ"}
+	,{name:"msn",type:"char",comment:"MSN"}
+]

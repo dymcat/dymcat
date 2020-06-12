@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<[[=$.name||'']]>
+<sql part="query">
+	select{([
+[[~$.list:v:i]]
+		tb.[[=v.name||'']],
+[[~]]
+[[?$.hasModifyUser]]
+		mu.login modifyUserLogin,
+[[?]]
+[[?$.hasCreateUser]]
+		cu.login createUserLogin,
+[[?]]
+	])}from tb_[[=$.name||'']] tb
+[[?$.hasModifyUser]]
+	left join tb_user mu on mu.id=tb.modifyUser
+[[?]]
+[[?$.hasCreateUser]]
+	left join tb_user cu on cu.id=tb.createUser
+[[?]]
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+[[~$.list:v:i]]
+	[[?v.isNumber]]
+		{=sql.num("tb.[[=v.name||'']]=",$.[[=v.name||'']]," and")}
+	[[??v.type=='datetime'||v.type=='timestamp']]
+		{=sql.dt("tb.[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+	[[??v.type=='date']]
+		{=sql.date("tb.[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+	[[??v.type=='time']]
+		{=sql.time("tb.[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+	[[??v.type=='year']]
+		{=sql.year("tb.[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+	[[??]]
+		{=sql.str("tb.[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+	[[?]]
+	[[?v.type=='char']]
+		{=sql.str("tb.[[=v.name||'']] like '%",$._query_like_[[=v.name||'']],"%' and")}
+	[[??v.isNumber&&v.type!='tinyint']]
+		{=sql.num("tb.[[=v.name||'']]>=",$._query_min_[[=v.name||'']]," and")}
+		{=sql.num("",$._query_max_[[=v.name||'']],">=tb.[[=v.name||'']] and")}
+	[[??v.type=='datetime'||v.type=='timestamp']]
+		{=sql.dt("tb.[[=v.name||'']]>='",$._query_min_[[=v.name||'']],"' and")}
+		{=sql.dt("'",$._query_max_[[=v.name||'']],"'>=tb.[[=v.name||'']] and")}
+	[[??v.type=='date']]
+		{=sql.date("tb.[[=v.name||'']]>='",$._query_min_[[=v.name||'']],"' and")}
+		{=sql.date("'",$._query_max_[[=v.name||'']],"'>=tb.[[=v.name||'']] and")}
+	[[??v.type=='time']]
+		{=sql.time("tb.[[=v.name||'']]>='",$._query_min_[[=v.name||'']],"' and")}
+		{=sql.time("'",$._query_max_[[=v.name||'']],"'>=tb.[[=v.name||'']] and")}
+	[[??v.type=='year']]
+		{=sql.year("tb.[[=v.name||'']]>='",$._query_min_[[=v.name||'']],"' and")}
+		{=sql.year("'",$._query_max_[[=v.name||'']],"'>=tb.[[=v.name||'']] and")}
+	[[?]]
+[[~]]
+[[?$.index.length==1]]
+		{=sql.str("tb.[[=$.index[0]||'']] like '%",$._query_search_,"%' and")}
+[[??$.index.length>1]]
+{?lang.isString($._query_search_)}
+		({([
+	[[~$.index:v:i]]
+			tb.[[=v||'']] like '%{=$._query_search_}%' or
+	[[~]]
+		])})and
+{?}
+[[?]]
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+[[?$.order]]
+{??}
+		tb.[[=$.order||'']] desc
+[[?]]
+{?}
+	])}
+</sql>
+[[?$.idName]]
+<sql name="info" type="map">
+{#def.query}
+	where
+[[?$.isNumber]]
+	{=sql.num("tb.[[=$.idName||'']]=",$.[[=$.idName||'']],"")}
+[[??]]
+	{=sql.str("tb.[[=$.idName||'']]='",$.[[=$.idName||'']],"'")}
+[[?]]
+</sql>
+<sql name="edit" type="bool">
+	update tb_[[=$.name||'']] set{([
+[[~$.list:v:i]]
+	[[?v.isNumber]]
+		{=sql.num("[[=v.name||'']]=",$.[[=v.name||'']],",","[[=v.name||'']]=null,")}
+	[[??v.type=='datetime'||v.type=='timestamp']]
+		{=sql.dt("[[=v.name||'']]='",$.[[=v.name||'']],"',","[[=v.name||'']]=null,")}
+	[[??v.type=='date']]
+		{=sql.date("[[=v.name||'']]='",$.[[=v.name||'']],"',","[[=v.name||'']]=null,")}
+	[[??v.type=='time']]
+		{=sql.time("[[=v.name||'']]='",$.[[=v.name||'']],"',","[[=v.name||'']]=null,")}
+	[[??v.type=='year']]
+		{=sql.year("[[=v.name||'']]='",$.[[=v.name||'']],"',","[[=v.name||'']]=null,")}
+	[[??]]
+		{=sql.str("[[=v.name||'']]='",$.[[=v.name||'']],"',","[[=v.name||'']]=null,")}
+	[[?]]
+[[~]]
+	])}where
+[[?$.isNumber]]
+	{=sql.num("[[=$.idName||'']]=",$.[[=$.idName||'']],"")}
+[[??]]
+	{=sql.str("[[=$.idName||'']]='",$.[[=$.idName||'']],"'")}
+[[?]]
+</sql>
+[[?]]
+<sql name="add" type="bool">
+	insert into tb_[[=$.name||'']]({([
+[[~$.list:v:i]]
+		{=sql.full($.[[=v.name||'']],"[[=v.name||'']],")}
+[[~]]
+	])})values({([
+[[~$.list:v:i]]
+	[[?v.isNumber]]
+		{=sql.num("",$.[[=v.name||'']],",")}
+	[[??v.type=='datetime'||v.type=='timestamp']]
+		{=sql.dt("'",$.[[=v.name||'']],"',")}
+	[[??v.type=='date']]
+		{=sql.date("'",$.[[=v.name||'']],"',")}
+	[[??v.type=='time']]
+		{=sql.time("'",$.[[=v.name||'']],"',")}
+	[[??v.type=='year']]
+		{=sql.year("'",$.[[=v.name||'']],"',")}
+	[[??]]
+		{=sql.str("'",$.[[=v.name||'']],"',")}
+	[[?]]
+[[~]]
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_[[=$.name||'']] where
+[[?$.idName]]
+{?lang.isArray($.[[=$.idName]])}
+	[[?$.isNumber]]
+	[[=$.idName]] in({([{=sql.num_arr("",$.[[=$.idName]],",")}])})
+	[[??]]
+	[[=$.idName]] in({([{=sql.str_arr("'",$.[[=$.idName]],"',")}])})
+	[[?]]
+{??}
+	[[?$.isNumber]]
+	{=sql.num("[[=$.idName]]=",$.[[=$.idName]],"")}
+	[[??]]
+	{=sql.str("[[=$.idName]]='",$.[[=$.idName]],"'")}
+	[[?]]
+{?}
+[[??]]
+	{([
+	[[~$.list:v:i]]
+		[[?v.isNumber]]
+		{=sql.num("[[=v.name||'']]=",$.[[=v.name||'']]," and")}
+		[[??v.type=='datetime'||v.type=='timestamp']]
+		{=sql.dt("[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+		[[??v.type=='date']]
+		{=sql.date("[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+		[[??v.type=='time']]
+		{=sql.time("[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+		[[??v.type=='year']]
+		{=sql.year("[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+		[[??]]
+		{=sql.str("[[=v.name||'']]='",$.[[=v.name||'']],"' and")}
+		[[?]]
+	[[~]]
+	])}
+[[?]]
+</sql>
+</[[=$.name||'']]>

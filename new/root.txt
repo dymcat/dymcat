@@ -1,0 +1,4 @@
+{root}/sys
+{root}/own
+{root}/you
+{root}/web

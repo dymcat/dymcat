@@ -1,0 +1,16 @@
+[[~$.list:v:i]]
+	[[?v.type=='tinyint']]
+<dl><dt>[[=v.comment||v.name||'']]</dt><dd><select class="tinyint" tinyint="[[=$.name||'']]$[[=v.name||'']]" name="[[=v.name||'']]" data="{{=$.[[=v.name||'']]||''}}"></select></dd></dl>
+	[[??v.isNumber||v.type=='year']]
+<dl><dt>[[=v.comment||v.name||'']]</dt><dd class="twin"><input type="number" name="_query_min_[[=v.name||'']]"[[?v.type=='int'||v.type=='bigint']] min="0" pattern="[0-9]+"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/><s>&nbsp;</s><input type="number" name="_query_max_[[=v.name||'']]"[[?v.type=='int'||v.type=='bigint']] min="0" pattern="[0-9]+"[[?]][[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd></dl>
+	[[??v.type=='date']]
+<dl><dt>[[=v.comment||v.name||'']]</dt><dd class="twin"><input type="date" name="_query_min_[[=v.name||'']]"[[?v.length]] maxlength="[[=v.length]]"[[?]]/><s>&nbsp;</s><input type="date" name="_query_max_[[=v.name||'']]"[[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd></dl>
+	[[??v.type=='time']]
+<dl><dt>[[=v.comment||v.name||'']]</dt><dd class="twin"><input type="time" name="_query_min_[[=v.name||'']]"[[?v.length]] maxlength="[[=v.length]]"[[?]]/><s>&nbsp;</s><input type="time" name="_query_max_[[=v.name||'']]"[[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd></dl>
+	[[??v.type=='datetime'||v.type=='timestamp']]
+<dl><dt>从[[=v.comment||v.name||'']]</dt><dd><input type="datetime-local" name="_query_min_[[=v.name||'']]"[[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd></dl>
+<dl><dt>到[[=v.comment||v.name||'']]</dt><dd><input type="datetime-local" name="_query_max_[[=v.name||'']]"[[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd></dl>
+	[[??]]
+<dl><dt>[[=v.comment||v.name||'']]</dt><dd><input type="text" name="[[=v.name||'']]"[[?v.length]] maxlength="[[=v.length]]"[[?]]/></dd></dl>
+	[[?]]
+[[~]]

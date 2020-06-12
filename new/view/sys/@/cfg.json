@@ -1,0 +1,6 @@
+{
+	title:"增删改查"
+	,image:"image.png"
+	,imgs:["image.png","query.png","info.png","edit.png","add.png"]
+	,info:"这套模板专门用于后台管理平台，常规增删改查业务，建议使用。如果某些地方不适合您的实际情况，请修改你生成后的代码，而不是模板文件。"
+}
