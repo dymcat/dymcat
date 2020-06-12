@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user_role>
+<sql part="query">
+	select{([
+		tb.user,
+		tb.role,
+		tb.createUser,
+		tb.createTime,
+		cu.login createUserLogin,
+	])}from tb_user_role tb
+	left join tb_user cu on cu.id=tb.createUser
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+		{=sql.str("tb.user='",$.user,"' and")}
+		{=sql.str("tb.role='",$.role,"' and")}
+		{=sql.str("tb.createUser='",$.createUser,"' and")}
+		{=sql.dt("tb.createTime='",$.createTime,"' and")}
+		{=sql.dt("tb.createTime>='",$._query_min_createTime,"' and")}
+		{=sql.dt("'",$._query_max_createTime,"'>=tb.createTime and")}
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+{??}
+		tb.createTime desc
+{?}
+	])}
+</sql>
+<sql name="add" type="bool">
+	insert into tb_user_role({([
+		{=sql.full($.user,"user,")}
+		{=sql.full($.role,"role,")}
+		{=sql.full($.createUser,"createUser,")}
+		{=sql.full($.createTime,"createTime,")}
+	])})values({([
+		{=sql.str("'",$.user,"',")}
+		{=sql.str("'",$.role,"',")}
+		{=sql.str("'",$.createUser,"',")}
+		{=sql.dt("'",$.createTime,"',")}
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_user_role where
+	{([
+		{=sql.str("user='",$.user,"' and")}
+		{=sql.str("role='",$.role,"' and")}
+		{=sql.str("createUser='",$.createUser,"' and")}
+		{=sql.dt("createTime='",$.createTime,"' and")}
+	])}
+</sql>
+<sql name="role" type="list">
+	select r.name roleName,r.id role
+	,u.login,u.email,u.phone,u.idCard,u.name,u.sex,u.birth,u.nick,u.info,u.photo,u.scene,u.skin
+	,ur.user,ur.createUser,ur.createTime,cu.login createUserLogin
+	from tb_role r
+	left join tb_user_role ur on ur.role=r.id and ur.user={=sql.str("'",$.user,"'")}
+	left join tb_user u on u.id=ur.user
+	left join tb_user cu on cu.id=ur.createUser
+</sql>
+<sql name="save" type="ints">
+	delete from tb_user_role where user={=sql.str("'",$.user,"'")};
+{?lang.isArray($.role)}
+	insert into tb_user_role(user,role)values{([
+	{=sql.str_arr("("+sql.str("'",$.user,"'")+",'",$.role,"'),")}
+	])}
+{??lang.isString($.role)}
+	insert into tb_user_role(user,role)values
+	({=sql.str("'",$.user,"'")},{=sql.str("'",$.role,"'")})
+{?}
+</sql>
+</user_role>

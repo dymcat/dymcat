@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<erupt>
+<sql name="new" type="ints">
+	drop table if exists tb_erupt;
+	create table if not exists tb_erupt(
+		random varchar(255) not null comment '随机数'
+		,base64 varchar(255) not null comment '加密串'
+	)comment='并发'
+</sql>
+<sql name="set" type="bool">
+	insert into tb_erupt(random,base64) values('{=$.random}','{=$.base64}')
+</sql>
+<sql name="get" type="map">
+	select base64 from tb_erupt where random='{=$.random}'
+</sql>
+</erupt>

@@ -1,0 +1,28 @@
+<form action="{{=$.uripath||''}}/save/{{=$.args[0]||''}}.submit" method="POST"><table class="data-list tb"><tbody>
+	<tr>
+		<th align="left">{{?$.args[0]!="@@@@@"}}<input type="submit" value="✔ 保存"/>{{?}}</th>
+		<th>名称</th>
+		<th>路径</th>
+		<th>排序</th>
+		<th>角色</th>
+		<th>创建者</th>
+		<th>创建时间</th>
+	</tr>
+	{{~$._page_list_:v:i}}
+	<tr>
+		<td><input type="checkbox" name="link" value="{{=v.link||''}}"{{?v.role||$.args[0]=="@@@@@"}} checked="checked"{{?}}{{?$.args[0]=="@@@@@"}} readonly="readonly"{{?}}/></td>
+{{?v.actionPath}}
+		<td>{{=(v.plateName?(v.plateIcon||"")+v.plateName+" » ":"")+(v.groupName?(v.groupIcon||"")+v.groupName+" » ":"")+(v.entryName&&v.entryName!=v.groupName?(v.entryIcon||"")+v.entryName+" » ":"")+(v.actionName?(v.actionIcon||"")+v.actionName:"")}}</td>
+		<td>{{=(v.platePath?v.platePath+"/":"")+(v.groupPath&&v.platePath?v.groupPath+"/":"")+(v.actionPath||"")}}</td>
+		<td>{{=(v.plateSort||0)+" "+(v.groupSort||0)+" "+(v.entrySort&&v.entryName!=v.groupName?v.entrySort+" ":"")+(v.actionSort||0)}}</td>
+{{??}}
+		<td>{{=(v.plateName?(v.plateIcon||"")+v.plateName+" » ":"")+(v.groupName?(v.groupIcon||"")+v.groupName:"")+(v.entryName&&v.entryName!=v.groupName?" » "+(v.entryIcon||"")+v.entryName:"")}}</td>
+		<td>{{=(v.platePath?v.platePath+"/":"")+(v.groupPath&&v.platePath?v.groupPath+"/":"")+(v.entryPath||"")}}</td>
+		<td>{{=(v.plateSort||0)+" "+(v.groupSort||0)+(v.entrySort&&v.entryName!=v.groupName?" "+v.entrySort:"")}}</td>
+{{?}}
+		<td>{{=v.roleName||''}}</td>
+		<td>{{=v.createUserLogin||''}}</td>
+		<td>{{=v.createTime||''}}</td>
+	</tr>
+	{{~}}
+</tbody></table></form>

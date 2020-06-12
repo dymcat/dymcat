@@ -1,0 +1,108 @@
+<div class="area data-info">
+	<dl><dt>数据库</dt><dd>
+		<select id="jdbc">
+			<option value="">请选择数据库</option>
+{{%$.jdbcKeys.forEach(function(name){}}
+	{{?name}}
+			<option value="{{=name}}">{{=name}}</option>
+	{{?}}
+{{%});}}
+		</select>
+	</dd></dl>
+	<dl><dt>业务模块</dt><dd>
+		<select id="work">
+			<option value="">请选择业务模块</option>
+{{~$.workList:v:i}}
+			<option value="{{=v}}">{{=v}}</option>
+{{~}}
+		</select>
+	</dd></dl>
+	<dl><dt>生成路径</dt><dd>
+		<input type="text" id="root" list="root_list"/>
+		<datalist id="root_list">
+{{~$.rootList:v:i}}
+			<option label="{{=v}}" value="{{=v}}"/>
+{{~}}
+		</datalist>
+	</dd></dl>
+</div>
+<div class="area tab-tb tab-btn">
+	<div class="tab-th th">
+		<a class="tab now">选择模板</a>
+		<a class="tab tab-title">效果图</a>
+		<a class="tab tab-title">介绍</a>
+	</div>
+	<div class="tab-td">
+		<div class="tab now">
+			<dl id="view" class="around">
+{{~$.viewList:v:i}}
+				<dd>
+					<img src="sys/create/face/{{=v.name}}/{{=v.image}}"/>
+					<div class="td">{{=v.title}}</div>
+					<input type="hidden" value="{{=v.name}}"/>
+				</dd>
+{{~}}
+			</dl>
+		</div>
+		<div class="tab">
+{{~$.viewList:v:i}}
+			<dd class="dd-imgs dd-imgs-{{=v.name}}"><div class="around">
+	{{~v.imgs:vv:ii}}
+				<img src="sys/create/face/{{=v.name}}/{{=vv}}"/>
+	{{~}}
+			</div></dd>
+{{~}}
+		</div>
+		<div class="tab">
+{{~$.viewList:v:i}}
+			<dd class="dd-info dd-info-{{=v.name}}">{{=v.info}}</dd>
+{{~}}
+		</div>
+	</div>
+	<div class="tab-ft">
+		<a title="生成" class="sfont-confirm" onclick="submitData();">生成</a>
+	</div>
+</div>
+<!--(<head<)-->
+<style>
+	#view{width:100%;height:auto;}
+	#view dd{float:left;margin:10px;width:150px;}
+	#view dd.selected{border-style:solid;border-width:1px;}
+	#view dd img{width:100%;height:120px;}
+	#view dd div{width:100%;line-height:30px;text-align:center;}
+	.tab-title,.dd-imgs,.dd-info{display:none;}
+	.dd-imgs img{margin:10px;width:320px;max-width:90%;height:240px;}
+	.dd-info{padding:20px;}
+</style>
+<!--(>head>)-->
+<!--(<foot<)-->
+<script>
+	$("#view dd").click(function(){
+		if($(this).hasClass("selected")){
+			$(this).removeClass("selected");
+			$(".tab-title,.dd-imgs,.dd-info").hide();
+		}else{
+			$("#view dd").removeClass("selected");
+			$(".tab-title,.dd-imgs,.dd-info").hide();
+			$(this).addClass("selected");
+			var name=$(this).find("input").val();
+			$(".tab-title,.dd-imgs-"+name+",.dd-info-"+name).show();
+		}
+	});
+	function submitData(){
+		var jdbc=$("#jdbc").val();
+		var work=$("#work").val();
+		var root=$("#root").val();
+		var view=$("#view dd.selected input").val();
+		if(jdbc==""){alert("请选择数据库");return false;}
+		if(work==""){alert("请选择业务模块");return false;}
+		if(root==""){alert("请输入生成路径");return false;}
+		if(!view){alert("请选择功能模板");return false;}
+		$.post("sys/create.json",{jdbc:jdbc,work:work,root:root,view:view},function(data){
+			if(data.flag){
+				alert("代码已生成！");
+			}
+		});
+	}
+</script>
+<!--(>foot>)-->

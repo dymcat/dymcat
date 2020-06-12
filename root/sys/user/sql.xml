@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user>
+<sql part="query">
+	select{([
+		tb.id,
+		tb.login,
+		tb.email,
+		tb.phone,
+		tb.idCard,
+		tb.password,
+		tb.loginTime,
+		tb.loginCount,
+		tb.name,
+		tb.sex,
+		tb.birth,
+		tb.nick,
+		tb.info,
+		tb.photo,
+		tb.scene,
+		tb.skin,
+		tb.status,
+		tb.modifyUser,
+		tb.modifyTime,
+		tb.createUser,
+		tb.createTime,
+		mu.login modifyUserLogin,
+		cu.login createUserLogin,
+	])}from tb_user tb
+	left join tb_user mu on mu.id=tb.modifyUser
+	left join tb_user cu on cu.id=tb.createUser
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+		{=sql.str("tb.id='",$.id,"' and")}
+		{=sql.str("tb.login='",$.login,"' and")}
+		{=sql.str("tb.login like '%",$._query_like_login,"%' and")}
+		{=sql.str("tb.email='",$.email,"' and")}
+		{=sql.str("tb.email like '%",$._query_like_email,"%' and")}
+		{=sql.str("tb.phone='",$.phone,"' and")}
+		{=sql.str("tb.phone like '%",$._query_like_phone,"%' and")}
+		{=sql.str("tb.idCard='",$.idCard,"' and")}
+		{=sql.str("tb.idCard like '%",$._query_like_idCard,"%' and")}
+		{=sql.str("tb.password='",$.password,"' and")}
+		{=sql.dt("tb.loginTime='",$.loginTime,"' and")}
+		{=sql.dt("tb.loginTime>='",$._query_min_loginTime,"' and")}
+		{=sql.dt("'",$._query_max_loginTime,"'>=tb.loginTime and")}
+		{=sql.num("tb.loginCount=",$.loginCount," and")}
+		{=sql.num("tb.loginCount>=",$._query_min_loginCount," and")}
+		{=sql.num("",$._query_max_loginCount,">=tb.loginCount and")}
+		{=sql.str("tb.name='",$.name,"' and")}
+		{=sql.str("tb.name like '%",$._query_like_name,"%' and")}
+		{=sql.num("tb.sex=",$.sex," and")}
+		{=sql.date("tb.birth='",$.birth,"' and")}
+		{=sql.date("tb.birth>='",$._query_min_birth,"' and")}
+		{=sql.date("'",$._query_max_birth,"'>=tb.birth and")}
+		{=sql.str("tb.nick='",$.nick,"' and")}
+		{=sql.str("tb.nick like '%",$._query_like_nick,"%' and")}
+		{=sql.str("tb.info='",$.info,"' and")}
+		{=sql.str("tb.photo='",$.photo,"' and")}
+		{=sql.str("tb.scene='",$.scene,"' and")}
+		{=sql.str("tb.skin='",$.skin,"' and")}
+		{=sql.num("tb.status=",$.status," and")}
+		{=sql.str("tb.modifyUser='",$.modifyUser,"' and")}
+		{=sql.dt("tb.modifyTime='",$.modifyTime,"' and")}
+		{=sql.dt("tb.modifyTime>='",$._query_min_modifyTime,"' and")}
+		{=sql.dt("'",$._query_max_modifyTime,"'>=tb.modifyTime and")}
+		{=sql.str("tb.createUser='",$.createUser,"' and")}
+		{=sql.dt("tb.createTime='",$.createTime,"' and")}
+		{=sql.dt("tb.createTime>='",$._query_min_createTime,"' and")}
+		{=sql.dt("'",$._query_max_createTime,"'>=tb.createTime and")}
+{?lang.isString($._query_search_)}
+		({([
+			tb.login like '%{=$._query_search_}%' or
+			tb.email like '%{=$._query_search_}%' or
+			tb.phone like '%{=$._query_search_}%' or
+			tb.idCard like '%{=$._query_search_}%' or
+		])})and
+{?}
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+{??}
+		tb.createTime desc
+{?}
+	])}
+</sql>
+<sql name="info" type="map">
+{#def.query}
+	where
+	{=sql.str("tb.id='",$.id,"'")}
+</sql>
+<sql name="edit" type="bool">
+	update tb_user set{([
+		{=sql.str("id='",$.id,"',","id=null,")}
+		{=sql.str("login='",$.login,"',","login=null,")}
+		{=sql.str("email='",$.email,"',","email=null,")}
+		{=sql.str("phone='",$.phone,"',","phone=null,")}
+		{=sql.str("idCard='",$.idCard,"',","idCard=null,")}
+		{=sql.str("password='",$.password,"',","password=null,")}
+		{=sql.dt("loginTime='",$.loginTime,"',","loginTime=null,")}
+		{=sql.num("loginCount=",$.loginCount,",","loginCount=null,")}
+		{=sql.str("name='",$.name,"',","name=null,")}
+		{=sql.num("sex=",$.sex,",","sex=null,")}
+		{=sql.date("birth='",$.birth,"',","birth=null,")}
+		{=sql.str("nick='",$.nick,"',","nick=null,")}
+		{=sql.str("info='",$.info,"',","info=null,")}
+		{=sql.str("photo='",$.photo,"',","photo=null,")}
+		{=sql.str("scene='",$.scene,"',","scene=null,")}
+		{=sql.str("skin='",$.skin,"',","skin=null,")}
+		{=sql.num("status=",$.status,",","status=null,")}
+		{=sql.str("modifyUser='",$.modifyUser,"',","modifyUser=null,")}
+		{=sql.dt("modifyTime='",$.modifyTime,"',","modifyTime=null,")}
+		{=sql.str("createUser='",$.createUser,"',","createUser=null,")}
+		{=sql.dt("createTime='",$.createTime,"',","createTime=null,")}
+	])}where
+	{=sql.str("id='",$.id,"'")}
+</sql>
+<sql name="add" type="bool">
+	insert into tb_user({([
+		{=sql.full($.id,"id,")}
+		{=sql.full($.login,"login,")}
+		{=sql.full($.email,"email,")}
+		{=sql.full($.phone,"phone,")}
+		{=sql.full($.idCard,"idCard,")}
+		{=sql.full($.password,"password,")}
+		{=sql.full($.loginTime,"loginTime,")}
+		{=sql.full($.loginCount,"loginCount,")}
+		{=sql.full($.name,"name,")}
+		{=sql.full($.sex,"sex,")}
+		{=sql.full($.birth,"birth,")}
+		{=sql.full($.nick,"nick,")}
+		{=sql.full($.info,"info,")}
+		{=sql.full($.photo,"photo,")}
+		{=sql.full($.scene,"scene,")}
+		{=sql.full($.skin,"skin,")}
+		{=sql.full($.status,"status,")}
+		{=sql.full($.modifyUser,"modifyUser,")}
+		{=sql.full($.modifyTime,"modifyTime,")}
+		{=sql.full($.createUser,"createUser,")}
+		{=sql.full($.createTime,"createTime,")}
+	])})values({([
+		{=sql.str("'",$.id,"',")}
+		{=sql.str("'",$.login,"',")}
+		{=sql.str("'",$.email,"',")}
+		{=sql.str("'",$.phone,"',")}
+		{=sql.str("'",$.idCard,"',")}
+		{=sql.str("'",$.password,"',")}
+		{=sql.dt("'",$.loginTime,"',")}
+		{=sql.num("",$.loginCount,",")}
+		{=sql.str("'",$.name,"',")}
+		{=sql.num("",$.sex,",")}
+		{=sql.date("'",$.birth,"',")}
+		{=sql.str("'",$.nick,"',")}
+		{=sql.str("'",$.info,"',")}
+		{=sql.str("'",$.photo,"',")}
+		{=sql.str("'",$.scene,"',")}
+		{=sql.str("'",$.skin,"',")}
+		{=sql.num("",$.status,",")}
+		{=sql.str("'",$.modifyUser,"',")}
+		{=sql.dt("'",$.modifyTime,"',")}
+		{=sql.str("'",$.createUser,"',")}
+		{=sql.dt("'",$.createTime,"',")}
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_user where
+{?lang.isArray($.id)}
+	id in({([{=sql.str_arr("'",$.id,"',")}])})
+{??}
+	{=sql.str("id='",$.id,"'")}
+{?}
+</sql>
+</user>

@@ -1,0 +1,91 @@
+<form method="POST"><table class="data-list tb"><tbody>
+	<tr>
+		<th style="white-space:nowrap;text-align:right;min-width:80px;"><label style="display:block;">
+			<input type="checkbox" style="float:left;"/>
+			<div style="padding-top:5px;">序号</div>
+		</label></th>
+		<!--
+		<th class="order" by="tb.id" sort="asc">ID</th>
+		-->
+		<th class="order" by="tb.login" sort="asc">登录名</th>
+		<!--
+		<th class="order" by="tb.email" sort="asc">邮箱</th>
+		<th class="order" by="tb.phone" sort="asc">手机号</th>
+		<th class="order" by="tb.idCard" sort="asc">身份证</th>
+		<th class="order" by="tb.password" sort="asc">密码</th>
+		-->
+		<th class="order" by="tb.loginTime" sort="desc">登录时间</th>
+		<th class="order" by="tb.loginCount" sort="asc">登录次数</th>
+		<th class="order" by="tb.name" sort="asc">姓名</th>
+		<!--
+		<th class="order" by="tb.sex" sort="asc">性别</th>
+		<th class="order" by="tb.birth" sort="desc">生日</th>
+		-->
+		<th class="order" by="tb.nick" sort="asc">昵称</th>
+		<!--
+		<th class="order" by="tb.info" sort="asc">简介</th>
+		<th class="order" by="tb.photo" sort="asc">形象照</th>
+		<th class="order" by="tb.scene" sort="asc">背景图</th>
+		<th class="order" by="tb.skin" sort="asc">皮肤</th>
+		-->
+		<th class="order" by="tb.status" sort="asc">状态</th>
+		<!--
+		<th class="order" by="tb.modifyUser" sort="asc">修改者</th>
+		<th class="order" by="tb.modifyTime" sort="desc">修改时间</th>
+		<th class="order" by="tb.createUser" sort="asc">创建者</th>
+		<th class="order" by="tb.createTime" sort="desc">创建时间</th>
+		-->
+		<th align="right" style="white-space:nowrap;">
+			<a class="btn" title="查询" onclick="var $t=$('#{{=$.queryId||''}}');if($t.is(':visible')){$t.slideUp();}else{$t.slideDown();}">✈</a>
+			<a class="btn" title="添加" onclick="location.href='{{=$.uripath||''}}/add.html';">✚</a>
+			<a class="btn" title="移除" idName="id" uri="{{=$.uripath||''}}/drop.submit">━</a>
+		</th>
+	</tr>
+	{{~$._page_list_:v:i}}
+	<tr>
+		<td align="right"><label style="display:block;">
+			<input type="checkbox" style="float:left;" name="id" value="{{=v.id||''}}"/>
+			<div style="padding-top:5px;">{{=i+1}}</div>
+		</label></td>
+		<!--
+		<td>{{=v.id||''}}</td>
+		-->
+		<td>{{=v.login||''}}</td>
+		<!--
+		<td>{{=v.email||''}}</td>
+		<td>{{=v.phone||''}}</td>
+		<td>{{=v.idCard||''}}</td>
+		<td>{{=v.password||''}}</td>
+		-->
+		<td>{{=v.loginTime||''}}</td>
+		<td>{{=v.loginCount||0}}</td>
+		<td>{{=v.name||''}}</td>
+		<!--
+		<td class="tinyint" tinyint="user$sex">{{=v.sex||''}}</td>
+		<td>{{=v.birth||''}}</td>
+		-->
+		<td>{{=v.nick||''}}</td>
+		<!--
+		<td>{{=v.info||''}}</td>
+		<td>{{=v.photo||''}}</td>
+		<td>{{=v.scene||''}}</td>
+		<td>{{=v.skin||''}}</td>
+		-->
+		<td class="tinyint" tinyint="user$status">{{=v.status||''}}</td>
+		<!--
+		<td>{{=v.modifyUserLogin||''}}</td>
+		<td>{{=v.modifyTime||''}}</td>
+		<td>{{=v.createUserLogin||''}}</td>
+		<td>{{=v.createTime||''}}</td>
+		-->
+		<td align="right" style="white-space:nowrap;">
+			<a class="btn" title="详情" onclick="location.href='{{=$.uripath||''}}/info/{{=v.id||''}}.html';">☷</a>
+			<a class="btn" title="编辑" onclick="location.href='{{=$.uripath||''}}/edit/{{=v.id||''}}.html';">✎</a>
+		{{?v.id!='@@@@@@'&&v.id!='@@@@@@@'&&v.id!='@@@@@@@@'}}
+			<a class="btn" title="删除" onclick="if(confirmDropItem()){location.href='{{=$.uripath||''}}/drop/{{=v.id||''}}.submit';}">✖</a>
+		{{?}}
+			<input type="button" value="所属角色" onclick="location.href='{{=$.uripath||''}}/../user_role/{{=v.id||''}}.html';"/>
+		</td>
+	</tr>
+	{{~}}
+</tbody></table></form>

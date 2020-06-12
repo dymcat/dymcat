@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role_link>
+<sql part="query">
+	select{([
+		tb.role,
+		tb.link,
+		tb.createUser,
+		tb.createTime,
+		cu.login createUserLogin,
+	])}from tb_role_link tb
+	left join tb_user cu on cu.id=tb.createUser
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+		{=sql.str("tb.role='",$.role,"' and")}
+		{=sql.str("tb.link='",$.link,"' and")}
+		{=sql.str("tb.createUser='",$.createUser,"' and")}
+		{=sql.dt("tb.createTime='",$.createTime,"' and")}
+		{=sql.dt("tb.createTime>='",$._query_min_createTime,"' and")}
+		{=sql.dt("'",$._query_max_createTime,"'>=tb.createTime and")}
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+{??}
+		tb.createTime desc
+{?}
+	])}
+</sql>
+<sql name="add" type="bool">
+	insert into tb_role_link({([
+		{=sql.full($.role,"role,")}
+		{=sql.full($.link,"link,")}
+		{=sql.full($.createUser,"createUser,")}
+		{=sql.full($.createTime,"createTime,")}
+	])})values({([
+		{=sql.str("'",$.role,"',")}
+		{=sql.str("'",$.link,"',")}
+		{=sql.str("'",$.createUser,"',")}
+		{=sql.dt("'",$.createTime,"',")}
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_role_link where
+	{([
+		{=sql.str("role='",$.role,"' and")}
+		{=sql.str("link='",$.link,"' and")}
+		{=sql.str("createUser='",$.createUser,"' and")}
+		{=sql.dt("createTime='",$.createTime,"' and")}
+	])}
+</sql>
+<sql name="link" type="list">
+	select * from(
+	select e.id link
+	,p.path platePath,p.name plateName,p.icon plateIcon,p.sort plateSort
+	,g.path groupPath,g.name groupName,g.icon groupIcon,g.sort groupSort
+	,e.path entryPath,e.name entryName,e.icon entryIcon,e.sort entrySort
+	,null actionPath,null actionName,null actionIcon,null actionSort
+	,r.name roleName
+	,rl.role,rl.createUser,rl.createTime
+	,cu.login createUserLogin
+	from tb_link p
+	join tb_link g on g.lead=p.id
+	join tb_link e on e.lead=g.id
+	left join tb_role_link rl on rl.link=e.id and rl.role={=sql.str("'",$.role,"'")}
+	left join tb_role r on r.id=rl.role
+	left join tb_user cu on cu.id=rl.createUser
+	where p.lead='@' and p.rank=1 and g.rank=2 and e.rank=3
+	union all
+	select a.id link
+	,p.path platePath,p.name plateName,p.icon plateIcon,p.sort plateSort
+	,g.path groupPath,g.name groupName,g.icon groupIcon,g.sort groupSort
+	,e.path entryPath,e.name entryName,e.icon entryIcon,e.sort entrySort
+	,a.path actionPath,a.name actionName,a.icon actionIcon,a.sort actionSort
+	,r.name roleName
+	,rl.role,rl.createUser,rl.createTime
+	,cu.login createUserLogin
+	from tb_link p
+	join tb_link g on g.lead=p.id
+	join tb_link e on e.lead=g.id
+	join tb_link a on a.lead=e.id
+	left join tb_role_link rl on rl.link=a.id and rl.role={=sql.str("'",$.role,"'")}
+	left join tb_role r on r.id=rl.role
+	left join tb_user cu on cu.id=rl.createUser
+	where p.lead='@' and p.rank=1 and g.rank=2 and e.rank=3 and a.rank=4
+	) tb order by plateSort,groupSort,entrySort,actionSort
+</sql>
+<sql name="save" type="ints">
+	delete from tb_role_link where role={=sql.str("'",$.role,"'")};
+{?lang.isArray($.link)}
+	insert into tb_role_link(role,link)values{([
+	{=sql.str_arr("("+sql.str("'",$.role,"'")+",'",$.link,"'),")}
+	])}
+{??lang.isString($.link)}
+	insert into tb_role_link(role,link)values
+	({=sql.str("'",$.role,"'")},{=sql.str("'",$.link,"'")})
+{?}
+</sql>
+</role_link>

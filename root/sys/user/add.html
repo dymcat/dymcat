@@ -1,0 +1,41 @@
+<div class="area data-info">
+	<form action="{{=$.uripath||''}}/add.submit" method="POST">
+		{{%var v=$._page_info_;}}
+		<dl><dt>登录名</dt><dd><input type="text" name="login" value="{{=v.login||''}}" maxlength="32"/></dd><em id="_error_login_"></em></dl>
+		<dl><dt>邮箱</dt><dd><input type="text" name="email" value="{{=v.email||''}}" maxlength="32"/></dd><em id="_error_email_"></em></dl>
+		<dl><dt>手机号</dt><dd><input type="text" name="phone" value="{{=v.phone||''}}" maxlength="32"/></dd><em id="_error_phone_"></em></dl>
+		<dl><dt>身份证</dt><dd><input type="text" name="idCard" value="{{=v.idCard||''}}" maxlength="32"/></dd><em id="_error_idCard_"></em></dl>
+		<dl><dt>密码</dt><dd><input type="text" name="password" value="{{=v.password||''}}" required="required" maxlength="255"/></dd><em id="_error_password_"></em></dl>
+		<!--
+		<dl><dt>登录时间</dt><dd><input type="datetime-local" name="loginTime" value="{{=v.loginTime||''}}"/></dd><em id="_error_loginTime_"></em></dl>
+		-->
+		<!--
+		<dl><dt>登录次数</dt><dd><input type="number" name="loginCount" value="{{=v.loginCount||''}}" min="0" pattern="[0-9]+"/><i>次</i></dd><em id="_error_loginCount_"></em></dl>
+		-->
+		<dl><dt>姓名</dt><dd><input type="text" name="name" value="{{=v.name||''}}" maxlength="32"/></dd><em id="_error_name_"></em></dl>
+		<dl><dt>性别</dt><dd><select class="tinyint" tinyint="user$sex" name="sex" data="{{=v.sex||''}}"></select></dd><em id="_error_sex_"></em></dl>
+		<dl><dt>生日</dt><dd><input type="date" name="birth" value="{{=v.birth||''}}"/></dd><em id="_error_birth_"></em></dl>
+		<dl><dt>昵称</dt><dd><input type="text" name="nick" value="{{=v.nick||''}}" maxlength="32"/></dd><em id="_error_nick_"></em></dl>
+		<dl><dt>简介</dt><dd><textarea name="info">{{=v.info||''}}</textarea></dd><em id="_error_info_"></em></dl>
+		<dl><dt>形象照</dt><dd><input type="text" name="photo" value="{{=v.photo||''}}" maxlength="255"/></dd><em id="_error_photo_"></em></dl>
+		<dl><dt>背景图</dt><dd><input type="text" name="scene" value="{{=v.scene||''}}" maxlength="255"/></dd><em id="_error_scene_"></em></dl>
+		<dl><dt>皮肤</dt><dd><input type="text" name="skin" value="{{=v.skin||''}}" maxlength="255"/></dd><em id="_error_skin_"></em></dl>
+		<dl><dt>状态</dt><dd><select class="tinyint" tinyint="user$status" name="status" data="{{=v.status||''}}" text="false"></select></dd><em id="_error_status_"></em></dl>
+		<!--
+		<dl><dt>修改者</dt><dd><input type="text" name="modifyUser" value="{{=v.modifyUser||''}}" maxlength="36"/></dd><em id="_error_modifyUser_"></em></dl>
+		-->
+		<!--
+		<dl><dt>修改时间</dt><dd><input type="datetime-local" name="modifyTime" value="{{=v.modifyTime||''}}"/></dd><em id="_error_modifyTime_"></em></dl>
+		-->
+		<!--
+		<dl><dt>创建者</dt><dd><input type="text" name="createUser" value="{{=v.createUser||''}}" required="required" maxlength="36"/></dd><em id="_error_createUser_"></em></dl>
+		-->
+		<!--
+		<dl><dt>创建时间</dt><dd><input type="datetime-local" name="createTime" value="{{=v.createTime||''}}" required="required"/></dd><em id="_error_createTime_"></em></dl>
+		-->
+		<center>
+			<input type="submit" value="✔ 保存"/>
+			<input type="button" value="⏎ 返回" onclick="history.back();"/>
+		</center>
+	</form>
+</div>

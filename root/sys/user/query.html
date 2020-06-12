@@ -1,0 +1,24 @@
+<dl><dt>ID</dt><dd><input type="text" name="id" maxlength="36"/></dd></dl>
+<dl><dt>登录名</dt><dd><input type="text" name="login" maxlength="32"/></dd></dl>
+<dl><dt>邮箱</dt><dd><input type="text" name="email" maxlength="32"/></dd></dl>
+<dl><dt>手机号</dt><dd><input type="text" name="phone" maxlength="32"/></dd></dl>
+<dl><dt>身份证</dt><dd><input type="text" name="idCard" maxlength="32"/></dd></dl>
+<dl><dt>密码</dt><dd><input type="text" name="password" maxlength="255"/></dd></dl>
+<dl><dt>从登录时间</dt><dd><input type="datetime-local" name="_query_min_loginTime"/></dd></dl>
+<dl><dt>到登录时间</dt><dd><input type="datetime-local" name="_query_max_loginTime"/></dd></dl>
+<dl><dt>登录次数</dt><dd class="twin"><input type="number" name="_query_min_loginCount" min="0" pattern="[0-9]+"/><s>&nbsp;</s><input type="number" name="_query_max_loginCount" min="0" pattern="[0-9]+"/></dd></dl>
+<dl><dt>姓名</dt><dd><input type="text" name="name" maxlength="32"/></dd></dl>
+<dl><dt>性别</dt><dd><select class="tinyint" tinyint="user$sex" name="sex" data="{{=$.sex||''}}"></select></dd></dl>
+<dl><dt>生日</dt><dd class="twin"><input type="date" name="_query_min_birth"/><s>&nbsp;</s><input type="date" name="_query_max_birth"/></dd></dl>
+<dl><dt>昵称</dt><dd><input type="text" name="nick" maxlength="32"/></dd></dl>
+<dl><dt>简介</dt><dd><input type="text" name="info"/></dd></dl>
+<dl><dt>形象照</dt><dd><input type="text" name="photo" maxlength="255"/></dd></dl>
+<dl><dt>背景图</dt><dd><input type="text" name="scene" maxlength="255"/></dd></dl>
+<dl><dt>皮肤</dt><dd><input type="text" name="skin" maxlength="255"/></dd></dl>
+<dl><dt>状态</dt><dd><select class="tinyint" tinyint="user$status" name="status" data="{{=$.status||''}}"></select></dd></dl>
+<dl><dt>修改者</dt><dd><input type="text" name="modifyUser" maxlength="36"/></dd></dl>
+<dl><dt>从修改时间</dt><dd><input type="datetime-local" name="_query_min_modifyTime"/></dd></dl>
+<dl><dt>到修改时间</dt><dd><input type="datetime-local" name="_query_max_modifyTime"/></dd></dl>
+<dl><dt>创建者</dt><dd><input type="text" name="createUser" maxlength="36"/></dd></dl>
+<dl><dt>从创建时间</dt><dd><input type="datetime-local" name="_query_min_createTime"/></dd></dl>
+<dl><dt>到创建时间</dt><dd><input type="datetime-local" name="_query_max_createTime"/></dd></dl>

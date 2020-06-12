@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<demo>
+<sql part="query">
+	select{([
+		tb.id,
+		tb.name,
+		tb.sex,
+		tb.age,
+		tb.birth,
+		tb.nation,
+		tb.createTime,
+	])}from tb_demo tb
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+		{=sql.num("tb.id=",$.id," and")}
+		{=sql.num("tb.id>=",$._query_min_id," and")}
+		{=sql.num("",$._query_max_id,">=tb.id and")}
+		{=sql.str("tb.name='",$.name,"' and")}
+		{=sql.str("tb.name like '%",$._query_like_name,"%' and")}
+		{=sql.str("tb.sex='",$.sex,"' and")}
+		{=sql.num("tb.age=",$.age," and")}
+		{=sql.num("tb.age>=",$._query_min_age," and")}
+		{=sql.num("",$._query_max_age,">=tb.age and")}
+		{=sql.date("tb.birth='",$.birth,"' and")}
+		{=sql.date("tb.birth>='",$._query_min_birth,"' and")}
+		{=sql.date("'",$._query_max_birth,"'>=tb.birth and")}
+		{=sql.str("tb.nation='",$.nation,"' and")}
+		{=sql.dt("tb.createTime='",$.createTime,"' and")}
+		{=sql.dt("tb.createTime>='",$._query_min_createTime,"' and")}
+		{=sql.dt("'",$._query_max_createTime,"'>=tb.createTime and")}
+		{=sql.str("tb.name like '%",$._query_search_,"%' and")}
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+{??}
+		tb.createTime desc
+{?}
+	])}
+</sql>
+<sql name="info" type="map">
+{#def.query}
+	where
+	{=sql.num("tb.id=",$.id,"")}
+</sql>
+<sql name="edit" type="bool">
+	update tb_demo set{([
+		{=sql.num("id=",$.id,",","id=null,")}
+		{=sql.str("name='",$.name,"',","name=null,")}
+		{=sql.str("sex='",$.sex,"',","sex=null,")}
+		{=sql.num("age=",$.age,",","age=null,")}
+		{=sql.date("birth='",$.birth,"',","birth=null,")}
+		{=sql.str("nation='",$.nation,"',","nation=null,")}
+		{=sql.dt("createTime='",$.createTime,"',","createTime=null,")}
+	])}where
+	{=sql.num("id=",$.id,"")}
+</sql>
+<sql name="add" type="bool">
+	insert into tb_demo({([
+		{=sql.full($.id,"id,")}
+		{=sql.full($.name,"name,")}
+		{=sql.full($.sex,"sex,")}
+		{=sql.full($.age,"age,")}
+		{=sql.full($.birth,"birth,")}
+		{=sql.full($.nation,"nation,")}
+		{=sql.full($.createTime,"createTime,")}
+	])})values({([
+		{=sql.num("",$.id,",")}
+		{=sql.str("'",$.name,"',")}
+		{=sql.str("'",$.sex,"',")}
+		{=sql.num("",$.age,",")}
+		{=sql.date("'",$.birth,"',")}
+		{=sql.str("'",$.nation,"',")}
+		{=sql.dt("'",$.createTime,"',")}
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_demo where
+{?lang.isArray($.id)}
+	id in({([{=sql.num_arr("",$.id,",")}])})
+{??}
+	{=sql.num("id=",$.id,"")}
+{?}
+</sql>
+</demo>

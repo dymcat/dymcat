@@ -1,0 +1,13 @@
+<div class="area data-info">
+	{{%var v=$._page_info_;}}
+	<dl><dt>ID</dt><dd><input type="text" value="{{=v.id||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>名称</dt><dd><input type="text" value="{{=v.name||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>性别</dt><dd><input type="text" value="{{=v.sex||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>年龄</dt><dd><input type="text" value="{{=v.age||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>生日</dt><dd><input type="text" value="{{=v.birth||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>民族</dt><dd><input type="text" value="{{=v.nation||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>创建时间</dt><dd><input type="text" value="{{=v.createTime||''}}" readonly="readonly"/></dd></dl>
+	<center>
+		<input type="button" value="⏎ 返回" onclick="history.back();"/>
+	</center>
+</div>

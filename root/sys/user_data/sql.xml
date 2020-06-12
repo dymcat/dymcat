@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user_data>
+<sql part="query">
+	select{([
+		tb.saveTime,
+		tb.user,
+		tb.nation,
+		tb.blood,
+		tb.zodiac,
+		tb.constellation,
+		tb.character,
+		tb.marital,
+		tb.height,
+		tb.weight,
+		tb.habit,
+		tb.hobby,
+		tb.pet,
+		tb.city,
+		tb.school,
+		tb.education,
+		tb.company,
+		tb.vocation,
+		tb.income,
+		tb.house,
+		tb.car,
+		tb.address,
+		tb.position,
+		tb.postal,
+		tb.weibo,
+		tb.wechat,
+		tb.qq,
+		tb.msn,
+	])}from tb_user_data tb
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+		{=sql.dt("tb.saveTime='",$.saveTime,"' and")}
+		{=sql.dt("tb.saveTime>='",$._query_min_saveTime,"' and")}
+		{=sql.dt("'",$._query_max_saveTime,"'>=tb.saveTime and")}
+		{=sql.str("tb.user='",$.user,"' and")}
+		{=sql.num("tb.nation=",$.nation," and")}
+		{=sql.num("tb.blood=",$.blood," and")}
+		{=sql.num("tb.zodiac=",$.zodiac," and")}
+		{=sql.num("tb.constellation=",$.constellation," and")}
+		{=sql.num("tb.character=",$.character," and")}
+		{=sql.num("tb.marital=",$.marital," and")}
+		{=sql.num("tb.height=",$.height," and")}
+		{=sql.num("tb.height>=",$._query_min_height," and")}
+		{=sql.num("",$._query_max_height,">=tb.height and")}
+		{=sql.num("tb.weight=",$.weight," and")}
+		{=sql.num("tb.weight>=",$._query_min_weight," and")}
+		{=sql.num("",$._query_max_weight,">=tb.weight and")}
+		{=sql.str("tb.habit='",$.habit,"' and")}
+		{=sql.str("tb.hobby='",$.hobby,"' and")}
+		{=sql.num("tb.pet=",$.pet," and")}
+		{=sql.str("tb.city='",$.city,"' and")}
+		{=sql.str("tb.city like '%",$._query_like_city,"%' and")}
+		{=sql.str("tb.school='",$.school,"' and")}
+		{=sql.str("tb.school like '%",$._query_like_school,"%' and")}
+		{=sql.num("tb.education=",$.education," and")}
+		{=sql.str("tb.company='",$.company,"' and")}
+		{=sql.str("tb.company like '%",$._query_like_company,"%' and")}
+		{=sql.str("tb.vocation='",$.vocation,"' and")}
+		{=sql.str("tb.vocation like '%",$._query_like_vocation,"%' and")}
+		{=sql.num("tb.income=",$.income," and")}
+		{=sql.num("tb.income>=",$._query_min_income," and")}
+		{=sql.num("",$._query_max_income,">=tb.income and")}
+		{=sql.num("tb.house=",$.house," and")}
+		{=sql.num("tb.car=",$.car," and")}
+		{=sql.str("tb.address='",$.address,"' and")}
+		{=sql.str("tb.position='",$.position,"' and")}
+		{=sql.str("tb.postal='",$.postal,"' and")}
+		{=sql.str("tb.postal like '%",$._query_like_postal,"%' and")}
+		{=sql.str("tb.weibo='",$.weibo,"' and")}
+		{=sql.str("tb.weibo like '%",$._query_like_weibo,"%' and")}
+		{=sql.str("tb.wechat='",$.wechat,"' and")}
+		{=sql.str("tb.wechat like '%",$._query_like_wechat,"%' and")}
+		{=sql.str("tb.qq='",$.qq,"' and")}
+		{=sql.str("tb.qq like '%",$._query_like_qq,"%' and")}
+		{=sql.str("tb.msn='",$.msn,"' and")}
+		{=sql.str("tb.msn like '%",$._query_like_msn,"%' and")}
+{?lang.isString($._query_search_)}
+		({([
+			tb.city like '%{=$._query_search_}%' or
+			tb.school like '%{=$._query_search_}%' or
+			tb.company like '%{=$._query_search_}%' or
+			tb.vocation like '%{=$._query_search_}%' or
+			tb.postal like '%{=$._query_search_}%' or
+			tb.weibo like '%{=$._query_search_}%' or
+			tb.wechat like '%{=$._query_search_}%' or
+			tb.qq like '%{=$._query_search_}%' or
+			tb.msn like '%{=$._query_search_}%' or
+		])})and
+{?}
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+{??}
+		tb.saveTime desc
+{?}
+	])}
+</sql>
+<sql name="edit" type="bool">
+	update tb_user_data set{([
+		{=sql.dt("saveTime='",$.saveTime,"',","saveTime=null,")}
+		{=sql.num("nation=",$.nation,",","nation=null,")}
+		{=sql.num("blood=",$.blood,",","blood=null,")}
+		{=sql.num("zodiac=",$.zodiac,",","zodiac=null,")}
+		{=sql.num("constellation=",$.constellation,",","constellation=null,")}
+		{=sql.num("character=",$.character,",","character=null,")}
+		{=sql.num("marital=",$.marital,",","marital=null,")}
+		{=sql.num("height=",$.height,",","height=null,")}
+		{=sql.num("weight=",$.weight,",","weight=null,")}
+		{=sql.str("habit='",$.habit,"',","habit=null,")}
+		{=sql.str("hobby='",$.hobby,"',","hobby=null,")}
+		{=sql.num("pet=",$.pet,",","pet=null,")}
+		{=sql.str("city='",$.city,"',","city=null,")}
+		{=sql.str("school='",$.school,"',","school=null,")}
+		{=sql.num("education=",$.education,",","education=null,")}
+		{=sql.str("company='",$.company,"',","company=null,")}
+		{=sql.str("vocation='",$.vocation,"',","vocation=null,")}
+		{=sql.num("income=",$.income,",","income=null,")}
+		{=sql.num("house=",$.house,",","house=null,")}
+		{=sql.num("car=",$.car,",","car=null,")}
+		{=sql.str("address='",$.address,"',","address=null,")}
+		{=sql.str("position='",$.position,"',","position=null,")}
+		{=sql.str("postal='",$.postal,"',","postal=null,")}
+		{=sql.str("weibo='",$.weibo,"',","weibo=null,")}
+		{=sql.str("wechat='",$.wechat,"',","wechat=null,")}
+		{=sql.str("qq='",$.qq,"',","qq=null,")}
+		{=sql.str("msn='",$.msn,"',","msn=null,")}
+	])}where
+	{=sql.str("user='",$.user,"'")}
+</sql>
+<sql name="add" type="bool">
+	insert into tb_user_data({([
+		{=sql.full($.saveTime,"saveTime,")}
+		{=sql.full($.user,"user,")}
+		{=sql.full($.nation,"nation,")}
+		{=sql.full($.blood,"blood,")}
+		{=sql.full($.zodiac,"zodiac,")}
+		{=sql.full($.constellation,"constellation,")}
+		{=sql.full($.character,"character,")}
+		{=sql.full($.marital,"marital,")}
+		{=sql.full($.height,"height,")}
+		{=sql.full($.weight,"weight,")}
+		{=sql.full($.habit,"habit,")}
+		{=sql.full($.hobby,"hobby,")}
+		{=sql.full($.pet,"pet,")}
+		{=sql.full($.city,"city,")}
+		{=sql.full($.school,"school,")}
+		{=sql.full($.education,"education,")}
+		{=sql.full($.company,"company,")}
+		{=sql.full($.vocation,"vocation,")}
+		{=sql.full($.income,"income,")}
+		{=sql.full($.house,"house,")}
+		{=sql.full($.car,"car,")}
+		{=sql.full($.address,"address,")}
+		{=sql.full($.position,"position,")}
+		{=sql.full($.postal,"postal,")}
+		{=sql.full($.weibo,"weibo,")}
+		{=sql.full($.wechat,"wechat,")}
+		{=sql.full($.qq,"qq,")}
+		{=sql.full($.msn,"msn,")}
+	])})values({([
+		{=sql.dt("'",$.saveTime,"',")}
+		{=sql.str("'",$.user,"',")}
+		{=sql.num("",$.nation,",")}
+		{=sql.num("",$.blood,",")}
+		{=sql.num("",$.zodiac,",")}
+		{=sql.num("",$.constellation,",")}
+		{=sql.num("",$.character,",")}
+		{=sql.num("",$.marital,",")}
+		{=sql.num("",$.height,",")}
+		{=sql.num("",$.weight,",")}
+		{=sql.str("'",$.habit,"',")}
+		{=sql.str("'",$.hobby,"',")}
+		{=sql.num("",$.pet,",")}
+		{=sql.str("'",$.city,"',")}
+		{=sql.str("'",$.school,"',")}
+		{=sql.num("",$.education,",")}
+		{=sql.str("'",$.company,"',")}
+		{=sql.str("'",$.vocation,"',")}
+		{=sql.num("",$.income,",")}
+		{=sql.num("",$.house,",")}
+		{=sql.num("",$.car,",")}
+		{=sql.str("'",$.address,"',")}
+		{=sql.str("'",$.position,"',")}
+		{=sql.str("'",$.postal,"',")}
+		{=sql.str("'",$.weibo,"',")}
+		{=sql.str("'",$.wechat,"',")}
+		{=sql.str("'",$.qq,"',")}
+		{=sql.str("'",$.msn,"',")}
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_user_data where
+	{([
+		{=sql.dt("saveTime='",$.saveTime,"' and")}
+		{=sql.str("user='",$.user,"' and")}
+		{=sql.num("nation=",$.nation," and")}
+		{=sql.num("blood=",$.blood," and")}
+		{=sql.num("zodiac=",$.zodiac," and")}
+		{=sql.num("constellation=",$.constellation," and")}
+		{=sql.num("character=",$.character," and")}
+		{=sql.num("marital=",$.marital," and")}
+		{=sql.num("height=",$.height," and")}
+		{=sql.num("weight=",$.weight," and")}
+		{=sql.str("habit='",$.habit,"' and")}
+		{=sql.str("hobby='",$.hobby,"' and")}
+		{=sql.num("pet=",$.pet," and")}
+		{=sql.str("city='",$.city,"' and")}
+		{=sql.str("school='",$.school,"' and")}
+		{=sql.num("education=",$.education," and")}
+		{=sql.str("company='",$.company,"' and")}
+		{=sql.str("vocation='",$.vocation,"' and")}
+		{=sql.num("income=",$.income," and")}
+		{=sql.num("house=",$.house," and")}
+		{=sql.num("car=",$.car," and")}
+		{=sql.str("address='",$.address,"' and")}
+		{=sql.str("position='",$.position,"' and")}
+		{=sql.str("postal='",$.postal,"' and")}
+		{=sql.str("weibo='",$.weibo,"' and")}
+		{=sql.str("wechat='",$.wechat,"' and")}
+		{=sql.str("qq='",$.qq,"' and")}
+		{=sql.str("msn='",$.msn,"' and")}
+	])}
+</sql>
+</user_data>

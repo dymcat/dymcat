@@ -1,0 +1,187 @@
+<form class="area find-query"{{?$.hide_search}}style="display:none;"{{?}} action="{{=$.uriview||''}}" method="POST">
+	{{?$.hasPage}}
+	<input type="hidden" name="_page_size_" value="{{=$._page_size_||''}}"/>
+	<input type="hidden" name="_page_index_" value="1"/>
+	{{?}}
+	<input type="hidden" name="_order_by_" value="{{=$._order_by_||''}}"/>
+	<input type="hidden" name="_order_sort_" value="{{=$._order_sort_||''}}"/>
+	<input type="text" name="_query_search_" value="{{=$._query_search_||''}}" placeholder="大家都在搜……"/>
+	<input type="submit" value="搜索" class="th tr"/>
+</form>
+<form class="area data-info" id="{{=$.queryId||''}}" action="{{=$.uriview||''}}" method="POST" style="display:none;">
+{{#def.query}}
+	<center>
+		{{?$.hasPage}}
+		<input type="hidden" name="_page_size_" value="{{=$._page_size_||''}}"/>
+		<input type="hidden" name="_page_index_" value="{{=$._page_index_||1}}"/>
+		{{?}}
+		<input type="hidden" name="_order_by_" value="{{=$._order_by_||''}}"/>
+		<input type="hidden" name="_order_sort_" value="{{=$._order_sort_||''}}"/>
+		<input type="submit" value="✔ 搜索"/>
+		<input type="button" value="⏎ 取消" onclick="$('#{{=$.queryId||''}}').slideUp();"/>
+	</center>
+</form>
+<div class="area">
+{{#def.table}}
+{{?$._page_list_.length==0}}
+<table class="data-list"><tbody><tr><th>亲，没有什么可看的啦</th></tr></tbody></table>
+{{??$.hasPage&&$._page_total_>10}}
+<table class="data-list link-page" id="{{=$.pageId||''}}"><tbody><tr>
+	<th align="left" style="border-right:0;">
+		每页显示
+		<select>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option value="50">50</option>
+			<option value="80">80</option>
+			<option value="100">100</option>
+			<option value="200">200</option>
+			<option value="300">300</option>
+			<option value="500">500</option>
+			<option value="800">800</option>
+		</select>
+		条
+	</th>
+	<th style="border-left:0;border-right:0;padding:0;white-space:nowrap;">
+		{{?$._page_index_==1}}
+			<b title="上一页" class="sfont-last"></b>
+		{{??}}
+			<a title="上一页" class="sfont-last" onclick="submitQueryData({{=$._page_index_-1}});"></a>
+		{{?}}
+		{{?$._page_count_<10}}
+			{{%for(var i=1;i<=$._page_count_;i++){}}
+				{{?i==$._page_index_}}
+					<b>{{=i}}</b>
+				{{??}}
+					<a onclick="submitQueryData({{=i}});">{{=i}}</a>
+				{{?}}
+			{{%}}}
+		{{??}}
+			{{?$._page_index_==1}}
+				<b>{{=$._page_index_}}</b>
+			{{??}}
+				<a onclick="submitQueryData(1);">1</a>
+			{{?}}
+			{{?$._page_index_==2}}
+				<b>{{=$._page_index_}}</b>
+			{{??}}
+				<a onclick="submitQueryData(2);">2</a>
+			{{?}}
+			{{?$._page_index_==3}}
+				<b>{{=$._page_index_}}</b>
+				<a onclick="submitQueryData({{=$._page_index_+1}});">{{=$._page_index_+1}}</a>
+			{{??}}
+				<a onclick="submitQueryData(3);">3</a>
+			{{?}}
+			{{?$._page_index_==4}}
+				<b>{{=$._page_index_}}</b>
+				<a onclick="submitQueryData({{=$._page_index_+1}});">{{=$._page_index_+1}}</a>
+			{{?}}
+			{{?$._page_index_==5}}
+				<a onclick="submitQueryData({{=$._page_index_-1}});">{{=$._page_index_-1}}</a>
+				<b>{{=$._page_index_}}</b>
+				<a onclick="submitQueryData({{=$._page_index_+1}});">{{=$._page_index_+1}}</a>
+			{{?}}
+			{{?$._page_index_>5}}
+				~
+			{{?}}
+			{{?$._page_index_>7}}
+				<a onclick="submitQueryData({{=parseInt($._page_index_/2+1)}});">{{=parseInt($._page_index_/2+1)}}</a>
+				~
+			{{?}}
+			{{?$._page_index_>5&&$._page_index_<$._page_count_-4}}
+				<a onclick="submitQueryData({{=$._page_index_-1}});">{{=$._page_index_-1}}</a>
+				<b>{{=$._page_index_}}</b>
+				<a onclick="submitQueryData({{=$._page_index_+1}});">{{=$._page_index_+1}}</a>
+			{{?}}
+			{{?$._page_index_<$._page_count_-6}}
+				~
+				<a onclick="submitQueryData({{=parseInt(($._page_count_+$._page_index_-1)/2)}});">{{=parseInt(($._page_count_+$._page_index_-1)/2)}}</a>
+			{{?}}
+			{{?$._page_index_<$._page_count_-4}}
+				~
+			{{?}}
+			{{?$._page_index_==$._page_count_-4}}
+				<a onclick="submitQueryData({{=$._page_index_-1}});">{{=$._page_index_-1}}</a>
+				<b>{{=$._page_index_}}</b>
+				<a onclick="submitQueryData({{=$._page_index_+1}});">{{=$._page_index_+1}}</a>
+			{{?}}
+			{{?$._page_index_==$._page_count_-3}}
+				<a onclick="submitQueryData({{=$._page_index_-1}});">{{=$._page_index_-1}}</a>
+				<b>{{=$._page_index_}}</b>
+			{{?}}
+			{{?$._page_index_==$._page_count_-2}}
+				<a onclick="submitQueryData({{=$._page_index_-1}});">{{=$._page_index_-1}}</a>
+				<b>{{=$._page_index_}}</b>
+			{{??}}
+				<a onclick="submitQueryData({{=$._page_count_-2}});">{{=$._page_count_-2}}</a>
+			{{?}}
+			{{?$._page_index_==$._page_count_-1}}
+				<b>{{=$._page_index_}}</b>
+			{{??}}
+				<a onclick="submitQueryData({{=$._page_count_-1}});">{{=$._page_count_-1}}</a>
+			{{?}}
+			{{?$._page_index_==$._page_count_}}
+				<b>{{=$._page_index_}}</b>
+			{{??}}
+				<a onclick="submitQueryData({{=$._page_count_}});">{{=$._page_count_}}</a>
+			{{?}}
+		{{?}}
+		{{?$._page_index_==$._page_count_}}
+			<b title="下一页" class="sfont-next"></b>
+		{{??}}
+			<a title="下一页" class="sfont-next" onclick="submitQueryData({{=$._page_index_+1}});"></a>
+		{{?}}
+	</th>
+	<th align="right" style="border-left:0;">
+		第<input type="number" min="1" max="{{=$._page_count_||''}}" value="{{=$._page_index_||''}}" style="width:{{=($._page_count_.toString().length+3)*9}}px;"/>页，共{{=$._page_count_||''}}页{{=$._page_total_||''}}条
+	</th>
+</tr></tbody></table>
+<!--(<foot<)-->
+<script>
+	$("table#{{=$.pageId||''}} th select").val({{=$._page_size_||10}}+'').change(function(){
+		submitQueryData(1);
+	});
+	$("table#{{=$.pageId||''}} th input[type='number']").change(function(){
+		submitQueryData(this.value||1);
+	});
+	function submitQueryData(index){
+		$("form#{{=$.queryId||''}} input[name='_page_size_']").val($("#{{=$.pageId}} th select").val());
+		$("form#{{=$.queryId||''}} input[name='_page_index_']").val(index||1);
+		$("form#{{=$.queryId||''}}").submit();
+	}
+</script>
+<!--(>foot>)-->
+{{?}}
+</div>
+<!--(<foot<)-->
+<script>
+	$("th.order").each(function(){
+		$(this).html("<label style='float:left;'>"+$(this).html()+"</label><span style='float:right;'>"+($("form#{{=$.queryId||''}} input[name='_order_by_']").val()==$(this).attr("by")?($("form#{{=$.queryId||''}} input[name='_order_sort_']").val()=="desc"?"⇊":"⇈"):"⇅")+"</span>");		
+	});
+	$("th.order").click(function(){
+		$("form#{{=$.queryId||''}} input[name='_order_sort_']").val($("form#{{=$.queryId||''}} input[name='_order_by_']").val()==$(this).attr("by")?($("form#{{=$.queryId||''}} input[name='_order_sort_']").val()=="desc"?"asc":"desc"):$(this).attr("sort")||"asc");
+		$("form#{{=$.queryId||''}} input[name='_order_by_']").val($(this).attr("by"));
+		$("form#{{=$.queryId||''}} input[name='_page_index_']").val("1");
+		$("form#{{=$.queryId||''}}").submit();
+	});
+	$(".data-list tbody tr th input[type='checkbox']").change(function(){
+		$(this).parent().parent().parent().parent().find("input[type='checkbox']").prop("checked",$(this).prop("checked"));
+	});
+	$(".data-list tbody tr th a[class='btn'][title='移除'][idname][uri]").click(function(){
+		var count=$(this).parent().parent().parent().find("input[type='checkbox']:checked").not(this).size();
+		if(count==0){
+			alert('不知道要移除哪些记录啊，还没选择呢！');
+		}else if(confirm('真的要移除选中的这'+count+'条记录吗？')){
+			var $form=$(this).parent().parent().parent().parent();
+			while(!$form.is("form")){$form=$form.parent();}
+			$form.attr("action",$(this).attr("uri"));
+			$form.submit();
+		}
+	});
+	function confirmDropItem(){
+		return confirm('真的要删除选中的这条记录吗？');
+	}
+</script>
+<!--(>foot>)-->

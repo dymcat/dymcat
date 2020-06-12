@@ -1,0 +1,69 @@
+<div class="area">
+	<table class="data-list tb">
+		<tr>
+			<th style="white-space:nowrap;text-align:right;min-width:80px;"><label style="display:block;">
+				<input type="checkbox" style="float:left;"/>
+				<div style="padding-top:5px;">序号</div>
+			</label></th>
+			<th align="left">脚本</th>
+			<th>类型</th>
+			<th align="left">大小</th>
+			<th>时间</th>
+			<th>数量</th>
+			<th align="right" style="white-space:nowrap;">
+					<input type="button" value="已选=0" style="float:left;" onclick="fire_checked_script('unload',this.parentNode.parentNode.parentNode);"/>
+					<input type="button" value="已选+1" onclick="fire_checked_script('load',this.parentNode.parentNode.parentNode);"/>
+			</th>
+		</tr>
+{{%var index=1;for(var path in $.sjs_file_list){}}
+		<tr>
+			<td align="right"><label style="display:block;">
+				<input type="checkbox" style="float:left;" name="id" value="{{=v.id||''}}"/>
+				<div style="padding-top:5px;">{{=index++}}</div>
+			</label></td>
+			<td class="path">{{=path||''}}</td>
+			<td align="center" class="type">{{=$.sjs_file_list[path].type||''}}</td>
+			<td>{{=$.sjs_file_list[path].size||0}}</td>
+			<td align="center">{{=$.sjs_file_list[path].time||''}}</td>
+			<td align="center" class="count"><b style='color:{{=$.sjs_file_list[path].count?"lime":"red"}};'>{{=$.sjs_file_list[path].count||0}}</b></td>
+			<td align="right" style="white-space:nowrap;">
+				<input type="button" value="当前=0" class="unload" style="float:left;display:{{=$.sjs_file_list[path].count?'inline':'none'}};" onclick="fire_script('unload','{{=path}}','{{=$.sjs_file_list[path].type}}',{{=$.sjs_file_list[path].count}},this.parentNode.parentNode);"/>
+				<input type="button" value="当前+1" onclick="fire_script('load','{{=path}}','{{=$.sjs_file_list[path].type}}',{{=$.sjs_file_list[path].count}},this.parentNode.parentNode);"/>
+			</td>
+		</tr>
+{{%}}}
+	</table>
+</div>
+<!--(<foot<)-->
+<script>
+	$(".data-list tbody tr th input[type='checkbox']").change(function(){
+		$(this).parent().parent().parent().parent().find("input[type='checkbox']").prop("checked",$(this).prop("checked"));
+	});
+	function fire_script(func,path,type,count,tr){
+		if(func=="unload"&&!count){
+			console.error("不能卸载未加载脚本->"+path);
+			return false;
+		}
+		$.post("sys/script.json",{func:func,path:path,type:type},function(data){
+			if(data&&typeof(data.count)=="number"){
+				if(data.count==0){
+					$(tr).find(".count").html("<b style='color:red;'>"+data.count+"</b>");
+					$(tr).find(".unload").hide();
+				}else{
+					$(tr).find(".count").html("<b style='color:lime;'>"+data.count+"</b>");
+					$(tr).find(".unload").show();
+				}
+			}
+		});
+	}
+	function fire_checked_script(func,tb){
+		var selected_count=0;
+		$(tb).find("td input[type='checkbox']:checked").each(function(){
+			var tr=this.parentNode.parentNode.parentNode;
+			fire_script(func,$(tr).find(".path").text(),$(tr).find(".type").text(),parseInt($(tr).find(".count").text()),tr);
+			selected_count++;
+		});
+		if(selected_count==0){alert("请选择至少一个待"+(func=="load"?"增加":"归零")+"项");}
+	}
+</script>
+<!--(>foot>)-->

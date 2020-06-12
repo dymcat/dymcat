@@ -1,0 +1,10 @@
+<div class="area data-info">
+	{{%var v=$._page_info_;}}
+	<dl><dt>用户</dt><dd><input type="text" value="{{=v.user||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>角色</dt><dd><input type="text" value="{{=v.role||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>创建者</dt><dd><input type="text" value="{{=v.createUserLogin||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>创建时间</dt><dd><input type="text" value="{{=v.createTime||''}}" readonly="readonly"/></dd></dl>
+	<center>
+		<input type="button" value="⏎ 返回" onclick="history.back();"/>
+	</center>
+</div>

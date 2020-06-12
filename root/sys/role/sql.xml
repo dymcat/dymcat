@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role>
+<sql part="query">
+	select{([
+		tb.id,
+		tb.name,
+		tb.status,
+		tb.modifyUser,
+		tb.modifyTime,
+		tb.createUser,
+		tb.createTime,
+		mu.login modifyUserLogin,
+		cu.login createUserLogin,
+	])}from tb_role tb
+	left join tb_user mu on mu.id=tb.modifyUser
+	left join tb_user cu on cu.id=tb.createUser
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+		{=sql.str("tb.id='",$.id,"' and")}
+		{=sql.str("tb.name='",$.name,"' and")}
+		{=sql.str("tb.name like '%",$._query_like_name,"%' and")}
+		{=sql.num("tb.status=",$.status," and")}
+		{=sql.str("tb.modifyUser='",$.modifyUser,"' and")}
+		{=sql.dt("tb.modifyTime='",$.modifyTime,"' and")}
+		{=sql.dt("tb.modifyTime>='",$._query_min_modifyTime,"' and")}
+		{=sql.dt("'",$._query_max_modifyTime,"'>=tb.modifyTime and")}
+		{=sql.str("tb.createUser='",$.createUser,"' and")}
+		{=sql.dt("tb.createTime='",$.createTime,"' and")}
+		{=sql.dt("tb.createTime>='",$._query_min_createTime,"' and")}
+		{=sql.dt("'",$._query_max_createTime,"'>=tb.createTime and")}
+		{=sql.str("tb.name like '%",$._query_search_,"%' and")}
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+{??}
+		tb.createTime desc
+{?}
+	])}
+</sql>
+<sql name="info" type="map">
+{#def.query}
+	where
+	{=sql.str("tb.id='",$.id,"'")}
+</sql>
+<sql name="edit" type="bool">
+	update tb_role set{([
+		{=sql.str("id='",$.id,"',","id=null,")}
+		{=sql.str("name='",$.name,"',","name=null,")}
+		{=sql.num("status=",$.status,",","status=null,")}
+		{=sql.str("modifyUser='",$.modifyUser,"',","modifyUser=null,")}
+		{=sql.dt("modifyTime='",$.modifyTime,"',","modifyTime=null,")}
+		{=sql.str("createUser='",$.createUser,"',","createUser=null,")}
+		{=sql.dt("createTime='",$.createTime,"',","createTime=null,")}
+	])}where
+	{=sql.str("id='",$.id,"'")}
+</sql>
+<sql name="add" type="bool">
+	insert into tb_role({([
+		{=sql.full($.id,"id,")}
+		{=sql.full($.name,"name,")}
+		{=sql.full($.status,"status,")}
+		{=sql.full($.modifyUser,"modifyUser,")}
+		{=sql.full($.modifyTime,"modifyTime,")}
+		{=sql.full($.createUser,"createUser,")}
+		{=sql.full($.createTime,"createTime,")}
+	])})values({([
+		{=sql.str("'",$.id,"',")}
+		{=sql.str("'",$.name,"',")}
+		{=sql.num("",$.status,",")}
+		{=sql.str("'",$.modifyUser,"',")}
+		{=sql.dt("'",$.modifyTime,"',")}
+		{=sql.str("'",$.createUser,"',")}
+		{=sql.dt("'",$.createTime,"',")}
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_role where
+{?lang.isArray($.id)}
+	id in({([{=sql.str_arr("'",$.id,"',")}])})
+{??}
+	{=sql.str("id='",$.id,"'")}
+{?}
+</sql>
+</role>

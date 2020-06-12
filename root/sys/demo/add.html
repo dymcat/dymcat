@@ -1,0 +1,17 @@
+<div class="area data-info">
+	<form action="{{=$.uripath||''}}/add.submit" method="POST">
+		{{%var v=$._page_info_;}}
+		<dl><dt>名称</dt><dd><input type="text" name="name" value="{{=v.name||''}}" required="required" maxlength="32"/></dd><em id="_error_name_"></em></dl>
+		<dl><dt>性别</dt><dd><input type="text" name="sex" value="{{=v.sex||''}}" required="required" maxlength="255"/></dd><em id="_error_sex_"></em></dl>
+		<dl><dt>年龄</dt><dd><input type="number" name="age" value="{{=v.age||''}}" min="0" pattern="[0-9]+"/><i>岁</i></dd><em id="_error_age_"></em></dl>
+		<dl><dt>生日</dt><dd><input type="date" name="birth" value="{{=v.birth||''}}" required="required"/></dd><em id="_error_birth_"></em></dl>
+		<dl><dt>民族</dt><dd><input type="text" name="nation" value="{{=v.nation||''}}" required="required" maxlength="255"/></dd><em id="_error_nation_"></em></dl>
+		<!--
+		<dl><dt>创建时间</dt><dd><input type="datetime-local" name="createTime" value="{{=v.createTime||''}}" required="required"/></dd><em id="_error_createTime_"></em></dl>
+		-->
+		<center>
+			<input type="submit" value="✔ 保存"/>
+			<input type="button" value="⏎ 返回" onclick="history.back();"/>
+		</center>
+	</form>
+</div>

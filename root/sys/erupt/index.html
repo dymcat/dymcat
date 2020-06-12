@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>并发测试</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=yes,initial-scale=1,minimum-scale=1,maximum-scale=10"/>
+<meta name="x5-page-mode" content="app"/>
+<meta name="browsermode" content="application"/>
+<meta name="renderer" content="webkit"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<meta http-equiv="Cache-Control" content="no-transform"/>
+<style>
+	body{font-family:等线,宋体,Arial,Tahoma,Verdana;}
+	table{width:100%;border-collapse:collapse;text-align:center;}
+	th,td{padding:5px;border:solid 1px LightBlue;}
+	th{background-color:Azure;}
+	#erupt-pie{
+		width:300px;
+		height:300px;
+		margin:0 auto;
+		border-radius:50%;
+		background-color:green;
+		background-color:white;
+		background-image:linear-gradient(to right,transparent 50%,red 0);
+	}
+	#erupt-pie::before{
+		content:"";
+		display:block;
+		height:100%;
+		margin-left:50%;
+		border-radius:0 100% 100% 0/50%;
+		background-color:inherit;
+		transform-origin:left;
+	}
+</style>
+<style id="erupt-rotate">
+	#erupt-pie::before{transform:rotate(0turn);}
+</style>
+</head>
+<body>
+<p style="clear:both;">
+	<select id="erupt-type">
+		<option value="GET">GET</option>
+		<option value="POST">POST</option>
+	</select>
+	<input id="erupt-count" type="number" value="100" min="10" max="100000000"/>
+	<span id="erupt-back"></span>
+	<input type="button" value="并发测试" onclick="erupt_set_data();" style="float:right;"/>
+</p>
+<p style="clear:both;">
+	<progress id="erupt-set" value="0" min="0" max="100" style="width:80%;width:calc(100% - 70px);"></progress>
+	<span id="erupt-set-time" style="float:right;"></span>
+</p>
+<p style="clear:both;">
+	<progress id="erupt-get" value="0" min="0" max="100" style="width:80%;width:calc(100% - 70px);"></progress>
+	<span id="erupt-get-time" style="float:right;"></span>
+</p>
+<p style="clear:both;">
+	<div id="erupt-pie"></div>
+</p>
+<table id="erupt-log"></table>
+</body>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>window.jQuery||document.write("<script src='资源库/@/jquery/jquery-1.12.4.min.js'><\/script>")</script>
+<script>
+	function erupt_set_data(){
+		$("#erupt-set").val(0);
+		$("#erupt-get").val(0);
+		$("#erupt-set-time").html("");
+		$("#erupt-get-time").html("");
+		$("#erupt-back").html("");
+		$("#erupt-pie").css("background-color","white");
+		$("#erupt-rotate").html("#erupt-pie::before{transform:rotate(0turn);}");
+		$("#erupt-log").html("<tr><th>序数</th><th>随机数</th><th>加密串</th><th>错误结果</th></tr>");
+		var list=[];
+		var finish=0;
+		var count=parseInt($("#erupt-count").val());
+		var time=new Date().getTime();
+		for(var i=0;i<count;i++){
+			var random=(i+1)+Math.random().toString().replace(/\./,"");
+			$("#erupt-log").append("<tr><td>"+(i+1)+"</td><td>"+random+"</td><td id='erupt-set-"+random+"'></td><td id='erupt-get-"+random+"'></td></tr>");
+			$.ajax({
+				url:"erupt/set.json"
+				,type:$("#erupt-type").val()
+				,data:{
+					random:random
+					,base64:erupt_algorithm(random)
+				}
+				,success:function(data){
+					if(data&&data.random){
+						list.push(data.random);
+						$("#erupt-set").val(parseInt(100*(++finish)/count));
+						$("#erupt-set-time").html((new Date().getTime()-time)/1000+"秒");
+						$("#erupt-set-"+data.random).html(data.base64);
+						if(erupt_algorithm(data.random)!=data.base64){$("#erupt-set-"+data.random).css("color","red");}
+						if(finish==count){erupt_get_data(list);}
+					}
+				}
+			});
+		}
+	}
+	function erupt_get_data(list){
+		var ok_count=0;
+		var err_count=0;
+		var time=new Date().getTime();
+		for(var i=0;i<list.length;i++){
+			$.ajax({
+				url:"erupt/get.json"
+				,type:$("#erupt-type").val()
+				,data:{random:list[i]}
+				,success:function(data){
+					if(data&&data.random&&data.base64&&erupt_algorithm(data.random)==data.base64){
+						ok_count++;
+					}else{
+						err_count++;
+						$("#erupt-get-"+data.random).html("<span style='color:red;'>"+data.base64+"</span>");
+					}
+					$("#erupt-get").val(parseInt(100*(ok_count+err_count)/list.length));
+					$("#erupt-get-time").html((new Date().getTime()-time)/1000+"秒");
+					$("#erupt-back").html(" = <b style='color:red;'>"+err_count+"</b> + <b style='color:green;'>"+ok_count+"</b>");
+					$("#erupt-pie").css("background-color","green");
+					$("#erupt-rotate").html("#erupt-pie::before{transform:rotate("+ok_count/list.length+"turn);}");
+				}
+			});
+		}
+	}
+	function erupt_algorithm(random){
+		return btoa(random);
+	}
+</script>
+</html>

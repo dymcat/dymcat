@@ -1,0 +1,47 @@
+<div class="area data-info">
+	<dl><dt>连接池名称</dt><dd>
+		<select onchange="show_this_db_info(this.value);">
+{{%var top=null;}}
+{{%for(var name in $.db_info_list){}}
+	{{?!top}}
+		{{%top=name;}}
+	{{?}}
+			<option value="{{=name||''}}">{{=name||''}}</option>
+{{%}}}
+		</select>
+	</dd></dl>
+{{%var v=top?$.db_info_list[top]:{};}}
+	<dl><dt>驱动包</dt><dd><input type="text" id="db-driver" value="{{=v.driver||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>链接地址</dt><dd><input type="text" id="db-url" value="{{=v.url||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>用户</dt><dd><input type="text" id="db-user" value="{{=v.user||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>密码</dt><dd><input type="text" id="db-pwd" value="{{=v.pwd||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>连接保质期</dt><dd><input type="text" id="db-spanLife" value="{{=(v.spanLife||0)/1000/60/60}}" readonly="readonly"/><i>小时</i></dd></dl>
+	<dl><dt>使用周期</dt><dd><input type="text" id="db-workLife" value="{{=(v.workLife||0)/1000/60}}" readonly="readonly"/><i>分钟</i></dd></dl>
+	<dl><dt>等待周期</dt><dd><input type="text" id="db-waitLife" value="{{=(v.waitLife||0)/1000/60}}" readonly="readonly"/><i>分钟</i></dd></dl>
+	<dl><dt>剩余警戒线</dt><dd><input type="text" id="db-spare" value="{{=v.spare||0}}" readonly="readonly"/><i>个</i></dd></dl>
+	<dl><dt>在用连接数量</dt><dd><input type="text" id="db-workCount" value="{{=v.workCount==-1?0:v.workCount||0}}" readonly="readonly"/><i>个</i></dd></dl>
+	<dl><dt>待命连接数量</dt><dd><input type="text" id="db-waitCount" value="{{=v.waitCount==-1?0:v.waitCount||0}}" readonly="readonly"/><i>个</i></dd></dl>
+	<dl><dt>其他数据源</dt><dd><input type="text" id="db-source" value="{{=v.source||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>其他获取方法</dt><dd><input type="text" id="db-method" value="{{=v.method||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt></dt><dd><a href="sys/erupt.html" target="_blank" style="display:block;"><input type="button" value="并发测试"/></a></dd></dl>
+</div>
+<!--(<foot<)-->
+<script>
+	var db_info_list={{=lang.strify($.db_info_list)}};
+	function show_this_db_info(value){
+		var info=db_info_list[value];
+		$("#db-driver").val(info.driver||"");
+		$("#db-url").val(info.url||"");
+		$("#db-user").val(info.user||"");
+		$("#db-pwd").val(info.pwd||"");
+		$("#db-spanLife").val((info.spanLife||0)/1000/60/60);
+		$("#db-workLife").val((info.workLife||0)/1000/60);
+		$("#db-waitLife").val((info.waitLife||0)/1000/60);
+		$("#db-spare").val(info.spare||0);
+		$("#db-workCount").val(info.workCount==-1?0:info.workCount||0);
+		$("#db-waitCount").val(info.waitCount==-1?0:info.waitCount||0);
+		$("#db-source").val(info.source);
+		$("#db-method").val(info.method);
+	}
+</script>
+<!--(>foot>)-->

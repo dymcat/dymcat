@@ -1,0 +1,34 @@
+<div class="area data-info">
+	{{%var v=$._page_info_;}}
+	<dl><dt>保存时间</dt><dd><input type="text" value="{{=v.saveTime||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>用户</dt><dd><input type="text" value="{{=v.user||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>民族</dt><dd><input class="tinyint" tinyint="user_data$nation" type="text" value="{{=v.nation||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>血型</dt><dd><input class="tinyint" tinyint="user_data$blood" type="text" value="{{=v.blood||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>生肖</dt><dd><input class="tinyint" tinyint="user_data$zodiac" type="text" value="{{=v.zodiac||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>星座</dt><dd><input class="tinyint" tinyint="user_data$constellation" type="text" value="{{=v.constellation||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>性格</dt><dd><input class="tinyint" tinyint="user_data$character" type="text" value="{{=v.character||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>婚况</dt><dd><input class="tinyint" tinyint="user_data$marital" type="text" value="{{=v.marital||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>身高</dt><dd><input type="text" value="{{=v.height||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>体重</dt><dd><input type="text" value="{{=v.weight||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>习惯</dt><dd><input type="text" value="{{=v.habit||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>爱好</dt><dd><input type="text" value="{{=v.hobby||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>宠物</dt><dd><input class="tinyint" tinyint="user_data$pet" type="text" value="{{=v.pet||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>城市</dt><dd><input type="text" value="{{=v.city||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>学校</dt><dd><input type="text" value="{{=v.school||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>学历</dt><dd><input class="tinyint" tinyint="user_data$education" type="text" value="{{=v.education||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>公司</dt><dd><input type="text" value="{{=v.company||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>职业</dt><dd><input type="text" value="{{=v.vocation||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>收入</dt><dd><input type="text" value="{{=v.income||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>房产</dt><dd><input class="tinyint" tinyint="user_data$house" type="text" value="{{=v.house||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>汽车</dt><dd><input class="tinyint" tinyint="user_data$car" type="text" value="{{=v.car||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>地址</dt><dd><input type="text" value="{{=v.address||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>位置</dt><dd><input type="text" value="{{=v.position||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>邮编</dt><dd><input type="text" value="{{=v.postal||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>微博</dt><dd><input type="text" value="{{=v.weibo||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>微信</dt><dd><input type="text" value="{{=v.wechat||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>QQ</dt><dd><input type="text" value="{{=v.qq||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>MSN</dt><dd><input type="text" value="{{=v.msn||''}}" readonly="readonly"/></dd></dl>
+	<center>
+		<input type="button" value="⏎ 返回" onclick="history.back();"/>
+	</center>
+</div>

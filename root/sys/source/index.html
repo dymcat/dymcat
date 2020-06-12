@@ -1,0 +1,526 @@
+<script src="资源库/@/codemirror/codemirror.all.js"></script>
+<div class="area tab-tb">
+	<div class="tab-th th">
+		<a id="head_text" class="tab now">输入板</a>
+		<a id="head_file" class="tab">资源树</a>
+		<a id="head_edit" class="tab" style="display:none;">编辑器</a>
+		<a id="head_view" class="tab" style="display:none;">视图区</a>
+	</div>
+	<div class="tab-td">
+		<div class="tab now">
+			<div id="code_head" style="padding:10px;">
+				<i class="show6">代码类型：</i>
+				<select id="text_type" style="vertical-align:top;" onchange="gototype(this);">
+					<option value="html">HTML</option>
+					<option value="sjs">SJS</option>
+					<option value="sql">SQL</option>
+					<option value="cmd">CMD</option>
+				</select>
+				<select id="text_jdbc" style="display:none;margin:0 15px;vertical-align:top;">
+{{%$.jdbc_keys.forEach(function(name){}}
+	{{?name}}
+					<option value="{{=name}}">{{=name}}</option>
+	{{?}}
+{{%});}}
+				</select>
+				<select id="text_path" onchange="gotopath(this);">
+					<option value="" selected="selected">空白代码页</option>
+				</select>
+				<div style="float:right;min-width:130px;">
+					<a class="more_tool" style="float:right;">
+						<input type="button" value="更多" style="float:right;"/>
+						<div>
+							<input type="button" value="全选" style="margin-right:10px;" onclick="eval('text_editor.execCommand(\'selectAll\')');"/>
+							<input type="button" value="清空" style="margin-right:10px;" onclick="eval('text_editor.setValue(\'\')');"/>
+							<input type="button" value="删除" style="margin-right:10px;" onclick="eval('if(text_editor.getSelection()==\'\'){text_editor.execCommand(\'deleteLine\')}else{text_editor.replaceSelection(\'\')}');"/>
+							<input type="button" value="撤销" style="margin-right:10px;" onclick="eval('text_editor.undo()');"/>
+							<input type="button" value="回退" style="margin-right:10px;" onclick="eval('text_editor.redo()');"/>
+							<input type="button" value="查找" style="margin-right:10px;" onclick="eval('text_editor.execCommand(\'findPersistent\')');"/>
+						</div>
+					</a>
+					<input type="button" value="保存" style="margin-right:10px;" onclick="savecode();"/>
+					<input type="button" value="运行" style="margin-right:10px;" onclick="runcode();"/>
+				</div>
+			</div>
+			<textarea id="text_code"></textarea>
+		</div>
+		<div class="tab" style="padding:15px;">
+			<div id="file_tree"></div>
+		</div>
+		<div class="tab">
+			<div style="padding:10px;">
+				<i class="show6">浏览记录：</i>
+				<select id="file_path" onchange="editshow(this.value);"></select>
+				<div style="float:right;min-width:130px;">
+					<a class="more_tool" style="float:right;">
+						<input type="button" value="更多" style="float:right;"/>
+						<div>
+							<input type="button" value="全选" style="margin-right:10px;" onclick="eval('file_editor.execCommand(\'selectAll\')');"/>
+							<input type="button" value="清空" style="margin-right:10px;" onclick="eval('file_editor.setValue(\'\')');"/>
+							<input type="button" value="删除" style="margin-right:10px;" onclick="eval('if(file_editor.getSelection()==\'\'){file_editor.execCommand(\'deleteLine\')}else{file_editor.replaceSelection(\'\')}');"/>
+							<input type="button" value="撤销" style="margin-right:10px;" onclick="eval('file_editor.undo()');"/>
+							<input type="button" value="回退" style="margin-right:10px;" onclick="eval('file_editor.redo()');"/>
+							<input type="button" value="查找" style="margin-right:10px;" onclick="eval('file_editor.execCommand(\'findPersistent\')');"/>
+						</div>
+					</a>
+					<span id="save_area"></span>
+				</div>
+			</div>
+			<textarea id="file_code"></textarea>
+		</div>
+		<div class="tab">
+			<iframe id="code_view" style="width:100%;"></iframe>
+		</div>
+	</div>
+</div>
+<!--(<head<)-->
+<link href="资源库/@/dtree/dtree.css" rel="stylesheet"/>
+<link href="资源库/@/codemirror/codemirror.all.css" rel="stylesheet"/>
+<style>
+	.more_tool div{display:none;position:absolute;right:0;margin-right:10px;margin-top:30px;padding-top:6px;}
+	.more_tool:hover{height:70px;}
+	.more_tool:hover div{display:block;}
+	@media (max-width:500px){
+		#code_head{height:88px;}
+		#text_path{position:absolute;left:0;margin-left:10px;margin-top:36px;}
+	}
+</style>
+<!--(>head>)-->
+<!--(<foot<)-->
+<script>
+	var changeFrameHeight=function(){
+		var moreHeight=199;
+		if(document.documentElement.clientWidth<800){moreHeight=183;}
+		if(document.documentElement.clientWidth<600){moreHeight=157;}
+		document.getElementById("code_view").height=document.documentElement.clientHeight-moreHeight;
+	};
+	$(window).resize(function(){
+		changeFrameHeight();
+		if(document.documentElement.clientWidth<600){
+			$(".show6").hide();
+		}else{
+			$(".show6").show();
+		}
+	});
+	function preview(html_code,timeout){
+		var code_view=document.getElementById("code_view");
+		var doc=code_view.contentDocument||code_view.contentWindow.document;
+		doc.open();
+		doc.write(html_code);
+		doc.close();
+		doc=null;
+		var head_view=document.getElementById("head_view");
+		head_view.style.display="block";
+		head_view.click();
+		changeFrameHeight();
+	}
+</script>
+<script>
+	if(localStorage){
+		var text_path=document.getElementById("text_path");
+		for(var i=0;i<localStorage.length;i++){
+			if(localStorage.key(i).indexOf("local_history_code:/")==0){
+				var name=localStorage.key(i).replace("local_history_code:/","");
+				text_path.innerHTML="<option value='"+name+"'>"+name+"</option>"+text_path.innerHTML;
+			}
+		}
+	}
+	var text_editor=CodeMirror.fromTextArea(document.getElementById("text_code"),editor_config);
+	function gototype(own){
+		document.getElementById("text_jdbc").style.display=own.value=="sql"?"inline":"none";
+		if(own.value=="html"){text_editor.setOption("mode","text/html");}
+		else if(own.value=="sjs"){text_editor.setOption("mode","text/javascript");}
+		else if(own.value=="sql"){text_editor.setOption("mode","text/x-sql");}
+		else if(own.value=="cmd"){text_editor.setOption("mode","text/x-sh");}
+	}
+	function gotopath(own){
+		if(own.value==""){
+			text_editor.setValue("");
+		}else{
+			var text_type=document.getElementById("text_type");
+			text_type.value=own.value.substring(own.value.lastIndexOf(".")+1);
+			gototype(text_type);
+			text_editor.setValue(localStorage.getItem("local_history_code:/"+own.value));
+		}
+	}
+	function savecode(){
+		var value=text_editor.getValue();
+		if(!value){return false;}
+		if(localStorage){
+			var name=prompt("请输入保存的名称：");
+			if(name){
+				var type=document.getElementById("text_type").value;
+				if(name.indexOf("."+type,name.length-("."+type).length)==-1){name+="."+type;}
+				var text_path=document.getElementById("text_path");
+				text_path.innerHTML="<option value='"+name+"'>"+name+"</option>"+text_path.innerHTML;
+				localStorage.setItem("local_history_code:/"+name,value);
+			}
+		}else{
+			alert("您的浏览器不支持localStorage！");
+		}
+	}
+	function runcode(){
+		execode(text_editor.getValue(),document.getElementById("text_type").value);
+	}
+	function execode(code,type){
+		if(!code){return false;}
+		if(type=="html"){
+			preview(code);
+			return true;
+		}
+		var data={type:type,code:code};
+		if(type=="sql"){data.jdbc=document.getElementById("text_jdbc").value;}
+		$.post("sys/source/run.json",data,function(data){
+			if(data){
+				if(data._print){preview("<!DOCTYPE html><html><body>"+data._print+"</body></html>");}
+				for(var i=0;i<data._alert.length;i++){
+					alert(data._alert[i]);
+				}
+			}
+		});
+	}
+</script>
+<script>{{=$.tree_json}}</script>
+<script>
+	if(sessionStorage){
+		for(var i=sessionStorage.length-1;i>-1;i--){
+			if(sessionStorage.key(i).indexOf("session_")==0){
+				sessionStorage.removeItem(sessionStorage.key(i));
+			}
+		}
+	}
+	var file_code=document.getElementById("file_code");
+	file_code.parentNode.className="tab now";
+	var file_editor=CodeMirror.fromTextArea(file_code,editor_config);
+	file_code.parentNode.className="tab";
+	var file_tree=null;
+	var script=document.createElement("script");
+	script.src="资源库/@/dtree/dtree.js";
+	document.body.appendChild(script);
+	script.onload=function(){
+		file_tree=new dTree("file_tree","资源库/@/dtree/","callback","addback","downback","dropback");
+		file_tree.push(tree_json);
+		document.getElementById("file_tree").innerHTML=file_tree;
+		file_tree.closeAll();
+	};
+	function callback(own,id){
+		var input=own.parentNode.parentNode.getElementsByTagName("input");
+		if(input.length==1){
+			var path=input[0].value;
+			var name=path.substring(path.lastIndexOf("/")+1);
+			own.parentNode.parentNode.innerHTML+=""
+				+"<div>"
+				+"	<input type='text' style='width:calc(100% - 100px);' value='"+name+"'/>"
+				+"	<input type='button' style='float:right;width:49px;' value='取消' onclick='this.parentNode.parentNode.removeChild(this.parentNode);'/>"
+				+"	<input type='button' style='float:right;width:49px;' value='保存' onclick='callpost(this,"+id+");'/>"
+				+"</div>";
+		}else{
+			own.parentNode.parentNode.removeChild(own.parentNode.parentNode.getElementsByTagName("div")[1]);
+		}
+	}
+	function callpost(own,id){
+		var input=own.parentNode.parentNode.getElementsByTagName("input");
+		if(isVoidFileName(input[1].value)){
+			alert("文件名不能包含下列任何字符：\\/:*?\"<>|");
+			input[1].value=input[1].value.replace(/^\s+|\s+$/g,"");
+			return false;
+		}else{
+			var path=input[0].value;
+			var name=path.substring(path.lastIndexOf("/")+1);
+			if(input[1].value.trim()==name){
+				own.parentNode.parentNode.removeChild(own.parentNode);
+			}else{
+				name=input[1].value.trim();
+				$.post("sys/source/call.json",{path:path,name:name},function(data){
+					if(data.flag){
+						var href=path.substring(0,path.lastIndexOf("/")+1)+name;
+						input[0].value=href;
+						var b=own.parentNode.parentNode.getElementsByTagName("b")[0];
+						b.innerHTML=name;
+						b.parentNode.setAttribute("title",name);
+						if(b.parentNode.getAttribute("href").indexOf("infopost")>-1){
+							b.parentNode.setAttribute("href","javascript:infopost('"+href+"');");
+						}
+						own.parentNode.parentNode.removeChild(own.parentNode);
+						var tree_obj=document.getElementById("d"+file_tree.obj+id);
+						if(tree_obj){
+							var tags=tree_obj.getElementsByClassName("dTreeNode");
+							for(var i=0;i<tags.length;i++){
+								var tag=tags[i];
+								var at=tag.getElementsByTagName("a")[0];
+								at.setAttribute("href",at.getAttribute("href").replace(path,href));
+								var it=tag.getElementsByTagName("input")[0];
+								it.value=it.value.replace(path,href);
+							}
+						}
+						if(sessionStorage){
+							var file_path=document.getElementById("file_path");
+							for(var i=0;i<file_path.length;i++){
+								if(file_path.options[i].value==path){
+									file_path.options[i].value=href;
+									file_path.options[i].text=href;
+									break;
+								}
+							}
+							if(sessionStorage.getItem("session_current_file:/"+path)){
+								sessionStorage.setItem("session_current_file:/"+href,sessionStorage.getItem("session_current_file:/"+path));
+								sessionStorage.removeItem("session_current_file:/"+path);
+							}
+							if(sessionStorage.getItem("session_history_file:/"+path)){
+								sessionStorage.setItem("session_history_file:/"+href,sessionStorage.getItem("session_history_file:/"+path));
+								sessionStorage.removeItem("session_history_file:/"+path);
+							}
+						}
+					}else{
+						alert("重命名失败，该文件或文件夹可能已存在！");
+					}
+				});
+			}
+		}
+	}
+	function infopost(path){
+		var type=path.replace(/^.*\./,"").toLowerCase();
+		if(",jpg,png,gif,svg,bmp,jpeg,".indexOf(","+type+",")>-1){
+			preview("<!DOCTYPE html><html><body style='text-align:center;'><img src='"+document.getElementsByTagName("base")[0].href+"sys/source/play.json?path="+path+"'/></body></html>");
+			return true;
+		}
+		if(",mp4,ogg,webm,".indexOf(","+type+",")>-1){
+			preview("<!DOCTYPE html><html><body style='text-align:center;'><video controls='controls' loop='true' src='"+document.getElementsByTagName("base")[0].href+"sys/source/play.json?path="+path+"' onclick='if(this.paused){this.play();}else{this.pause();}'>您的浏览器不支持video标签。</video></body></html>");
+			return true;
+		}
+		if(",mp3,wav,ogg,".indexOf(","+type+",")>-1){
+			preview("<!DOCTYPE html><html><body style='margin:0;padding:10px 10px 5px 10px;'><audio style='width:100%;' controls='controls' src='"+document.getElementsByTagName("base")[0].href+"sys/source/play.json?path="+path+"'>您的浏览器不支持audio标签。</audio></body></html>");
+			return true;
+		}
+		var file_path=document.getElementById("file_path");
+		for(var i=0;i<file_path.length;i++){
+			if(file_path.options[i].value==path){
+				file_path.options.remove(i);
+				break;
+			}
+		}
+		file_path.innerHTML="<option value='"+path+"'>"+path+"</option>"+file_path.innerHTML;
+		if(sessionStorage&&sessionStorage.getItem("session_current_file:/"+path)){
+			editshow(path);
+			return;
+		}
+		var charset=document.getElementsByTagName("meta")[0].getAttribute("charset");
+		$.post("sys/source/info.json",{path:path,charset:charset},function(data){
+			editshow(path,type,data.text);
+		});
+	}
+	function editshow(path,type,data){
+		var file_path=document.getElementById("file_path");
+		if(sessionStorage&&file_path.getAttribute("data")){
+			sessionStorage.setItem("session_current_file:/"+file_path.getAttribute("data"),file_editor.getValue());
+		}
+		file_path.setAttribute("data",file_path.value);
+		var head_edit=document.getElementById("head_edit");
+		head_edit.style.display="block";
+		head_edit.click();
+		var save_area=document.getElementById("save_area");
+		save_area.innerHTML="";
+		file_editor.setValue(typeof(data)=="string"?data:sessionStorage?sessionStorage.getItem("session_current_file:/"+path):"");
+		if(!type){type=path.replace(/^.*\./,"").toLowerCase();}
+		if(type=="html"||type=="htm"){file_editor.setOption("mode","text/html");}
+		else if(type=="css"){file_editor.setOption("mode","text/css");}
+		else if(type=="xml"){file_editor.setOption("mode","application/xml");}
+		else if(type=="js"){file_editor.setOption("mode","text/javascript");}
+		else{file_editor.setOption("mode","text/x-"+type);}
+		if(sessionStorage){
+			if(!sessionStorage.getItem("session_current_file:/"+path)){
+				sessionStorage.setItem("session_current_file:/"+path,file_editor.getValue());
+			}
+			if(!sessionStorage.getItem("session_history_file:/"+path)){
+				sessionStorage.setItem("session_history_file:/"+path,file_editor.getValue());
+			}
+		}
+		if(path.indexOf("test/")==0){
+			if(type=="html"||type=="htm"){save_area.innerHTML+="<input type='button' value='执行' style='float:right;margin-right:10px;' onclick='preview(file_editor.getValue(),100);'/>";}
+			if(type=="js"||type=="sjs"){save_area.innerHTML+="<input type='button' value='执行' style='float:right;margin-right:10px;' onclick='execode(file_editor.getValue(),\"sjs\");'/>";}
+			if(type=="sql"||type=="db"){save_area.innerHTML+="<input type='button' value='执行' style='float:right;margin-right:10px;' onclick='execode(file_editor.getValue(),\"sql\");'/>";}
+			if(type=="cmd"||type=="bat"){save_area.innerHTML+="<input type='button' value='执行' style='float:right;margin-right:10px;' onclick='execode(file_editor.getValue(),\"cmd\");'/>";}
+		}
+		var display=sessionStorage&&file_editor.getValue()==sessionStorage.getItem("session_history_file:/"+path)?"none":"inline";
+		save_area.innerHTML+="<input id='file_save' type='button' value='保存' style='float:right;margin-right:10px;display:"+display+";' onclick='editpost(this);'/>";
+		save_area.innerHTML+="<input id='file_reset' type='button' value='重置' style='float:right;margin-right:10px;display:"+display+";' onclick='editreset(this);'/>";
+	}
+	file_editor.on("change",function(n){
+		if(document.getElementById("file_save")&&document.getElementById("file_reset")){
+			var display=sessionStorage&&file_editor.getValue()==sessionStorage.getItem("session_history_file:/"+document.getElementById("file_path").value)?"none":"inline";
+			document.getElementById("file_save").style.display=display;
+			document.getElementById("file_reset").style.display=display;
+		}
+	});
+	function editreset(own){
+		if(sessionStorage){
+			file_editor.setValue(sessionStorage.getItem("session_history_file:/"+document.getElementById("file_path").value));
+		}
+	}
+	function editpost(own){
+		var path=document.getElementById("file_path").value;
+		var code=file_editor.getValue();
+		$.post("sys/source/edit.json",{path:path,code:code},function(data){
+			if(data.flag){
+				document.getElementById("file_save").style.display="none";
+				document.getElementById("file_reset").style.display="none";
+				if(sessionStorage){
+					sessionStorage.setItem("session_history_file:/"+path,code);
+				}
+			}
+		});
+	}
+	function addback(own,id){
+		if(own.parentNode.parentNode.getElementsByTagName("input").length==1){
+			own.parentNode.parentNode.innerHTML+=""
+				+"<div>"
+				+"	<select style='float:left;width:100px;' onchange=\"var input=this.parentNode.getElementsByTagName('input');if(this.value=='upload'||this.value=='cover'){input[0].style.display='none';input[input.length-1].style.display='none';input[4].form.style.display='inline';input[4].value=this.value=='cover';}else{input[0].style.display='inline';input[input.length-1].style.display='inline';input[4].form.style.display='none';}\">"
+				+"		<option value='folder'>文件夹</option>"
+				+"		<option value=''>空文件</option>"
+				+"		<option value='.html'>HTML</option>"
+				+"		<option value='.xml'>XML</option>"
+				+"		<option value='.js'>SJS</option>"
+				+"		<option value='.cmd'>CMD</option>"
+				+"		<option value='.sql'>SQL</option>"
+				+"		<option value='upload'>上传文件</option>"
+				+"		<option value='cover'>覆盖上传</option>"
+				+"	</select>"
+				+"	<input type='text' style='float:left;width:calc(100% - 200px);' value='' onchange=\"if(this.type=='text')return;this.name='files';this.form.enctype='multipart/form-data';\"/>"
+				+"	<form style='float:left;width:calc(100% - 150px);display:none;' action='sys/source/upload.html' method='POST' enctype='multipart/form-data' target='hidden-form-iframe' style='display:none;'>"
+				+"		<input type='hidden' name='_upload_size_file' value='1G'/>"
+				+"		<input type='hidden' name='_upload_type_file' value='*'/>"
+				//+"		<input type='hidden' name='_upload_door_file' value=''/>"
+				+"		<input type='hidden' name='_upload_path_file' value='/"+own.parentNode.parentNode.getElementsByTagName("input")[0].value+"'/>"
+				//+"		<input type='hidden' name='_upload_name_file' value=''/>"
+				+"		<input type='hidden' name='_upload_cover_file' value='false'/>"
+				+"		<input type='hidden' name='pId' value='"+id+"'/>"
+				+"		<input type='hidden' name='back' value='uploadback'/>"
+				+"		<input type='file' style='width:100%;padding:1px calc(50% - 33px);color:transparent;' name='file' multiple='multiple' onchange='this.form.submit();this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);'/>"
+				+"	</form>"
+				+"	<input type='button' style='float:right;width:49px;' value='取消' onclick='this.parentNode.parentNode.removeChild(this.parentNode);'/>"
+				+"	<input type='button' style='float:right;width:49px;' value='确定' onclick='addpost(this,"+id+");'/>"
+				+"</div>";
+		}else{
+			own.parentNode.parentNode.removeChild(own.parentNode.parentNode.getElementsByTagName("div")[1]);
+		}
+	}
+	function addpost(own,id){
+		var input=own.parentNode.parentNode.getElementsByTagName("input");
+		var type=own.parentNode.parentNode.getElementsByTagName("select")[0].value;
+		if(isVoidFileName(input[1].value)){
+			alert("文件名不能包含下列任何字符：\\/:*?\"<>|");
+			input[1].value=input[1].value.replace(/^\s+|\s+$/g,"");
+			return false;
+		}else{
+			var name=input[1].value.trim();
+			if(type.indexOf(".")==0&&name.toLowerCase().indexOf(type,name.length-type.length)==-1){name+=type;}
+			var path=input[0].value+"/"+name;
+			$.post("sys/source/add.json",{path:path,type:type},function(data){
+				if(data.flag){
+					var oid=file_tree.aNodes[file_tree.aNodes.length-1].id+1;
+					var node=file_tree.push({
+						pId:id
+						,id:oid
+						,path:path
+						,url:type=="folder"?"javascript:file_tree.o("+oid+");":"javascript:infopost('"+path+"');"
+						,open:type=="folder"
+					});
+					own.parentNode.parentNode.removeChild(own.parentNode);
+					var tree_obj=document.getElementById("d"+file_tree.obj+id);
+					tree_obj.innerHTML=file_tree.node(node,oid,tree_obj.innerHTML.length==0)+tree_obj.innerHTML;
+				}else{
+					alert("添加失败，该文件或文件夹可能已存在！");
+				}
+			});
+		}
+	}
+	function uploadback(json){
+		if(json.flag){
+			if(Array.isArray(json.path)){
+				for(var i=0;i<json.path.length;i++){
+					var oid=file_tree.aNodes[file_tree.aNodes.length-1].id+1;
+					var node=file_tree.push({
+						pId:json.pId
+						,id:oid
+						,path:json.path[i]
+						,url:"javascript:infopost('"+json.path[i]+"');"
+					});
+					var file_tree_obj=document.getElementById("d"+file_tree.obj+json.pId);
+					tree_obj.innerHTML=file_tree.node(node,oid,tree_obj.innerHTML.length==0)+tree_obj.innerHTML;
+				}
+			}else{
+				var oid=file_tree.aNodes[file_tree.aNodes.length-1].id+1;
+				var node=file_tree.push({
+					pId:json.pId
+					,id:oid
+					,path:json.path
+					,url:"javascript:infopost('"+json.path+"');"
+				});
+				var tree_obj=document.getElementById("d"+file_tree.obj+json.pId);
+				tree_obj.innerHTML=file_tree.node(node,oid,tree_obj.innerHTML.length==0)+tree_obj.innerHTML;
+			}
+		}else{
+			if(!Array.isArray(json.error)){json.error=[json.error];}
+			var error="";
+			for(var i=0;i<json.error.length;i++){
+				if(i>0){error+="\n";}
+				if(json.error[i].status==1){
+					error+="上传文件："+json.error[i].file+"，遇到服务器异常。";
+				}else if(json.error[i].status==2){
+					error+="上传文件："+json.error[i].file+"，遇到超出的文件大小。";
+				}else if(json.error[i].status==3){
+					error+="上传文件："+json.error[i].file+"，遇到不支持的文件类型。";
+				}else if(json.error[i].status==4){
+					error+="上传文件："+json.error[i].file+"，遇到未授权的操作用户。";
+				}
+			}
+			alert(error);
+		}
+	}
+	function downback(own,id){
+		location.href="sys/source/down.json?path="+own.parentNode.parentNode.getElementsByTagName("input")[0].value;
+	}
+	function dropback(own,id){
+		var node=document.getElementById("d"+file_tree.obj+id);
+		if(confirm("确定要删除这个"+(node?"文件夹":"文件")+"吗？")){
+			var path=own.parentNode.parentNode.getElementsByTagName("input")[0].value;
+			$.post("sys/source/drop.json",{path:path},function(data){
+				if(data.flag){
+					if(node){node.parentNode.removeChild(node);}
+					own.parentNode.parentNode.parentNode.removeChild(own.parentNode.parentNode);
+					var file_path=document.getElementById("file_path");
+					var value=file_path.value;
+					if(localStorage){
+						for(var i=0;i<file_path.length;i++){
+							if(file_path.options[i].value==path){
+								file_path.options.remove(i);
+								break;
+							}
+						}
+					}
+					if(value==path){
+						if(file_path.length==0){
+							file_editor.setValue("");
+							document.getElementById("head_edit").style.display="none";
+						}else{
+							editshow(file_path.value);
+						}
+					}
+					if(sessionStorage){
+						if(sessionStorage.getItem("session_current_file:/"+path)){
+							sessionStorage.removeItem("session_current_file:/"+path);
+						}
+						if(sessionStorage.getItem("session_history_file:/"+path)){
+							sessionStorage.removeItem("session_history_file:/"+path);
+						}
+					}
+					document.getElementById("head_file").click();
+				}
+			});
+		}
+	}
+	function isVoidFileName(name){
+		return name.indexOf("\\")+name.indexOf("/")+name.indexOf(":")+name.indexOf("*")+name.indexOf("?")+name.indexOf('"')+name.indexOf("<")+name.indexOf(">")+name.indexOf("|")>-9;
+	}
+</script>
+<!--(>foot>)-->

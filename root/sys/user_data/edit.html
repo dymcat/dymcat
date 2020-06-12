@@ -1,0 +1,39 @@
+<div class="area data-info">
+	<form class="edit-form" action="{{=$.uripath||''}}/edit.submit" method="POST">
+		{{%var v=$._page_info_;}}
+		<!--
+		<dl><dt>保存时间</dt><dd><input type="datetime-local" name="saveTime" value="{{=v.saveTime||''}}" required="required"/></dd><em id="_error_saveTime_"></em></dl>
+		-->
+		<dl><dt>用户</dt><dd><input type="text" name="user" value="{{=v.user||''}}" required="required" maxlength="36"/></dd><em id="_error_user_"></em></dl>
+		<dl><dt>民族</dt><dd><select class="tinyint" tinyint="user_data$nation" name="nation" data="{{=v.nation||''}}"></select></dd><em id="_error_nation_"></em></dl>
+		<dl><dt>血型</dt><dd><select class="tinyint" tinyint="user_data$blood" name="blood" data="{{=v.blood||''}}"></select></dd><em id="_error_blood_"></em></dl>
+		<dl><dt>生肖</dt><dd><select class="tinyint" tinyint="user_data$zodiac" name="zodiac" data="{{=v.zodiac||''}}"></select></dd><em id="_error_zodiac_"></em></dl>
+		<dl><dt>星座</dt><dd><select class="tinyint" tinyint="user_data$constellation" name="constellation" data="{{=v.constellation||''}}"></select></dd><em id="_error_constellation_"></em></dl>
+		<dl><dt>性格</dt><dd><select class="tinyint" tinyint="user_data$character" name="character" data="{{=v.character||''}}"></select></dd><em id="_error_character_"></em></dl>
+		<dl><dt>婚况</dt><dd><select class="tinyint" tinyint="user_data$marital" name="marital" data="{{=v.marital||''}}"></select></dd><em id="_error_marital_"></em></dl>
+		<dl><dt>身高</dt><dd><input type="number" name="height" value="{{=v.height||''}}" min="0" pattern="[0-9]+"/><i>厘米</i></dd><em id="_error_height_"></em></dl>
+		<dl><dt>体重</dt><dd><input type="number" name="weight" value="{{=v.weight||''}}" min="0" pattern="[0-9]+"/><i>千克</i></dd><em id="_error_weight_"></em></dl>
+		<dl><dt>习惯</dt><dd><input type="text" name="habit" value="{{=v.habit||''}}" maxlength="255"/></dd><em id="_error_habit_"></em></dl>
+		<dl><dt>爱好</dt><dd><input type="text" name="hobby" value="{{=v.hobby||''}}" maxlength="255"/></dd><em id="_error_hobby_"></em></dl>
+		<dl><dt>宠物</dt><dd><select class="tinyint" tinyint="user_data$pet" name="pet" data="{{=v.pet||''}}"></select></dd><em id="_error_pet_"></em></dl>
+		<dl><dt>城市</dt><dd><input type="text" name="city" value="{{=v.city||''}}" maxlength="32"/></dd><em id="_error_city_"></em></dl>
+		<dl><dt>学校</dt><dd><input type="text" name="school" value="{{=v.school||''}}" maxlength="32"/></dd><em id="_error_school_"></em></dl>
+		<dl><dt>学历</dt><dd><select class="tinyint" tinyint="user_data$education" name="education" data="{{=v.education||''}}"></select></dd><em id="_error_education_"></em></dl>
+		<dl><dt>公司</dt><dd><input type="text" name="company" value="{{=v.company||''}}" maxlength="32"/></dd><em id="_error_company_"></em></dl>
+		<dl><dt>职业</dt><dd><input type="text" name="vocation" value="{{=v.vocation||''}}" maxlength="32"/></dd><em id="_error_vocation_"></em></dl>
+		<dl><dt>收入</dt><dd><input type="number" name="income" value="{{=v.income||''}}" min="0" pattern="[0-9]+"/></dd><em id="_error_income_"></em></dl>
+		<dl><dt>房产</dt><dd><select class="tinyint" tinyint="user_data$house" name="house" data="{{=v.house||''}}"></select></dd><em id="_error_house_"></em></dl>
+		<dl><dt>汽车</dt><dd><select class="tinyint" tinyint="user_data$car" name="car" data="{{=v.car||''}}"></select></dd><em id="_error_car_"></em></dl>
+		<dl><dt>地址</dt><dd><input type="text" name="address" value="{{=v.address||''}}" maxlength="255"/></dd><em id="_error_address_"></em></dl>
+		<dl><dt>位置</dt><dd><input type="text" name="position" value="{{=v.position||''}}" maxlength="255"/></dd><em id="_error_position_"></em></dl>
+		<dl><dt>邮编</dt><dd><input type="text" name="postal" value="{{=v.postal||''}}" maxlength="32"/></dd><em id="_error_postal_"></em></dl>
+		<dl><dt>微博</dt><dd><input type="text" name="weibo" value="{{=v.weibo||''}}" maxlength="32"/></dd><em id="_error_weibo_"></em></dl>
+		<dl><dt>微信</dt><dd><input type="text" name="wechat" value="{{=v.wechat||''}}" maxlength="32"/></dd><em id="_error_wechat_"></em></dl>
+		<dl><dt>QQ</dt><dd><input type="text" name="qq" value="{{=v.qq||''}}" maxlength="32"/></dd><em id="_error_qq_"></em></dl>
+		<dl><dt>MSN</dt><dd><input type="text" name="msn" value="{{=v.msn||''}}" maxlength="32"/></dd><em id="_error_msn_"></em></dl>
+		<center>
+			<input type="submit" value="✔ 保存"/>
+			<input type="button" value="⏎ 返回" onclick="history.back();"/>
+		</center>
+	</form>
+</div>

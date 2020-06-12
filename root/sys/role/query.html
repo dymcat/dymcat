@@ -1,0 +1,9 @@
+<dl><dt>ID</dt><dd><input type="text" name="id" maxlength="36"/></dd></dl>
+<dl><dt>名称</dt><dd><input type="text" name="name" maxlength="32"/></dd></dl>
+<dl><dt>状态</dt><dd><select class="tinyint" tinyint="role$status" name="status" data="{{=$.status||''}}"></select></dd></dl>
+<dl><dt>修改者</dt><dd><input type="text" name="modifyUser" maxlength="36"/></dd></dl>
+<dl><dt>从修改时间</dt><dd><input type="datetime-local" name="_query_min_modifyTime"/></dd></dl>
+<dl><dt>到修改时间</dt><dd><input type="datetime-local" name="_query_max_modifyTime"/></dd></dl>
+<dl><dt>创建者</dt><dd><input type="text" name="createUser" maxlength="36"/></dd></dl>
+<dl><dt>从创建时间</dt><dd><input type="datetime-local" name="_query_min_createTime"/></dd></dl>
+<dl><dt>到创建时间</dt><dd><input type="datetime-local" name="_query_max_createTime"/></dd></dl>

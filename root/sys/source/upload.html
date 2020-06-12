@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="{{=$.urlbase||'/'}}"/>
+<meta charset="UTF-8"/>
+</head>
+<script>
+{{?$.pars._upload_error_file}}
+	parent.{{=$.pars.back}}({flag:false,error:{{=stringify($.pars._upload_error_file)}}});
+{{??}}
+	parent.{{=$.pars.back}}({flag:true,pId:"{{=$.pars.pId}}",path:{{=stringify($.pars.file)}}});
+{{?}}
+</script>
+</html>

@@ -1,0 +1,82 @@
+<form method="POST"><table class="data-list tb"><tbody>
+	<tr>
+		<th style="white-space:nowrap;text-align:right;min-width:80px;"><label style="display:block;">
+			<input type="checkbox" style="float:left;"/>
+			<div style="padding-top:5px;">序号</div>
+		</label></th>
+		<th class="order" by="tb.saveTime" sort="desc">保存时间</th>
+		<th class="order" by="tb.user" sort="asc">用户</th>
+		<th class="order" by="tb.nation" sort="asc">民族</th>
+		<th class="order" by="tb.blood" sort="asc">血型</th>
+		<th class="order" by="tb.zodiac" sort="asc">生肖</th>
+		<th class="order" by="tb.constellation" sort="asc">星座</th>
+		<th class="order" by="tb.character" sort="asc">性格</th>
+		<th class="order" by="tb.marital" sort="asc">婚况</th>
+		<th class="order" by="tb.height" sort="asc">身高</th>
+		<th class="order" by="tb.weight" sort="asc">体重</th>
+		<th class="order" by="tb.habit" sort="asc">习惯</th>
+		<th class="order" by="tb.hobby" sort="asc">爱好</th>
+		<th class="order" by="tb.pet" sort="asc">宠物</th>
+		<th class="order" by="tb.city" sort="asc">城市</th>
+		<th class="order" by="tb.school" sort="asc">学校</th>
+		<th class="order" by="tb.education" sort="asc">学历</th>
+		<th class="order" by="tb.company" sort="asc">公司</th>
+		<th class="order" by="tb.vocation" sort="asc">职业</th>
+		<th class="order" by="tb.income" sort="asc">收入</th>
+		<th class="order" by="tb.house" sort="asc">房产</th>
+		<th class="order" by="tb.car" sort="asc">汽车</th>
+		<th class="order" by="tb.address" sort="asc">地址</th>
+		<th class="order" by="tb.position" sort="asc">位置</th>
+		<th class="order" by="tb.postal" sort="asc">邮编</th>
+		<th class="order" by="tb.weibo" sort="asc">微博</th>
+		<th class="order" by="tb.wechat" sort="asc">微信</th>
+		<th class="order" by="tb.qq" sort="asc">QQ</th>
+		<th class="order" by="tb.msn" sort="asc">MSN</th>
+		<th align="right" style="white-space:nowrap;">
+			<a class="btn" title="查询" onclick="var $t=$('#{{=$.queryId||''}}');if($t.is(':visible')){$t.slideUp();}else{$t.slideDown();}">✈</a>
+			<a class="btn" title="添加" onclick="location.href='{{=$.uripath||''}}/add.html';">✚</a>
+			<a class="btn" title="移除" idName="user" uri="{{=$.uripath||''}}/drop.submit">━</a>
+		</th>
+	</tr>
+	{{~$._page_list_:v:i}}
+	<tr>
+		<td align="right"><label style="display:block;">
+			<input type="checkbox" style="float:left;" name="user" value="{{=v.user||''}}"/>
+			<div style="padding-top:5px;">{{=i+1}}</div>
+		</label></td>
+		<td>{{=v.saveTime||''}}</td>
+		<td>{{=v.user||''}}</td>
+		<td class="tinyint" tinyint="user_data$nation">{{=v.nation||''}}</td>
+		<td class="tinyint" tinyint="user_data$blood">{{=v.blood||''}}</td>
+		<td class="tinyint" tinyint="user_data$zodiac">{{=v.zodiac||''}}</td>
+		<td class="tinyint" tinyint="user_data$constellation">{{=v.constellation||''}}</td>
+		<td class="tinyint" tinyint="user_data$character">{{=v.character||''}}</td>
+		<td class="tinyint" tinyint="user_data$marital">{{=v.marital||''}}</td>
+		<td>{{=v.height||''}}</td>
+		<td>{{=v.weight||''}}</td>
+		<td>{{=v.habit||''}}</td>
+		<td>{{=v.hobby||''}}</td>
+		<td class="tinyint" tinyint="user_data$pet">{{=v.pet||''}}</td>
+		<td>{{=v.city||''}}</td>
+		<td>{{=v.school||''}}</td>
+		<td class="tinyint" tinyint="user_data$education">{{=v.education||''}}</td>
+		<td>{{=v.company||''}}</td>
+		<td>{{=v.vocation||''}}</td>
+		<td>{{=v.income||''}}</td>
+		<td class="tinyint" tinyint="user_data$house">{{=v.house||''}}</td>
+		<td class="tinyint" tinyint="user_data$car">{{=v.car||''}}</td>
+		<td>{{=v.address||''}}</td>
+		<td>{{=v.position||''}}</td>
+		<td>{{=v.postal||''}}</td>
+		<td>{{=v.weibo||''}}</td>
+		<td>{{=v.wechat||''}}</td>
+		<td>{{=v.qq||''}}</td>
+		<td>{{=v.msn||''}}</td>
+		<td align="right" style="white-space:nowrap;">
+			<a class="btn" title="详情" onclick="location.href='{{=$.uripath||''}}/info/{{=v.user||''}}.html';">☷</a>
+			<a class="btn" title="编辑" onclick="location.href='{{=$.uripath||''}}/edit/{{=v.user||''}}.html';">✎</a>
+			<a class="btn" title="删除" onclick="if(confirmDropItem()){location.href='{{=$.uripath||''}}/drop/{{=v.user||''}}.submit';}">✖</a>
+		</td>
+	</tr>
+	{{~}}
+</tbody></table></form>

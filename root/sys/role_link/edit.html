@@ -1,0 +1,17 @@
+<div class="area data-info">
+	<form class="edit-form" action="{{=$.uripath||''}}/edit.submit" method="POST">
+		{{%var v=$._page_info_;}}
+		<dl><dt>角色</dt><dd><input type="text" name="role" value="{{=v.role||''}}" required="required" maxlength="36"/></dd><em id="_error_role_"></em></dl>
+		<dl><dt>链接</dt><dd><input type="text" name="link" value="{{=v.link||''}}" required="required" maxlength="36"/></dd><em id="_error_link_"></em></dl>
+		<!--
+		<dl><dt>创建者</dt><dd><input type="text" name="createUser" value="{{=v.createUser||''}}" required="required" maxlength="36"/></dd><em id="_error_createUser_"></em></dl>
+		-->
+		<!--
+		<dl><dt>创建时间</dt><dd><input type="datetime-local" name="createTime" value="{{=v.createTime||''}}" required="required"/></dd><em id="_error_createTime_"></em></dl>
+		-->
+		<center>
+			<input type="submit" value="✔ 保存"/>
+			<input type="button" value="⏎ 返回" onclick="history.back();"/>
+		</center>
+	</form>
+</div>

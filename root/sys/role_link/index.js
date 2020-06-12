@@ -1,0 +1,9 @@
+into($.srcroot+"/#/web.js");
+if($.end=="html"){
+	web.arg2par("role");
+	into($.srcbase+"/&.js");
+	setListHtmlContent(null,{
+		title:"角色链接列表"
+		,hide_search:true
+	},web.exeSQL("link"));
+}
