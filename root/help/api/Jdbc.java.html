@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.lang;
+public class Jdbc{
+	public Jdbc(){}
+	public Jdbc(List<Map<String,Object>> list) throws SQLException{}
+	public Pool add(String name,String jar,String driver,String url,String user,String pwd,int spare,int workLife,int waitLife,boolean isDefault){}
+	public Pool add(String name,Object source,String method,boolean isDefault){}
+	public Set<String> keys(){}
+	public boolean has(String name){}
+	public Pool get(String name){}
+	public Pool get(){}
+	public static Connection create(final Pool pool) throws SQLException{}
+	public class Pool{
+		public String getJar(){}
+		public String getDriver(){}
+		public String getUrl(){}
+		public String getUser(){}
+		public String getPwd(){}
+		public int getSpare(){}
+		public int getWorkLife(){}
+		public int getWaitLife(){}
+		public Object getSource(){}
+		public String getMethod(){}
+		public Long getSpanLife(){}
+		public int getWaitCount(){}
+		public int getWorkCount(){}
+		public Connection toWork(boolean autoCommit) throws SQLException{}
+		public Connection toWork() throws SQLException{}
+		public void toWait(final Connection conn,final Boolean isCommit) throws SQLException{}
+		public void toWait(Connection conn) throws SQLException{}
+		public void toWait(Statement stat,Boolean isCommit) throws SQLException{}
+		public void toWait(Statement stat) throws SQLException{}
+	}
+	public Connection toWork(String name,boolean autoCommit) throws SQLException{}
+	public Connection toWork(String name) throws SQLException{}
+	public Connection toWork(boolean autoCommit) throws SQLException{}
+	public Connection toWork() throws SQLException{}
+	public void toWait(String name,Connection conn,Boolean isCommit) throws SQLException{}
+	public void toWait(String name,Connection conn) throws SQLException{}
+	public void toWait(Connection conn,Boolean isCommit) throws SQLException{}
+	public void toWait(Connection conn) throws SQLException{}
+	public void toWait(String name,Statement stat,Boolean isCommit) throws SQLException{}
+	public void toWait(String name,Statement stat) throws SQLException{}
+	public void toWait(Statement stat,Boolean isCommit) throws SQLException{}
+	public void toWait(Statement stat) throws SQLException{}
+	public static boolean isClosed(Connection conn) throws SQLException{}
+	public static boolean isClosed(Statement stat) throws SQLException{}
+	public static Object mirror(Object object){}
+	public static Boolean update(Statement stat,String sql) throws SQLException{}
+	public static Boolean update(Connection conn,String sql) throws SQLException{}
+	public Boolean update(String name,String sql) throws SQLException{}
+	public Boolean update(String sql) throws SQLException{}
+	public static Integer count(Statement stat,String sql) throws SQLException{}
+	public static Integer count(Connection conn,String sql) throws SQLException{}
+	public Integer count(String name,String sql) throws SQLException{}
+	public Integer count(String sql) throws SQLException{}
+	public static int[] batch(Statement stat,String sql) throws SQLException{}
+	public static int[] batch(Connection conn,String sql) throws SQLException{}
+	public int[] batch(String name,String sql) throws SQLException{}
+	public int[] batch(String sql) throws SQLException{}
+	public static Object data(Statement stat,String sql) throws SQLException{}
+	public static Object data(Connection conn,String sql) throws SQLException{}
+	public Object data(String name,String sql) throws SQLException{}
+	public Object data(String sql) throws SQLException{}
+	public static Object data(Statement stat,String sql,Integer index) throws SQLException{}
+	public static Object data(Connection conn,String sql,Integer index) throws SQLException{}
+	public Object data(String name,String sql,Integer index) throws SQLException{}
+	public Object data(String sql,Integer index) throws SQLException{}
+	public static Map<String,Object> find(Statement stat,String sql,boolean sort,String...key) throws SQLException{}
+	public static Map<String,Object> find(Connection conn,String sql,boolean sort,String...key) throws SQLException{}
+	public Map<String,Object> find(String name,String sql,boolean sort,String...key) throws SQLException{}
+	public Map<String,Object> find(String sql,boolean sort,String...key) throws SQLException{}
+	public static List<Map<String,Object>> list(Statement stat,String sql,boolean sort,String...key) throws SQLException{}
+	public static List<Map<String,Object>> list(Connection conn,String sql,boolean sort,String...key) throws SQLException{}
+	public List<Map<String,Object>> list(String name,String sql,boolean sort,String...key) throws SQLException{}
+	public List<Map<String,Object>> list(String sql,boolean sort,String...key) throws SQLException{}
+	public static List<Map<String,Object>> list(Statement stat,String sql,Integer size,Integer index,boolean sort,String...key) throws SQLException{}
+	public static List<Map<String,Object>> list(Connection conn,String sql,Integer size,Integer index,boolean sort,String...key) throws SQLException{}
+	public List<Map<String,Object>> list(String name,String sql,Integer size,Integer index,boolean sort,String...key) throws SQLException{}
+	public List<Map<String,Object>> list(String sql,Integer size,Integer index,boolean sort,String...key) throws SQLException{}
+	public static Map<String,Object> page(Statement stat,String sql,int size,int index,boolean sort,String...key) throws SQLException{}
+	public static Map<String,Object> page(Connection conn,String sql,int size,int index,boolean sort,String...key) throws SQLException{}
+	public Map<String,Object> page(String name,String sql,int size,int index,boolean sort,String...key) throws SQLException{}
+	public Map<String,Object> page(String sql,int size,int index,boolean sort,String...key) throws SQLException{}
+	public static Map<String,Object> call(Connection conn,String sql,boolean sort,String...key) throws SQLException{}
+	public Map<String,Object> call(String name,String sql,boolean sort,String...key) throws SQLException{}
+	public Map<String,Object> call(String sql,boolean sort,String...key) throws SQLException{}
+	public static PreparedStatement prepared(Connection conn,String sql,Object...data) throws SQLException{}
+	public static PreparedStatement prepared(Connection conn,String sql,String[] keys,Map<String,Object> data) throws SQLException{}
+	public final void put(String table,Map<String,String> config){}
+	public final void create(Connection conn,String table) throws SQLException{}
+	public final boolean insert(Connection conn,String table,Map<String,Object> field) throws SQLException{}
+	public final int update(Connection conn,String table,Map<String,Object> field,Map<String,Object> where) throws SQLException{}
+	public final boolean update(Connection conn,String table,Map<String,Object> field,final String name,final Object data) throws SQLException{}
+	public final int delete(Connection conn,String table,Map<String,Object> where) throws SQLException{}
+	public final boolean delete(Connection conn,String table,final String name,final Object data) throws SQLException{}
+	public final Map<String,Object> page(Connection conn,String table,Map<String,Object> where) throws SQLException{}
+	public final List<Map<String,Object>> list(Connection conn,String table,Map<String,Object> where) throws SQLException{}
+	public final Map<String,Object> find(Connection conn,String table,Map<String,Object> where) throws SQLException{}
+	public final Map<String,Object> find(Connection conn,String table,final String name,final Object data) throws SQLException{}
+	public static String sql(String sql,final String key,final String val){}
+	public static String sql(String sql,Map<String,String> map){}
+	public static final String split="\b\f\b,\f\b\f";
+}
+</code></pre>
+</body>
+</html>

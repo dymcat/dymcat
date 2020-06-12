@@ -1,0 +1,251 @@
+<div class="tab-tb login-tab">
+	<div class="tab-th th">
+		<a class="tab{{?$.uridoor!="logon.html"&&$.uridoor!="reset.html"}} now{{?}}">登录</a>
+		<a class="tab{{?$.uridoor=="logon.html"}} now{{?}}">注册</a>
+		<a class="tab{{?$.uridoor=="reset.html"}} now{{?}}">重置密码</a>
+	</div>
+	<div class="tab-td">
+		<form class="tab{{?$.uridoor!="logon.html"&&$.uridoor!="reset.html"}} now{{?}}" id="login_form" action="login.submit" method="POST" target="hidden-form-iframe">
+			<div class="tr">
+				<i class="sfont-account"></i>
+				<input type="text" name="account" placeholder="用户名或邮箱或手机号"/>
+				<em id="_error_login_account_"></em>
+			</div>
+			<div class="tr">
+				<i class="sfont-password"></i>
+				<input type="hidden" name="password"/>
+				<input type="password" placeholder="请输入密码" onchange="this.parentNode.getElementsByTagName('input')[0].value=this.value;"/>
+				<em id="_error_login_password_"></em>
+			</div>
+			<div class="tr" style="margin:10px;border-width:0;">
+				<label style="float:left;"><input type="checkbox" value="true"/>记住账号</label>
+				<label style="float:right;">自动登录<input type="checkbox" value="true"/></label>
+			</div>
+			<input class="tr" type="submit" value="登录"/>
+			<input class="tr" type="button" value="返回" onclick="history.back();"/>
+		</form>
+		<form class="tab{{?$.uridoor=="logon.html"}} now{{?}}" id="logon_form" action="logon.submit" method="POST" target="hidden-form-iframe">
+			<div class="tr">
+				<i class="sfont-account"></i>
+				<input type="text" name="account" placeholder="用户名或邮箱或手机号"/>
+				<em id="_error_logon_account_"></em>
+				<input type="hidden" name="type" value=""/>
+				<a class="tr">发送验证码</a>
+			</div>
+			<div class="tr" style="display:none;">
+				<i class="sfont-security-code"></i>
+				<input type="text" name="checkCode" placeholder="请填写验证码"/>
+				<em id="_error_logon_checkCode_"></em>
+			</div>
+			<div class="tr">
+				<i class="sfont-password"></i>
+				<input type="password" name="password" placeholder="请输入密码"/>
+				<em id="_error_logon_password_"></em>
+			</div>
+			<div class="tr">
+				<i class="sfont-confirm-password"></i>
+				<input type="password" name="confirmPassword" placeholder="请输入确认密码"/>
+				<em id="_error_logon_confirmPassword_"></em>
+			</div>
+			<input class="tr" type="submit" value="注册"/>
+			<input class="tr" type="button" value="返回" onclick="history.back();"/>
+		</form>
+		<form class="tab{{?$.uridoor=="reset.html"}} now{{?}}" id="reset_form" action="reset.submit" method="POST" target="hidden-form-iframe">
+			<div class="tr">
+				<i class="sfont-account"></i>
+				<input type="text" name="account" placeholder="邮箱或手机号"/>
+				<em id="_error_reset_account_"></em>
+				<input type="hidden" name="type" value=""/>
+				<a class="tr">发送验证码</a>
+			</div>
+			<div class="tr">
+				<i class="sfont-security-code"></i>
+				<input type="text" name="checkCode" placeholder="请填写验证码"/>
+				<em id="_error_reset_checkCode_"></em>
+			</div>
+			<div class="tr">
+				<i class="sfont-password"></i>
+				<input type="password" name="password" placeholder="请输入新密码"/>
+				<em id="_error_reset_password_"></em>
+			</div>
+			<div class="tr">
+				<i class="sfont-confirm-password"></i>
+				<input type="password" name="confirmPassword" placeholder="请输入确认密码"/>
+				<em id="_error_reset_confirmPassword_"></em>
+			</div>
+			<input class="tr" type="submit" value="重置密码"/>
+			<input class="tr" type="button" value="返回" onclick="history.back();"/>
+		</form>
+	</div>
+</div>
+<!--(<head<)-->
+<style>
+	.login-tab .tab-th .tab{width:33.3333333333%;padding:15px 0;}
+	.login-tab .tab-td .tab div{position:relative;margin:15px;border-width:1px;overflow:hidden;}
+	.login-tab .tab-td .tab div i{position:absolute;top:8px;left:8px;}
+	.login-tab .tab-td .tab div input[type="text"],.login-tab .tab-td .tab div input[type="password"]{width:100%;height:40px;padding:5px 5px 5px 30px;border-width:0;}
+	.login-tab .tab-td .tab div em{color:red;}
+	.login-tab .tab-td .tab div a{display:none;position:absolute;top:0;right:0;height:40px;line-height:40px;padding:0 20px;background-color:orange;}
+	.login-tab .tab-td .tab input[type="submit"],.login-tab .tab-td .tab input[type="button"]{width:50%;height:40px;border-width:0;text-align:center;}
+	.login-tab .tab-td .tab input[type="submit"]{float:left;background-color:orange;}
+	.login-tab .tab-td .tab input[type="button"]{float:right;background-color:gray;}
+	{{?page=="index"}}
+	.login-tab .tab-td .tab input[type="button"]{display:none;}
+	.login-tab .tab-td .tab input[type="submit"]{width:100%;}
+	{{?}}
+</style>
+<!--(>head>)-->
+<!--(<foot<)-->
+<script>
+	$("#login_form").submit(function(e){
+		var $form=$(this);
+		$form.find("input[name='account']").val($.trim($form.find("input[name='account']").val()));
+		$form.find("input[name='password']").val($.trim($form.find("input[name='password']").val()));
+		$form.find("em").text("");
+		if($form.find("input[name='account']").val().length<5||$form.find("input[name='account']").val().length>32){
+			$form.find("input[name='account']").parent().find("em").text("账号长度需在5到32个字符之间");
+			e.preventDefault();
+		}else if($form.find("input[name='password']").val().length<6||$form.find("input[name='password']").val().length>255){
+			$form.find("input[name='password']").parent().find("em").text("密码长度需在6到255个字符之间");
+			e.preventDefault();
+		}else if(localStorage){
+			localStorage.removeItem("login_account");
+			localStorage.removeItem("login_password");
+			localStorage.removeItem("login_remember");
+			localStorage.removeItem("login_automatic");
+			if($form.find("div input[type='checkbox']:first").prop("checked")){
+				localStorage.setItem("login_account",$form.find("input[name='account']").val());
+				localStorage.setItem("login_password",$form.find("input[name='password']").val());
+				localStorage.setItem("login_remember","on");
+				if($form.find("div input[type='checkbox']:last").prop("checked")){localStorage.setItem("login_automatic","on");}
+			}
+		}
+	});
+	if(localStorage){
+		var account=localStorage.getItem("login_account");
+		var password=localStorage.getItem("login_password");
+		var remember=localStorage.getItem("login_remember");
+		var automatic=localStorage.getItem("login_automatic");
+		$("#login_form input[name='account']").val(account||"");
+		$("#login_form input[name='password']").val(password||"");
+		$("#login_form input[type='password']").val(password||"");
+		if(remember){$("#login_form div input[type='checkbox']:first").prop("checked","checked");}
+		if(automatic){
+			$("#login_form div input[type='checkbox']:last").prop("checked","checked");
+			if("#/login.html##/#/index.html#".indexOf("#"+location.pathname+"#")>-1){$("#login_form").submit();}
+		}
+		$("#login_form div input[type='checkbox']:first").change(function(){
+			if(!$(this).prop("checked")){$("#login_form div input[type='checkbox']:last").prop("checked",$(this).prop("checked"));}
+		});
+		$("#login_form div input[type='checkbox']:last").change(function(){
+			if($(this).prop("checked")){$("#login_form div input[type='checkbox']:first").prop("checked",$(this).prop("checked"));}
+		});
+	}else{
+		$("#login_form div:last").hide();
+	}
+</script>
+<script>
+	$("#logon_form input[name='account'],#reset_form input[name='account']").change(function(){
+		if(this.value.length>=6&&/^[^\@]+\@[^\@\.]+\.[^\@]+$/.test(this.value)){
+			$(this).parent().find("a").fadeIn();
+			$(this).parent().find("input[name='type']").val("email");
+			if($(this).parent().parent().attr("id")=="logon_form"){$(this).parent().parent().find("input[name='checkCode']").parent().fadeIn();}
+		}else if(/^1\d{10}$/.test(this.value)){
+			$(this).parent().find("a").fadeIn();
+			$(this).parent().find("input[name='type']").val("phone");
+			if($(this).parent().parent().attr("id")=="logon_form"){$(this).parent().parent().find("input[name='checkCode']").parent().fadeIn();}
+		}else{
+			$(this).parent().find("a").fadeOut();
+			$(this).parent().find("input[name='type']").val("");
+			if($(this).parent().parent().attr("id")=="logon_form"){$(this).parent().parent().find("input[name='checkCode']").parent().fadeOut();}
+		}
+	});
+	$("#logon_form input[name='account']").parent().find("a").click(function(){
+		sendCheckCode($(this),"logon/send.json","注册");
+	});
+	$("#reset_form input[name='account']").parent().find("a").click(function(){
+		sendCheckCode($(this),"reset/send.json","重置密码");
+	});
+	function sendCheckCode($own,url,title){
+		if($own.text()!="发送验证码"){return;}
+		$own.text("60 秒后可重发");
+		$.post(url,{
+			type:$own.parent().find("input[name='type']").val()
+			,account:$own.parent().find("input[name='account']").val()
+		},function(data){
+			console.log(data);
+			if(data.flag){
+				var interval=setInterval(function(){
+					var last=parseInt($own.text());
+					if(last==0){
+						clearInterval(interval);
+						$own.text("发送验证码");
+					}else{
+						$own.text(last-1+" 秒后可重发");
+					}
+				},1000);
+			}else{
+				var type=$own.parent().find("input[name='type']").val();
+				if(type=="email"){
+					alert(title+"验证码邮件发送失败，清检查输入的邮箱地址是否正确。");
+				}else if(type=="phone"){
+					alert(title+"验证码手机短信发送失败，清检查输入的手机号码是否正确。");
+				}
+			}
+		});
+	}
+	var suspicion=true;
+	$("#logon_form,#reset_form").submit(function(e){
+		var $form=$(this);
+		$form.find("input[name='account']").val($.trim($form.find("input[name='account']").val()));
+		$form.find("input[name='checkCode']").val($.trim($form.find("input[name='checkCode']").val()));
+		$form.find("input[name='password']").val($.trim($form.find("input[name='password']").val()));
+		$form.find("input[name='confirmPassword']").val($.trim($form.find("input[name='confirmPassword']").val()));
+		$form.find("em").text("");
+		var reject=false;
+		if($form.find("input[name='account']").val().length<5||$form.find("input[name='account']").val().length>32){
+			$form.find("input[name='account']").parent().find("em").text("账号长度需在5到32个字符之间");
+			reject=true;
+		}
+		if($form.attr("id")=="reset_form"){
+			if($form.find("input[name='type']").val()==""){
+				$form.find("input[name='account']").parent().find("em").text("账号只能是邮箱或手机号");
+				reject=true;
+			}
+		}
+		if($form.find("input[name='type']").val()!=""){
+			if(!/^\d{6}$/.test($form.find("input[name='checkCode']").val())){
+				$form.find("input[name='checkCode']").parent().find("em").text("验证码只能为6个数字");
+				reject=true;
+			}
+		}
+		if($form.find("input[name='password']").val().length<6||$form.find("input[name='password']").val().length>255){
+			$form.find("input[name='password']").parent().find("em").text("密码长度需在6到255个字符之间");
+			reject=true;
+		}
+		if($form.find("input[name='confirmPassword']").val()!=$form.find("input[name='password']").val()){
+			$form.find("input[name='confirmPassword']").parent().find("em").text("确认密码与密码不一致");
+			reject=true;
+		}
+		if(reject){
+			e.preventDefault();
+			return;
+		}
+		if(suspicion&&$form.find("input[name='type']").val()==""){
+			e.preventDefault();
+			$.post("logon/send.json",{
+				type:$form.find("input[name='type']").val()
+				,account:$form.find("input[name='account']").val()
+			},function(data){
+				console.log(data);
+				if(data.flag){
+					suspicion=false;
+					$form.submit();
+				}else{
+					$form.find("input[name='account']").parent().find("em").text("该用户名已注册，请修改");
+				}
+			});
+		}
+	});
+</script>
+<!--(>foot>)-->

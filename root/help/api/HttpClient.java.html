@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.netty;
+public class HttpClient{
+	public boolean ssl(){}
+	public String host(){}
+	public int port(){}
+	public String uri(){}
+	public int version(){}
+	public String method(){}
+	public boolean multipart(){}
+	public List parameter(){}
+	public Map<String,String> cookie(){}
+	public Map<CharSequence,Object> header(final boolean ssl,final String host,final int port,final boolean post){}
+	public void postbody(boolean multipart){}
+	public void connect(Bootstrap bootstrap){}
+	public void error(ChannelHandlerContext context,Throwable cause){}
+	public void handleHttpResponse(ChannelHandlerContext context,HttpResponse response,boolean chunked){}
+	public void handleHttpContent(ChannelHandlerContext context,HttpContent content,boolean chunked){}
+	public void handleLastHttpContent(ChannelHandlerContext context,LastHttpContent content,boolean chunked){}
+	public Map<String,Map<String,Object>> setup(){}
+	public SslContext context(){}
+	public void init(){}
+	public void connectError(InterruptedException exception){}
+	public void uriError(URISyntaxException exception){}
+	public void encoderError(ErrorDataEncoderException exception){}
+	public void ioError(IOException exception){}
+	public final HttpClient start(){}
+	public final HttpDataFactory DefaultDataFactory=new DefaultHttpDataFactory(DefaultHttpDataFactory.MAXSIZE);
+	public static void get(HttpDataFactory factory,Channel channel,String path,List<Entry<String,String>> parameter,Map<CharSequence,Object> header) throws InterruptedException,URISyntaxException{}
+	public static void get(HttpDataFactory factory,HttpVersion version,Channel channel,String path,List<Entry<String,String>> parameter,Map<CharSequence,Object> header) throws InterruptedException,URISyntaxException{}
+	public static void post(HttpDataFactory factory,Channel channel,String path,Map<CharSequence,Object> header,boolean multipart,List parameter) throws ErrorDataEncoderException,URISyntaxException,IOException,InterruptedException{}
+	public static void post(HttpDataFactory factory,HttpVersion version,Channel channel,String path,Map<CharSequence,Object> header,boolean multipart,List parameter) throws ErrorDataEncoderException,URISyntaxException,IOException,InterruptedException{}
+	public static void customHeaders(HttpHeaders headers,Map<CharSequence,Object> header){}
+	public static String getHttpRequestURI(String path){}
+}
+</code></pre>
+</body>
+</html>

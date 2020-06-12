@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web>
+<sql name="duty" type="list">
+	select r.* from tb_role r
+	join tb_user_role ur on ur.role=r.id
+	join tb_user u on u.id=ur.user
+	where u.id={=sql.str("'",web.own("id")||"@@@@@@","'")}
+	and r.status=1 and u.status=1
+</sql>
+<sql name="door" type="list">
+	select p.path platePath,e.path linkPath
+	from tb_link p
+	join tb_link g on g.lead=p.id
+	join tb_link e on e.lead=g.id
+	left join tb_role_link rl on rl.link=e.id
+	where p.lead='@' and p.rank=1 and g.rank=2 and e.rank=3
+	and p.status=1 and g.status=1 and e.status=1
+	{=sql.text("and rl.role in(",$.duty,")")}
+	union
+	select p.path platePath,a.path linkPath
+	from tb_link p
+	join tb_link g on g.lead=p.id
+	join tb_link e on e.lead=g.id
+	join tb_link a on a.lead=e.id
+	left join tb_role_link rl on rl.link=a.id
+	where p.lead='@' and p.rank=1 and g.rank=2 and e.rank=3 and a.rank=4
+	and p.status=1 and g.status=1 and e.status=1 and a.status=1
+	{=sql.text("and rl.role in(",$.duty,")")}
+</sql>
+<sql name="head_menu" type="list">
+	select distinct e.path entryPath,e.name entryName,e.icon entryIcon
+	,p.sort plateSort,g.sort groupSort,e.sort entrySort
+	from tb_link p
+	join tb_link g on g.lead=p.id
+	join tb_link e on e.lead=g.id
+	left join tb_role_link rl on rl.link=e.id
+	where p.lead='@' and p.rank=1 and g.rank=2 and e.rank=3
+	and p.path is null and g.path={=sql.str("'",$.path,"'")}
+	and p.status=1 and g.status=1 and e.status=1
+	{=sql.text("and rl.role in(",$.duty,")")}
+	order by p.sort,g.sort,e.sort
+</sql>
+<sql name="left_menu" type="list">
+	select distinct p.path platePath,p.sort plateSort
+	,g.name groupName,g.icon groupIcon,g.sort groupSort
+	,e.path entryPath,e.name entryName,e.icon entryIcon,e.sort entrySort
+	from tb_link p
+	join tb_link g on g.lead=p.id
+	join tb_link e on e.lead=g.id
+	left join tb_role_link rl on rl.link=e.id
+	where p.lead='@' and p.rank=1 and g.rank=2 and e.rank=3
+	and p.path={=sql.str("'",$.path,"'")} and g.path is null
+	and p.status=1 and g.status=1 and e.status=1
+	{=sql.text("and rl.role in(",$.duty,")")}
+	order by p.sort,g.sort,e.sort
+</sql>
+<sql name="login" type="map">
+	select tb.*,ud.* from tb_user tb
+	left join tb_user_data ud on ud.user=tb.id
+	where ({([
+		{=sql.str("tb.login='",$.account,"' or")}
+		{=sql.str("tb.email='",$.account,"' or")}
+		{=sql.str("tb.phone='",$.account,"' or")}
+		{=sql.str("tb.idCard='",$.account,"' or")}
+	])})
+	{=sql.str("and tb.password='",$.password,"'")}
+</sql>
+<sql name="logon" type="bool">
+	insert into tb_user(
+		{=sql.str("",$.type,"")}
+		,password
+	)values(
+		{=sql.str("'",$.account,"'")}
+		,{=sql.str("'",$.password,"'")}
+	)
+</sql>
+<sql name="reset" type="bool">
+	update tb_user set
+	password={=sql.str("'",$.password,"'")}
+	where{([
+		{=sql.str("tb.login='",$.account,"' or")}
+		{=sql.str("tb.email='",$.account,"' or")}
+		{=sql.str("tb.phone='",$.account,"' or")}
+		{=sql.str("tb.idCard='",$.account,"' or")}
+	])}
+</sql>
+<sql name="last" type="bool">
+	update tb_user set
+	loginTime={=sql.dt("'",lang.now(),"'")}
+	,loginCount=loginCount+1
+	where id={=sql.str("'",$.id,"'")}
+</sql>
+</web>

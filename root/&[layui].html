@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title level="{{=$.level||0}}">{{=$.title||'<!--(<title>)-->'}}</title>
+<base href="{{=$.urlbase||'/'}}"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=yes,initial-scale=1,minimum-scale=1,maximum-scale=10"/>
+<meta name="x5-page-mode" content="app"/>
+<meta name="browsermode" content="application"/>
+<meta name="renderer" content="webkit"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<meta http-equiv="Cache-Control" content="no-transform"/>
+<link href="资源库/@/layui/css/layui.css" rel="stylesheet"/>
+<link href="资源库/@/sfont/sfont.css" rel="stylesheet"/>
+<link href="@/style/common.css" rel="stylesheet"/>
+<style id="body-color-style">
+{{=$.body_color_style||''}}
+</style>
+<style id="area-color-style">
+{{=$.area_color_style||''}}
+</style>
+<style>
+	#page-head{height:50px;}
+	#page-body{height:100%;height:calc(100% - 50px);}
+	#page-foot{display:none;position:absolute;width:100%;height:50px;bottom:0;}
+	#page-foot a{float:left;width:25%;padding:5px 0;}
+	#page-foot a div{text-align:center;}
+	#page-foot a div:nth-of-type(even){font-size:smaller;}
+	#page-foot a div:nth-of-type(odd){margin-top:-5px;font-size:x-large;}
+	#page-right{float:right;width:30%;width:calc(300px);height:100%;overflow:auto;}
+	#page-main{float:left;width:70%;width:calc(100% - 300px);height:100%;overflow:auto;}
+	@-moz-document url-prefix(){
+		#page-right,.find-search{width:calc(300px + 16px);}
+		#page-main{width:calc(100% - 300px - 16px);}
+	}
+	.link-bread{display:none;}
+	@media (max-width:800px){
+		#page-right{display:none;position:absolute;z-index:1;right:0;}
+		#page-main{width:100%;}
+		.area{margin-left:10px;}
+		.menu-head{display:none;}
+		.link-back{display:inline;}
+		.link-bread{display:block;position:absolute;top:0;left:50px;margin:0;box-shadow:none;background-color:transparent;}
+		.find-search{width:50px;}
+		.find-search input[type="text"]{display:none;border-left-width:0;}
+		.find-search:hover{width:100%;background-color:black;}
+		.find-search:hover input{display:inline;color:white;}
+		#page-body{height:calc(100% - 100px);}
+		#page-foot{display:block;}
+	}
+	@media (max-width:600px){
+		.area{margin:1px 0 0 0;box-shadow:none;}
+		.area-top{margin-top:0;}
+		#page-head{margin-bottom:1px!important;}
+		#page-body{height:calc(100% - 102px);}
+	}
+	@media (max-width:400px){
+		.link-bread a,.link-bread i{display:none;}
+		.link-bread a.now{display:inline;}
+	}
+</style>
+{{=$.head||'<!--(<head>)-->'}}
+</head>
+<body>
+<div id="page-head" class="area area-none plane">
+	<div class="th" style="overflow:hidden;">
+		<a class="link-back sfont-last" title="返回" onclick="history.back();"></a>
+		<ul class="menu-head">
+			<li><a href=""><div class="tr{{?$.uridoor=='index.html'}} td{{?}}">首页</div></a></li>
+			<li><a href="view.html"><div class="tr{{?$.uridoor=='view.html'}} td{{?}}">发现</div></a></li>
+			<li><a href="help.html"><div class="tr{{?$.uridoor=='help.html'}} td{{?}}">帮助</div></a></li>
+		</ul>
+	</div>
+	<form class="find-search" action="{{=$.uriview||''}}" method="POST" onsubmit="return this._query_search_.value!='';">
+		{{?$.hasPage}}
+		<input type="hidden" name="_page_size_" value="{{=$._page_size_||''}}"/>
+		<input type="hidden" name="_page_index_" value="1"/>
+		{{?}}
+		<input type="hidden" name="_order_by_" value="{{=$._order_by_||''}}"/>
+		<input type="hidden" name="_order_sort_" value="{{=$._order_sort_||''}}"/>
+		<input type="text" name="_query_search_" value="{{=$._query_search_||''}}" placeholder="大家都在搜……"/>
+		<input class="tr" type="submit" value="&#x9206;"/>
+	</form>
+</div>
+<div id="page-body">
+	<div id="page-right">
+{{#def.right}}
+	</div>
+	<div id="page-main">
+		<div class="area area-top link-bread"></div>
+{{#def.body}}
+	</div>
+</div>
+<div id="page-foot" class="area area-none plane">
+	<a href=""{{?$.uridoor=='index.html'}} class="td"{{?}}>
+		<div class="sfont-home"></div>
+		<div>首页</div>
+	</a>
+	<a href="view.html"{{?$.uridoor=='view.html'}} class="td"{{?}}>
+		<div class="sfont-view"></div>
+		<div>发现</div>
+	</a>
+	<a href="help.html"{{?$.uridoor=='help.html'}} class="td"{{?}}>
+		<div class="sfont-help"></div>
+		<div>帮助</div>
+	</a>
+{{?$.owner}}
+	<a href="own.html">
+		<div class="sfont-login"></div>
+		<div>我的</div>
+	</a>
+{{??}}
+	<a href="login.html">
+		<div class="sfont-login"></div>
+		<div>登录</div>
+	</a>
+{{?}}
+</div>
+<iframe name="hidden-form-iframe" style="display:none;"></iframe>
+</body>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>window.jQuery||document.write("<script src='资源库/@/jquery/jquery-1.12.4.min.js'><\/script>")</script>
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<script>window.layui||document.write("<script src='资源库/@/layui/layui.js'><\/script>")</script>
+<script src="@/script/tinyint.js"></script>
+<script src="@/script/common.js"></script>
+<!--[if lt IE 9]>
+<script src="资源库/@/polyfill/html5shiv/html5shiv.min.js"></script>
+<script src="资源库/@/polyfill/respond/respond.min.js"></script>
+<![endif]-->
+{{=$.foot||'<!--(<foot>)-->'}}
+</html>

@@ -1,0 +1,167 @@
+<div class="area tab-tb tab-btn">
+	<div class="tab-th th">
+		<a title="经典搭配" class="tab now">经典搭配</a>
+		<a title="自定义搭配" class="tab">自定义</a>
+	</div>
+	<div class="tab-td">
+		<div class="tab now">
+			<div id="color-group" class="around"></div>
+		</div>
+		<div class="tab">
+			<div class="data-info">
+				<dl><dt>左上角</dt><dd><input type="color" id="rgb-lt" value="#0180ff"/></dd></dl>
+				<dl><dt>右下角</dt><dd><input type="color" id="rgb-rb" value="#ff8001"/></dd></dl>
+				<dl><dt>灰阶值</dt><dd><input type="range" id="grayscale" min="0" max="255" value="0"/></dd></dl>
+				<dl><dt>饱和度</dt><dd><input type="range" id="saturation" min="0" max="10" value="5"/></dd></dl>
+			</div>
+		</div>
+	</div>
+	<div class="tab-ft">
+		<a title="保存" class="sfont-confirm" onclick="saveUserSkin();">保存</a>
+		<a title="重置" class="sfont-return" onclick="resetUserSkin();">重置</a>
+{{?(web.own("role_duty")||"").indexOf("'@@@@@'")>-1}}
+		<a title="复制" onclick="copyUserSkin();">复制</a>
+{{?}}
+	</div>
+</div>
+<!--(<head<)-->
+<style>
+	#color-group{padding:10px 0;}
+	.color-item{position:relative;float:left;width:150px;height:150px;margin:10px 0;cursor:pointer;}
+	.color-item.selected{border-style:solid;border-width:1px;}
+	.color-item .area-tb{position:absolute;top:50px;left:0;width:100%;height:50px;}
+	.color-item .area-th{position:absolute;top:50px;left:50px;width:50px;height:50px;}
+	.color-item .area-td{position:absolute;top:50px;left:100px;width:50px;height:50px;}
+	.color-item h4{position:absolute;top:0;width:100%;margin-top:15px;text-align:center;}
+	.color-item a{position:absolute;bottom:0;width:100%;padding:10px;text-align:center;}
+</style>
+<!--(>head>)-->
+<!--(<foot<)-->
+<script src="@/script/skin.config.js"></script>
+<script src="@/script/skin.counter.js"></script>
+<script>
+	var html="";
+	for(var name in color_skin_config){
+		var data=color_skin_config[name];
+		var text=JSON.stringify(data);
+		html+="<div class='color-item' data='"+text+"' style='background:-webkit-linear-gradient(315deg,rgba("+data[0]+","+data[1]+","+data[2]+",1.0),rgba("+data[3]+","+data[4]+","+data[5]+",1.0));background:linear-gradient(135deg,rgba("+data[0]+","+data[1]+","+data[2]+",1.0),rgba("+data[3]+","+data[4]+","+data[5]+",1.0));'>";
+		html+="	<div class='area-tb' style='background-color:rgba("+(data[6]<128?"0,0,0,":"255,255,255,")+data[7]/10+");'></div>";
+		html+="	<div class='area-th' style='background-color:rgba("+(data[6]<128?"0,0,0,0.3":(data[6]-128)+","+(data[6]-128)+","+(data[6]-128)+",0.1")+");'></div>";
+		html+="	<div class='area-td' style='background-color:rgba("+(data[6]<128?"0,0,0,0.1":"255,255,255,0.1")+");'></div>";
+		html+="	<h4 style='color:rgb("+(data[6]<128?"255,255,255":"0,0,0")+");text-shadow:0 0 3px rgb("+(data[6]<128?"0,0,0":"255,255,255")+");'>"+name+"</h4>";
+		var count=color_skin_counter[text.replace(/^\[|\]$/g,"")];
+		html+="	<a style='color:rgb("+(data[6]<128?"255,255,255":"0,0,0")+");text-shadow:0 0 3px rgb("+(data[6]<128?"0,0,0":"255,255,255")+");'>"+(count?count+" ❤":"")+"</a>";
+		html+="</div>";
+	}
+	$("#color-group").html(html);
+	$(".color-item").click(function(){
+		if($(this).hasClass("selected")){
+			$(this).removeClass("selected");
+		}else{
+			$(".color-item").removeClass("selected");
+			$(this).addClass("selected");
+		}
+		var data=JSON.parse($(this).attr("data"));
+		resetColor(rgb2hex(data[0]+","+data[1]+","+data[2]),rgb2hex(data[3]+","+data[4]+","+data[5]),data[6],data[7]);
+	});
+	function selectItem(skin){
+		$(".color-item").removeClass("selected");
+		$(".color-item").each(function(){
+			if($(this).attr("data")=="["+skin+"]"){
+				$(this).addClass("selected");
+				return false;
+			}
+		});
+	}
+</script>
+<script>
+	var area_cloud_style={{=$.server.getGlobal("config").area_cloud_style}}
+	var area_glass_style={{=$.server.getGlobal("config").area_glass_style}}
+</script>
+<script>
+	function rgb2hex(color){
+		color=color.split(",");
+		color=((parseInt(color[0])<<16)|(parseInt(color[1])<<8)|parseInt(color[2])).toString(16);
+		return "#"+"000000".substring(color.length)+color;
+	}
+	function hex2rgb(color){
+		return parseInt("0x"+color.substring(1,3))+","+parseInt("0x"+color.substring(3,5))+","+parseInt("0x"+color.substring(5,7));
+	}
+	function copy2paste(data){
+		var input=document.createElement("input");
+		input.style.position="absolute";
+		input.style.opacity="0";
+		document.body.appendChild(input);
+		input.value=data;
+		input.select();
+		document.execCommand("copy");
+		document.body.removeChild(input);
+	}
+	function getSkinData(){
+		return hex2rgb($("#rgb-lt").val())+","+hex2rgb($("#rgb-rb").val())+","+$("#grayscale").val()+","+$("#saturation").val();
+	}
+</script>
+<script>
+	var style=$("#body-color-style").html();
+	var data=/,rgba\((\d{1,3},\d{1,3},\d{1,3}),1\.0\),rgba\((\d{1,3},\d{1,3},\d{1,3}),1\.0\)\);/.exec(style);
+	var body_color_style=style.replace(new RegExp(data[1]+",1.0","g"),"<rgb lt>").replace(new RegExp(data[2]+",1.0","g"),"<rgb rb>");
+	$("#rgb-lt").val(rgb2hex(data[1])).attr("data",$("#rgb-lt").val());
+	$("#rgb-rb").val(rgb2hex(data[2])).attr("data",$("#rgb-rb").val());
+	style=$("#area-color-style").html();
+	data=/\.area\{background-color\:rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),([0-9\.]+)\);\}/.exec(style);
+	$("#grayscale").val(data[1]).attr("data",$("#grayscale").val());
+	$("#saturation").val(data[4]*10).attr("data",$("#saturation").val());
+	selectItem(getSkinData());
+</script>
+<script>
+	function resetBodyColorStyle(){
+		$("#body-color-style").html(body_color_style.replace(/<rgb lt>/g,hex2rgb($("#rgb-lt").val())+",1.0").replace(/<rgb rb>/g,hex2rgb($("#rgb-rb").val())+",1.0"));
+	}
+	$("#rgb-lt").change(function(){
+		resetBodyColorStyle();
+		selectItem(getSkinData());
+	});
+	$("#rgb-rb").change(function(){
+		resetBodyColorStyle();
+		selectItem(getSkinData());
+	});
+	function resetAreaColorStyle(){
+		var grayscale=$("#grayscale").val();
+		$("#area-color-style").html((grayscale<128?area_glass_style.note(1).replace(/<rgb\+64>/g,(grayscale+64)+","+(grayscale+64)+","+(grayscale+64)):area_cloud_style.note(1).replace(/<rgb\-64>/g,(grayscale-64)+","+(grayscale-64)+","+(grayscale-64))).replace(/<rgba>/,grayscale+","+grayscale+","+grayscale+","+$("#saturation").val()/10));
+	}
+	$("#grayscale").change(function(){
+		resetAreaColorStyle();
+		selectItem(getSkinData());
+	});
+	$("#saturation").change(function(){
+		resetAreaColorStyle();
+		selectItem(getSkinData());
+	});
+</script>
+<script>
+	function saveUserSkin(){
+		var skin=getSkinData();
+		$.post("own/skin.json",{skin:skin},function(data){
+			if(data.flag){
+				var item=$(".color-item[data='["+skin+"]'] a");
+				if(item){item.html(parseInt(item.html()||0)+1+" ❤");}
+			}
+		});
+	}
+	function resetUserSkin(){
+		resetColor($("#rgb-lt").attr("data"),$("#rgb-rb").attr("data"),$("#grayscale").attr("data"),$("#saturation").attr("data"));
+		selectItem(getSkinData());
+	}
+	function resetColor(rgb_lt,rgb_rb,grayscale,saturation){
+		$("#rgb-lt").val(rgb_lt);
+		$("#rgb-rb").val(rgb_rb);
+		resetBodyColorStyle();
+		$("#grayscale").val(grayscale);
+		$("#saturation").val(saturation);
+		resetAreaColorStyle();
+	}
+	function copyUserSkin(){
+		copy2paste(getSkinData());
+	}
+</script>
+<!--(>foot>)-->

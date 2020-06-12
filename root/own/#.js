@@ -1,0 +1,10 @@
+into($.srcroot+"/#/web.js");
+into($.srcroot+"/#/door.js");
+if(!door.power("own")){
+	if($.end=="html"){
+		$.redirect="/login.html";
+	}else{
+		$.status=401;
+		$.content="未获取到访问该链接的权限。";
+	}
+}

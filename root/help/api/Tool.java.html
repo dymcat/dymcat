@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.lang;
+public class Tool{
+	/**
+	 * 常用日期格式化模式
+	 */
+	public static final DateFormat CommonDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+	/**
+	 * 常用时间格式化模式
+	 */
+	public static final DateFormat CommonTimeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	/**
+	 * 常用毫秒级时间格式化模式
+	 */
+	public static final DateFormat CommonSTimeFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	/**
+	 * 纯数字日期格式化模式
+	 */
+	public static final DateFormat NumberDateFormat=new SimpleDateFormat("yyyyMMdd");
+	/**
+	 * 纯数字时间格式化模式
+	 */
+	public static final DateFormat NumberTimeFormat=new SimpleDateFormat("yyyyMMddHHmmss");
+	/**
+	 * 纯数字毫秒级时间格式化模式
+	 */
+	public static final DateFormat NumberSTimeFormat=new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	/**
+	 * HTTP头域时间格式化模式
+	 */
+	public static final DateFormat HeaderTimeFormat=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",Locale.ENGLISH);
+	/**
+	 * 常用浮点数格式化模式
+	 */
+	public static final NumberFormat CommonDoubleFormat=NumberFormat.getInstance(Locale.getDefault());
+	/**
+	 * 常用金额格式化模式
+	 */
+	public static final NumberFormat CommonMoneyFormat=NumberFormat.getInstance(Locale.getDefault());
+	/**
+	 * 头域名称单词首字母大写
+	 */
+	public static String headerName(CharSequence name){}
+	/**
+	 * 补全请求资源路径前面的/，得到标准URI
+	 */
+	public static String requestURI(String path){}
+	/**
+	 * 去除标准URI前面的/，得到请求资源路径
+	 */
+	public static String requestPath(String uri){}
+	/**
+	 * 获取MAC地址
+	 */
+	public static byte[] macAddress(){}
+	/**
+	 * 获取本地主机名称
+	 */
+	public static String localHostName(){}
+	/**
+	 * 获取本地IP
+	 */
+	public static String localIP(){}
+	/**
+	 * 获取网络IP
+	 */
+	public static String netIP(){}
+	/**
+	 * 是否为本地IP
+	 */
+	public static boolean isLocalIP(String ip){}
+	/**
+	 * 是否为内网IP
+	 */
+	public static boolean isInnerIP(String ip){}
+	/**
+	 * 是否为外网IP
+	 */
+	public static boolean isOuterIP(String ip){}
+	/**
+	 * 是否为外网主机
+	 */
+	public static boolean isOuterHost(String host) throws UnknownHostException{}
+	/**
+	 * 是否为内网主机
+	 */
+	public static boolean isInnerHost(String host) throws UnknownHostException{}
+	/**
+	 * 是否离线
+	 */
+	public static boolean isOffLine(){}
+	/**
+	 * 是否在线
+	 */
+	public static boolean isOnLine(){}
+	/**
+	 * 是否为可连接主机
+	 */
+	public static boolean isReachHost(String host,int timeout){}
+	/**
+	 * 是否为可连接地址
+	 */
+	public static boolean isReachAddress(SocketAddress address,int timeout){}
+	/**
+	 * 是否为可用端口
+	 */
+	public static boolean isUsablePort(int port){}
+	/**
+	 * 是否为链接地址
+	 */
+	public static boolean isURL(String path){}
+	/**
+	 * 创建多个处理流程HTTP服务器
+	 */
+	public static HttpServer createHttpServer(boolean start,int port,ExecutorService executor,Map<String,HttpHandler> handlerMap) throws IOException{}
+	/**
+	 * 创建单个处理流程HTTP服务器
+	 */
+	public static HttpServer createHttpServer(boolean start,int port,ExecutorService executor,String context,HttpHandler handler) throws IOException{}
+	/**
+	 * 创建默认处理流程HTTP服务器
+	 */
+	public static HttpServer createHttpServer(boolean start,int port,ExecutorService executor,HttpHandler handler) throws IOException{}
+	/**
+	 * 定时执行周期性任务
+	 */
+	public static Timer runTimerTask(double time,TimerTask task) throws ParseException{}
+	/**
+	 * 执行指定次数多线程任务
+	 */
+	public static void runThreadTask(int count,Runnable runnable){}
+	/**
+	 * 执行JS脚本
+	 */
+	public static Object eval(String content) throws ScriptException{}
+	/**
+	 * 解析JS脚本
+	 */
+	public static Object parse(String content) throws ScriptException{}
+	/**
+	 * JS对象转成Java对象
+	 */
+	public static Object mirror(Object object){}
+	/**
+	 * 转成列表
+	 */
+	public static List listify(Object object) throws ScriptException{}
+	/**
+	 * 转成键值对
+	 */
+	public static Map mapify(Object object) throws ScriptException{}
+	/**
+	 * 实体对象转成键值对
+	 */
+	public static Map<String,Object> bean2map(Object object){}
+	/**
+	 * 实体对象转成键值对
+	 */
+	public static Map<String,Object> bean2map(Object object,boolean retainIS){}
+	/**
+	 * 键值对转成实体对象
+	 */
+	public static <X> X map2bean(Map<String,Object> map,Class<X> clazz) throws IllegalAccessException{}
+	/**
+	 * 键值对转成实体对象
+	 */
+	public static <X> X map2bean(Map<String,Object> map,Class<X> clazz,boolean retainIS) throws IllegalAccessException{}
+	/**
+	 * 对象转成字节数组
+	 */
+	public static byte[] object2bytes(Object object) throws IOException{}
+	/**
+	 * 字节数组转成对象
+	 */
+	public static Object bytes2object(byte[] bytes) throws IOException,ClassNotFoundException{}
+	/**
+	 * 字符串转成文本数据
+	 */
+	public static Clob string2clob(String string){}
+	/**
+	 * 文本数据转成字符串
+	 */
+	public static String clob2string(Clob clob){}
+	/**
+	 * 字节数组转成二进制数据
+	 */
+	public static Blob bytes2blob(byte[] bytes){}
+	/**
+	 * 二进制数据转成字节数组
+	 */
+	public static byte[] blob2bytes(Blob blob){}
+	/**
+	 * Base64码字符串转成字节数组
+	 */
+	public static byte[] base642bytes(String string){}
+	/**
+	 * 字节数组转成Base64码字符串
+	 */
+	public static String bytes2base64(byte[] bytes){}
+	/**
+	 * 字节数组转成十六进制字符串
+	 */
+	public static String bytes2hex(byte[] bytes,String separator){}
+	/**
+	 * 字节数组转成十六进制字符串
+	 */
+	public static String bytes2hex(byte[] bytes){}
+	/**
+	 * 字符串转成Unicode
+	 */
+	public static String string2unicode(String string,boolean all){}
+	/**
+	 * Unicode转成字符串
+	 */
+	public static String unicode2string(String unicode,boolean all){}
+	/**
+	 * 非英文转成Unicode
+	 */
+	public static String string2unicode(String string){}
+	/**
+	 * Unicode转成非英文
+	 */
+	public static String unicode2string(String unicode){}
+	/**
+	 * 链接地址转成输入流
+	 */
+	public static InputStream url2input(URL url) throws IOException{}
+	/**
+	 * 转成字符串
+	 */
+	public static String strify(Object object){}
+	/**
+	 * 转成SQL字符串
+	 */
+	public static String sqlify(Object object){}
+	/**
+	 * XML文档或节点转成字符串
+	 */
+	public static String strify(Node node) throws TransformerException,IOException{}
+	/**
+	 * XML文档或节点转成键值对
+	 */
+	public static Map<String,Object> mapify(Element element){}
+	/**
+	 * 解析带单位的时长字符串，得到毫秒级时长值
+	 */
+	public static long timeify(String text){}
+	/**
+	 * 解析毫秒级时长值，得到带单位的时长字符串
+	 */
+	public static String timeify(long value){}
+	/**
+	 * 解析带单位的空间容量字符串，得到比特级空间容量值
+	 */
+	public static long sizeify(String text){}
+	/**
+	 * 解析比特级空间容量值，得到带单位的空间容量字符串
+	 */
+	public static String sizeify(long value){}
+	/**
+	 * 获取指定端口或随机可用端口
+	 */
+	public static int portify(Object port){}
+	/**
+	 * 返回原数指定差值的十阶数
+	 */
+	public static int slantNumber(double data,int step){}
+	/**
+	 * 返回十阶数指定差值的原数范围
+	 */
+	public static int[] slantNumberRange(int data,int step){}
+	/**
+	 * 返回原数指定差值的百阶数
+	 */
+	public static String slantString(double data,int step){}
+	/**
+	 * 返回百阶数指定差值的原数范围
+	 */
+	public static long[] slantStringRange(String data,int step){}
+	/**
+	 * 返回原数指定倍数的十阶数
+	 */
+	public static int curveNumber(double data,int step){}
+	/**
+	 * 返回十阶数指定倍数的原数范围
+	 */
+	public static int[] curveNumberRange(int data,int step){}
+	/**
+	 * 返回原数指定倍数的百阶数
+	 */
+	public static String curveString(double data,int step){}
+	/**
+	 * 返回百阶数指定倍数的原数范围
+	 */
+	public static long[] curveStringRange(String data,int step){}
+	/**
+	 * 返回原数的三位规模数
+	 */
+	public static int scaleNumber(double data){}
+	/**
+	 * 返回三位规模数的原数范围
+	 */
+	public static int[] scaleNumberRange(int data){}
+	/**
+	 * 返回原数的四位规模数
+	 */
+	public static String scaleString(double data){}
+	/**
+	 * 返回四位规模数的原数范围
+	 */
+	public static long[] scaleStringRange(String data){}
+	/**
+	 * 整数转成四个字节的数组
+	 */
+	public static byte[] int2bytes(int number){}
+	/**
+	 * 从字节数组中取开头的第几个整数
+	 */
+	public static int bytes2int(byte[] bytes,int index){}
+	/**
+	 * 从字节数组中取开头的那个整数
+	 */
+	public static int bytes2int(byte[] bytes){}
+	/**
+	 * 长整数转成八个字节的数组
+	 */
+	public static byte[] long2bytes(long number){}
+	/**
+	 * 从字节数组中取开头的第几个长整数
+	 */
+	public static long bytes2long(byte[] bytes,int index){}
+	/**
+	 * 从字节数组中取开头的那个长整数
+	 */
+	public static long bytes2long(byte[] bytes){}
+	/**
+	 * 两个整数合并成一个长整数
+	 */
+	public static long ints2long(int high,int low){}
+	/**
+	 * 一个长整数拆分成两个整数
+	 */
+	public static int[] long2ints(long big){}
+	/**
+	 * 连接多个字节数组
+	 */
+	public static byte[] concatArray(byte[] arr,byte[]...arrs){}
+	/**
+	 * 连接多个短整数数组
+	 */
+	public static short[] concatArray(short[] arr,short[]...arrs){}
+	/**
+	 * 连接多个整数数组
+	 */
+	public static int[] concatArray(int[] arr,int[]...arrs){}
+	/**
+	 * 连接多个长整数数组
+	 */
+	public static long[] concatArray(long[] arr,long[]...arrs){}
+	/**
+	 * 连接多个单精度浮点数数组
+	 */
+	public static float[] concatArray(float[] arr,float[]...arrs){}
+	/**
+	 * 连接多个双精度浮点数数组
+	 */
+	public static double[] concatArray(double[] arr,double[]...arrs){}
+	/**
+	 * 连接多个布尔数组
+	 */
+	public static boolean[] concatArray(boolean[] arr,boolean[]...arrs){}
+	/**
+	 * 连接多个字符数组
+	 */
+	public static char[] concatArray(char[] arr,char[]...arrs){}
+	/**
+	 * 连接多个指定类型数组
+	 */
+	public static <X> X[] concatArray(X[] arr,X[]...arrs){}
+	/**
+	 * 生成指定范围随机整数
+	 */
+	public static int randomRange(int min,int max){}
+	/**
+	 * 生成指定范围随机长整数
+	 */
+	public static long randomRange(long min,long max){}
+	/**
+	 * 生成指定长度随机简体中文GB3755字符串
+	 */
+	public static String randomGB3755(int length){}
+	/**
+	 * 生成指定长度随机简体中文GB2312字符串
+	 */
+	public static String randomGB2312(int length){}
+	/**
+	 * 生成指定长度随机中文GBK字符串
+	 */
+	public static String randomGBK(int length){}
+	/**
+	 * 比较两个字符串的大小
+	 */
+	public static int compareString(String before,String after,boolean isNumber){}
+	/**
+	 * 根据键给键值对排序
+	 */
+	public static Map sortMapByKey(Map map,boolean isAsc,boolean isNumber){}
+	/**
+	 * 根据值给键值对排序
+	 */
+	public static Map sortMapByVal(Map map,boolean isAsc,boolean isNumber){}
+	/**
+	 * 给文件数组排序
+	 */
+	public static File[] sortFiles(File[] files,String order){}
+	/**
+	 * 给文件列表排序
+	 */
+	public static List<File> sortFiles(List<File> files,String order){}
+	/**
+	 * 文件遍历处理器
+	 */
+	public static interface Handler{
+		void handle(File file);
+	}
+	/**
+	 * 遍历全部文件，自定义处理方式
+	 */
+	public static void eachAllFiles(File file,final String filter,String order,Handler handler){}
+	/**
+	 * 遍历并返回全部文件
+	 */
+	public static List<File> eachAllFiles(File file,String filter,String order){}
+	/**
+	 * 删除文件或文件夹及其下面的全部文件和文件夹
+	 */
+	public static boolean deleteAllFiles(File file){}
+	/**
+	 * 清除文本文件开头的BOM
+	 */
+	public static String cleanTextFileBOM(String text){}
+	/**
+	 * 从输入流中读取指定字符集文本
+	 */
+	public static String readString(InputStream input,String charset,boolean close) throws IOException{}
+	/**
+	 * 从输入流中读取文本
+	 */
+	public static String readString(InputStream input,boolean close) throws IOException{}
+	/**
+	 * 从输入流中读取文本并关闭输入流
+	 */
+	public static String readString(InputStream input) throws IOException{}
+	/**
+	 * 从文件中读取指定字符集文本
+	 */
+	public static String readString(File file,String charset) throws IOException{}
+	/**
+	 * 从文件中读取文本
+	 */
+	public static String readString(File file) throws IOException{}
+	/**
+	 * 从指定文件路径读取指定字符集文本
+	 */
+	public static String readString(String path,String charset) throws IOException{}
+	/**
+	 * 从指定文件路径读取文本
+	 */
+	public static String readString(String path) throws IOException{}
+	/**
+	 * 从文件中读取多行指定字符集文本
+	 */
+	public static List<String> readLines(File file,String charset) throws IOException{}
+	/**
+	 * 从文件中读取多行文本
+	 */
+	public static List<String> readLines(File file) throws IOException{}
+	/**
+	 * 从指定文件路径读取多行指定字符集文本
+	 */
+	public static List<String> readLines(String path,String charset) throws IOException{}
+	/**
+	 * 从指定文件路径读取多行文本
+	 */
+	public static List<String> readLines(String path) throws IOException{}
+	/**
+	 * 从文件读取最先一行文本
+	 */
+	public static String readFirstLine(File file) throws IOException{}
+	/**
+	 * 从指定文件路径读取最先一行文本
+	 */
+	public static String readFirstLine(String path) throws IOException{}
+	/**
+	 * 从文件读取最后一行文本
+	 */
+	public static String readLastLine(File file) throws IOException{}
+	/**
+	 * 从指定文件路径读取最后一行文本
+	 */
+	public static String readLastLine(String path) throws IOException{}
+	/**
+	 * 从文件中读取字节数组
+	 */
+	public static byte[] readBytes(File file) throws IOException{}
+	/**
+	 * 从指定文件路径读取字节数组
+	 */
+	public static byte[] readBytes(String path) throws IOException{}
+	/**
+	 * 从输入流中按指定缓冲区读取字节数组
+	 */
+	public static byte[] readBytes(InputStream input,int buffer,boolean close) throws IOException{}
+	/**
+	 * 从输入流中按指定缓冲区读取字节数组并关闭输入流
+	 */
+	public static byte[] readBytes(InputStream input,int buffer) throws IOException{}
+	/**
+	 * 从输入流中读取字节数组并关闭输入流
+	 */
+	public static byte[] readBytes(InputStream input) throws IOException{}
+	/**
+	 * 从指定链接地址按指定缓冲区读取字节数组
+	 */
+	public static byte[] readBytes(URL url,int buffer) throws IOException{}
+	/**
+	 * 从指定链接地址读取字节数组
+	 */
+	public static byte[] readBytes(URL url) throws IOException{}
+	/**
+	 * 从指定链接地址读取指定字符集文本
+	 */
+	public static String readString(URL url,String charset) throws IOException{}
+	/**
+	 * 从指定链接地址读取文本
+	 */
+	public static String readString(URL url) throws IOException{}
+	/**
+	 * 读取文件时，默认缓冲区
+	 */
+	public static final int DefaultReadFileBuffer=Short.MAX_VALUE;
+	/**
+	 * 向输出流中写入字节数组
+	 */
+	public static void writeBytes(OutputStream output,byte[] bytes,boolean close) throws IOException{}
+	/**
+	 * 向输出流中写入字节数组并关闭输出流
+	 */
+	public static void writeBytes(OutputStream output,byte[] bytes) throws IOException{}
+	/**
+	 * 向文件中写入字节数组
+	 */
+	public static Path writeBytes(File file,byte[] bytes) throws IOException{}
+	/**
+	 * 向指定文件路径写入字节数组
+	 */
+	public static Path writeBytes(String path,byte[] bytes) throws IOException{}
+	/**
+	 * 向输出流中写入数据
+	 */
+	public static void writeString(OutputStream output,Object data,boolean close) throws IOException{}
+	/**
+	 * 向输出流中写入数据并关闭输出流
+	 */
+	public static void writeString(OutputStream output,Object data) throws IOException{}
+	/**
+	 * 向文件中写入数据
+	 */
+	public static boolean writeString(File file,Object data) throws IOException{}
+	/**
+	 * 向指定文件路径写入数据
+	 */
+	public static boolean writeString(String path,Object data) throws IOException{}
+	/**
+	 * 向文件中追加数据
+	 */
+	public static boolean appendToFile(File file,Object data) throws IOException{}
+	/**
+	 * 向指定文件路径追加数据
+	 */
+	public static boolean appendToFile(String path,Object data) throws IOException{}
+	/**
+	 * 向文件中追加带换行的数据
+	 */
+	public static boolean printlnToFile(File file,Object data,boolean before) throws IOException{}
+	/**
+	 * 向指定文件路径追加带换行的数据
+	 */
+	public static boolean printlnToFile(String path,Object data,boolean before) throws IOException{}
+	/**
+	 * 向文件中追加数据并换行
+	 */
+	public static boolean printlnToFile(File file,Object data) throws IOException{}
+	/**
+	 * 向指定文件路径追加数据并换行
+	 */
+	public static boolean printlnToFile(String path,Object data) throws IOException{}
+	/**
+	 * 输出常规日志到指定文件路径
+	 */
+	public static void out(Object data,String path,boolean console){}
+	/**
+	 * 输出错误日志到指定文件路径
+	 */
+	public static void err(Object data,String path,boolean console){}
+	/**
+	 * 输出常规日志到指定文件路径和控制台
+	 */
+	public static void out(Object data,String path){}
+	/**
+	 * 输出错误日志到指定文件路径和控制台
+	 */
+	public static void err(Object data,String path){}
+	/**
+	 * 输出常规日志到控制台
+	 */
+	public static void out(Object data){}
+	/**
+	 * 输出错误日志到控制台
+	 */
+	public static void err(Object data){}
+	/**
+	 * 按指定缓冲区压缩输入流到输出流
+	 */
+	public static void compressByGzip(OutputStream output,InputStream input,int buffer,boolean sync,boolean close) throws IOException{}
+	/**
+	 * 按指定缓冲区压缩字节数组
+	 */
+	public static byte[] compressByGzip(byte[] bytes,int buffer,boolean sync) throws IOException{}
+	/**
+	 * 压缩字节数组
+	 */
+	public static byte[] compressByGzip(byte[] bytes,boolean sync) throws IOException{}
+	/**
+	 * 按指定缓冲区解压输入流到输出流
+	 */
+	public static void releaseByGzip(OutputStream output,InputStream input,int buffer,boolean close) throws IOException{}
+	/**
+	 * 按指定缓冲区解压字节数组
+	 */
+	public static byte[] releaseByGzip(byte[] bytes,int buffer) throws IOException{}
+	/**
+	 * 解压字节数组
+	 */
+	public static byte[] releaseByGzip(byte[] bytes) throws IOException{}
+	/**
+	 * 按指定缓冲区压缩文件或文件夹到输出流
+	 */
+	public static byte[] compressByZip(OutputStream output,File inFile,String charset,int buffer,int level,String comment) throws IOException{}
+	/**
+	 * 按指定缓冲区压缩文件或文件夹到字节数组
+	 */
+	public static byte[] compressByZip(File inFile,String charset,int buffer,int level,String comment) throws IOException{}
+	/**
+	 * 按指定缓冲区压缩文件或文件夹到文件
+	 */
+	public static void compressByZip(File outFile,File inFile,String charset,int buffer,int level,String comment) throws IOException{}
+	/**
+	 * 按指定缓冲区解压输入流到指定文件路径
+	 */
+	public static void releaseByZip(String outRoot,InputStream input,String charset,int buffer) throws IOException{}
+	/**
+	 * 按指定缓冲区解压字节数组到指定文件路径
+	 */
+	public static void releaseByZip(String outRoot,byte[] bytes,String charset,int buffer) throws IOException{}
+	/**
+	 * 按指定缓冲区解压文件到指定文件路径
+	 */
+	public static void releaseByZip(String outRoot,File inFile,String charset,int buffer) throws IOException{}
+	/**
+	 * 支持的几种签名方法
+	 */
+	public static final String DigestMD2="MD2";
+	public static final String DigestMD5="MD5";
+	public static final String DigestSHA="SHA";
+	public static final String DigestSHA224="SHA-224";
+	public static final String DigestSHA256="SHA-256";
+	public static final String DigestSHA384="SHA-384";
+	public static final String DigestSHA512="SHA-512";
+	/**
+	 * 是否为支持的签名方法
+	 */
+	public static boolean isDigestMethod(String method){}
+	/**
+	 * 字节数组签名
+	 */
+	public static byte[] digest(String method,byte[] bytes){}
+	/**
+	 * 字符串签名
+	 */
+	public static String digest(String method,String string){}
+	/**
+	 * 按指定缓冲区签名输入流
+	 */
+	public static byte[] digest(String method,InputStream input,int buffer,boolean close) throws IOException{}
+	/**
+	 * 按指定缓冲区签名并关闭输入流
+	 */
+	public static byte[] digest(String method,InputStream input,int buffer) throws IOException{}
+	/**
+	 * 签名并关闭输入流
+	 */
+	public static byte[] digest(String method,InputStream input) throws IOException{}
+	/**
+	 * 文件签名
+	 */
+	public static String digest(String method,File file) throws IOException{}
+	/**
+	 * 链接地址签名
+	 */
+	public static String digest(String method,URL url) throws IOException{}
+	/**
+	 * 加解密
+	 */
+	public static byte[] crypto(int mode,String method,Key key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 加密
+	 */
+	public static byte[] encrypt(String method,Key key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 解密
+	 */
+	public static byte[] decrypt(String method,Key key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 支持的几种对称加解密方法
+	 */
+	public static final String SymmetricAES="AES";
+	public static final String SymmetricDES="DES";
+	public static final String SymmetricDESede="DESede";
+	public static final String SymmetricRijndael="Rijndael";
+	public static final String SymmetricBlowfish="Blowfish";
+	public static final String SymmetricRC2="RC2";
+	public static final String SymmetricRC4="RC4";
+	/**
+	 * 是否为支持的对称加解密方法
+	 */
+	public static boolean isSymmetricMethod(String method){}
+	/**
+	 * 是否为默认密匙支持的对称加解密方法
+	 */
+	public static boolean isSymmetricMethod4SecureKey(String method){}
+	/**
+	 * 默认的对称加解密密匙
+	 */
+	public static final byte[] SecureRandomKey=new byte[16];
+	/**
+	 * 获取对称加解密密匙
+	 */
+	public static byte[] getKey(String method,int length){}
+	/**
+	 * 获取对称加解密AES密匙
+	 */
+	public static byte[] getKeyByAES(){}
+	/**
+	 * 获取对称加解密DES密匙
+	 */
+	public static byte[] getKeyByDES(){}
+	/**
+	 * 获取对称加解密DESede密匙
+	 */
+	public static byte[] getKeyByDESede(){}
+	/**
+	 * 获取对称加解密DESede168密匙
+	 */
+	public static byte[] getKeyByDESede168(){}
+	/**
+	 * 获取对称加解密Rijndael密匙
+	 */
+	public static byte[] getKeyByRijndael(){}
+	/**
+	 * 获取对称加解密2Rijndael密匙
+	 */
+	public static byte[] getKeyBy2Rijndael(){}
+	/**
+	 * 获取对称加解密3Rijndael密匙
+	 */
+	public static byte[] getKeyBy3Rijndael(){}
+	/**
+	 * 获取对称加解密指定长度的Blowfish密匙
+	 */
+	public static byte[] getKeyByBlowfish(int length){}
+	/**
+	 * 获取对称加解密4*8个长度的Blowfish密匙
+	 */
+	public static byte[] getKeyBy4Blowfish(){}
+	/**
+	 * 获取对称加解密16*8个长度的Blowfish密匙
+	 */
+	public static byte[] getKeyBy16Blowfish(){}
+	/**
+	 * 获取对称加解密指定长度的RC2密匙
+	 */
+	public static byte[] getKeyByRC2(int length){}
+	/**
+	 * 获取对称加解密5*8个长度的RC2密匙
+	 */
+	public static byte[] getKeyBy5RC2(){}
+	/**
+	 * 获取对称加解密16*8个长度的RC2密匙
+	 */
+	public static byte[] getKeyBy16RC2(){}
+	/**
+	 * 获取对称加解密指定长度的RC4密匙
+	 */
+	public static byte[] getKeyByRC4(int length){}
+	/**
+	 * 获取对称加解密5*8个长度的RC4密匙
+	 */
+	public static byte[] getKeyBy5RC4(){}
+	/**
+	 * 获取对称加解密16*8个长度的RC4密匙
+	 */
+	public static byte[] getKeyBy16RC4(){}
+	/**
+	 * 对称加密字节数组
+	 */
+	public static byte[] encrypt(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 对称解密字节数组
+	 */
+	public static byte[] decrypt(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 对称加密字节数组
+	 */
+	public static byte[] encrypt(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 对称解密字节数组
+	 */
+	public static byte[] decrypt(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 对称加密字符串
+	 */
+	public static String encrypt(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 对称解密字符串
+	 */
+	public static String decrypt(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 固定密匙对称加密字节数组
+	 */
+	public static byte[] encrypt(String method,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 固定密匙对称解密字节数组
+	 */
+	public static byte[] decrypt(String method,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 固定密匙对称加密字符串
+	 */
+	public static String encrypt(String method,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 固定密匙对称解密字符串
+	 */
+	public static String decrypt(String method,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	/**
+	 * 支持的非对称加解密方法
+	 */
+	public static final String AsymmetricRSA="RSA";
+	/**
+	 * 是否为支持的非对称加解密方法
+	 */
+	public static boolean isAsymmetricMethod(String method){}
+	/**
+	 * 获取非对称加解密双密匙
+	 */
+	public static byte[][] getKeyPair(String method,int scale,boolean withScale){}
+	/**
+	 * 获取非对称加解密RSA双密匙
+	 */
+	public static byte[][] getKeyPairByRSA(int scale,boolean withScale){}
+	/**
+	 * 使用公匙非对称加密字节数组
+	 */
+	public static byte[] encryptByPublic(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称解密字节数组
+	 */
+	public static byte[] decryptByPrivate(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称加密字节数组
+	 */
+	public static byte[] encryptByPrivate(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称解密字节数组
+	 */
+	public static byte[] decryptByPublic(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称加密字节数组
+	 */
+	public static byte[] encryptByPublic(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称解密字节数组
+	 */
+	public static byte[] decryptByPrivate(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称加密字节数组
+	 */
+	public static byte[] encryptByPrivate(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称解密字节数组
+	 */
+	public static byte[] decryptByPublic(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称加密字符串
+	 */
+	public static String encryptByPublic(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称解密字符串
+	 */
+	public static String decryptByPrivate(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称加密字符串
+	 */
+	public static String encryptByPrivate(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称解密字符串
+	 */
+	public static String decryptByPublic(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称加密无限量字节数组
+	 */
+	public static byte[] encryptAllByPublic(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称解密无限量字节数组
+	 */
+	public static byte[] decryptAllByPrivate(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称加密无限量字节数组
+	 */
+	public static byte[] encryptAllByPrivate(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称解密无限量字节数组
+	 */
+	public static byte[] decryptAllByPublic(String method,byte[] key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称加密无限量字节数组
+	 */
+	public static byte[] encryptAllByPublic(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称解密无限量字节数组
+	 */
+	public static byte[] decryptAllByPrivate(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称加密无限量字节数组
+	 */
+	public static byte[] encryptAllByPrivate(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称解密无限量字节数组
+	 */
+	public static byte[] decryptAllByPublic(String method,String key,byte[] data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称加密无限量字符串
+	 */
+	public static String encryptAllByPublic(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称解密无限量字符串
+	 */
+	public static String decryptAllByPrivate(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称加密无限量字符串
+	 */
+	public static String encryptAllByPrivate(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用公匙非对称解密无限量字符串
+	 */
+	public static String decryptAllByPublic(String method,String key,String data) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InvalidKeySpecException{}
+	/**
+	 * 使用私匙非对称签名字节数组
+	 */
+	public static byte[] signByPrivate(String method,byte[] key,byte[] data) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用私匙非对称签名字节数组
+	 */
+	public static byte[] signByPrivate(String method,String key,byte[] data) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用私匙非对称签名字符串
+	 */
+	public static String signByPrivate(String method,String key,String data) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用私匙非对称签名无限量字节数组
+	 */
+	public static byte[] signAllByPrivate(String method,byte[] key,byte[] data) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用私匙非对称签名无限量字节数组
+	 */
+	public static byte[] signAllByPrivate(String method,String key,byte[] data) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用私匙非对称签名无限量字符串
+	 */
+	public static String signAllByPrivate(String method,String key,String data) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用公匙非对称验证字节数组签名
+	 */
+	public static boolean verifyByPublic(String method,byte[] key,byte[] data,byte[] sign) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用公匙非对称验证字节数组签名
+	 */
+	public static boolean verifyByPublic(String method,String key,byte[] data,byte[] sign) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用公匙非对称验证字符串签名
+	 */
+	public static boolean verifyByPublic(String method,String key,String data,String sign) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用公匙非对称验证无限量字节数组签名
+	 */
+	public static boolean verifyAllByPublic(String method,byte[] key,byte[] data,byte[] sign) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用公匙非对称验证无限量字节数组签名
+	 */
+	public static boolean verifyAllByPublic(String method,String key,byte[] data,byte[] sign) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 使用公匙非对称验证无限量字符串签名
+	 */
+	public static boolean verifyAllByPublic(String method,String key,String data,String sign) throws InvalidKeyException,InvalidKeySpecException,SignatureException{}
+	/**
+	 * 执行多行操作系统命令行
+	 */
+	public static String[] commandLines(String[] cmds,String charset) throws IOException,InterruptedException{}
+	/**
+	 * 执行多行操作系统命令行
+	 */
+	public static String[] commandLines(String[] cmds,String charset,boolean wait) throws IOException,InterruptedException{}
+	/**
+	 * 执行单行操作系统命令行
+	 */
+	public static String[] commandLine(String cmd,String charset) throws IOException,InterruptedException{}
+	/**
+	 * 执行单行操作系统命令行
+	 */
+	public static String[] commandLine(String cmd,String charset,boolean wait) throws IOException,InterruptedException{}
+	/**
+	 * 正则模式缓存
+	 */
+	public static final Map<String,Pattern> RegexPatternCache=new ConcurrentHashMap<String,Pattern>();
+	/**
+	 * 获取正则模式
+	 */
+	public static Pattern getRegexPattern(String regex){}
+	/**
+	 * 获取正则单次匹配到的第几个捕获组
+	 */
+	public static String matchGroup(String string,String regex,int index){}
+	/**
+	 * 获取正则单次匹配到的整个捕获组
+	 */
+	public static String matchGroup0(String string,String regex){}
+	/**
+	 * 获取正则单次匹配到的第一个捕获组
+	 */
+	public static String matchGroup1(String string,String regex){}
+	/**
+	 * 获取正则单次匹配到的多个捕获组
+	 */
+	public static String[] matchGroup(String string,String regex){}
+	/**
+	 * 获取正则多次匹配到的多个捕获组
+	 */
+	public static List<String[]> matchGroups(String string,String regex){}
+	/**
+	 * 获取正则单次匹配到的第几个捕获组开始位置
+	 */
+	public static int matchStart(String string,String regex,int index){}
+	/**
+	 * 获取正则单次匹配到的整个捕获组开始位置
+	 */
+	public static int matchStart0(String string,String regex){}
+	/**
+	 * 获取正则单次匹配到的第一个捕获组开始位置
+	 */
+	public static int matchStart1(String string,String regex){}
+	/**
+	 * 获取正则单次匹配到的多个捕获组开始位置
+	 */
+	public static int[] matchStart(String string,String regex){}
+	/**
+	 * 获取正则多次匹配到的多个捕获组开始位置
+	 */
+	public static List<int[]> matchStarts(String string,String regex){}
+	/**
+	 * 停止执行后续脚本异常
+	 */
+	public static final class ExitOrQuitScriptException extends ScriptException{
+		public ExitOrQuitScriptException(String code){}
+	}
+	/**
+	 * 植入代码片段
+	 */
+	public static final String DefaultEvalIntoCode=getDefaultEvalIntoCode();
+	/**
+	 * 脚本构建设定
+	 */
+	public static final String[] ScriptEngineBuildOption={"-strict","--language=es6","--global-per-engine"};
+	/**
+	 * 脚本引擎工厂
+	 */
+	public static final NashornScriptEngineFactory ScriptEngineFactory=new NashornScriptEngineFactory();
+	/**
+	 * 脚本编译缓存
+	 */
+	public static final Map<String,Object[]> ScriptCompiledCache=new ConcurrentHashMap<String,Object[]>();
+	/**
+	 * 运行脚本代码
+	 */
+	public static void runScript(String into,File file,final Map<String,Object> data) throws IOException,ScriptException{}
+	/**
+	 * 运行脚本代码
+	 */
+	public static void runScript(File file,Map<String,Object> data) throws IOException,ScriptException{}
+	/**
+	 * 脚本引擎缓存
+	 */
+	public static final Map<String,ScriptEngine> ScriptEngineCache=new ConcurrentHashMap<String,ScriptEngine>();
+	/**
+	 * 运行脚本方法
+	 */
+	public static Object runScript(String into,File file,String func,Object...args) throws IOException,NoSuchMethodException,ScriptException{}
+	/**
+	 * 运行脚本方法
+	 */
+	public static Object runScript(File file,String func,Object...args) throws NoSuchMethodException,IOException,ScriptException{}
+	/**
+	 * 获取脚本语法转换器引擎
+	 */
+	public static ScriptEngine getBabelScriptEngine() throws ScriptException{}
+	/**
+	 * XML文档构建工厂
+	 */
+	public static final DocumentBuilderFactory XmlDocumentBuilderFactory=DocumentBuilderFactory.newInstance();
+	/**
+	 * XML文档缓存
+	 */
+	public static final Map<String,Element> XmlDocumentCache=new ConcurrentHashMap<String,Element>();
+	/**
+	 * 加载XML文档的根节点
+	 */
+	public static Element loadNode(File xml) throws IOException,SAXException{}
+	/**
+	 * XML节点缓存
+	 */
+	public static final Map<String,Map<String,Element>> XmlElementCache=new ConcurrentHashMap<String,Map<String,Element>>();
+	/**
+	 * XPath解析器
+	 */
+	public static final XPath XmlXPathParser=XPathFactory.newInstance().newXPath();
+	/**
+	 * 加载XML文档中的指定节点
+	 */
+	public static Element loadNode(File xml,String tag,String key,String val) throws IOException,XPathExpressionException,SAXException{}
+	/**
+	 * Java文件加载器
+	 */
+	public static class JavaFileLoader extends URLClassLoader{
+		public JavaFileLoader(URL[] urls,ClassLoader parent){}
+		public JavaFileLoader(ClassLoader parent){}
+		public JavaFileLoader(){}
+		public void joinJarFile(URL url){}
+		public Class<?> loadJarFile(String name,URL url) throws ClassNotFoundException{}
+		public Class<?> findClassFile(String name){}
+		public Class<?> loadClassFile(String name,byte[] bytes){}
+		public Class<?> loadClassFile(byte[] bytes){}
+	}
+	/**
+	 * 默认类加载器
+	 */
+	public static final JavaFileLoader DefaultClassLoader=new JavaFileLoader();
+	/**
+	 * 从默认类加载器加载指定类
+	 */
+	public static Class<?> loadClass(String name) throws ClassNotFoundException{}
+	/**
+	 * 加载Java文件并返回指定类
+	 */
+	public static Class<?> loadJavaFiles(String name,File...files) throws ClassNotFoundException{}
+	/**
+	 * 导入Java文件
+	 */
+	public static void joinJavaFiles(File...files){}
+	/**
+	 * 加载指定文件路径Java文件并返回指定类
+	 */
+	public static Class<?> loadJavaFiles(String name,String...paths) throws ClassNotFoundException{}
+	/**
+	 * 导入指定文件路径Java文件
+	 */
+	public static void joinJavaFiles(String...paths){}
+	/**
+	 * 加载方法缓存
+	 */
+	public static final Map<String,Method> LoadMethodCache=new ConcurrentHashMap<String,Method>();
+	/**
+	 * 运行多参数方法
+	 */
+	public static Object runMethod(Class clazz,String method,Class[] type,Object[] data) throws IllegalAccessException,NoSuchMethodException,IllegalArgumentException{}
+	/**
+	 * 运行单参数方法
+	 */
+	public static Object runMethod(Class clazz,String method,Class type,Object data) throws IllegalAccessException,NoSuchMethodException,IllegalArgumentException{}
+	/**
+	 * 给指定类的私有属性或最终属性赋值
+	 */
+	public static Object useField(Class clazz,String name,Object...value) throws IllegalAccessException,NoSuchFieldException,IllegalArgumentException{}
+	/**
+	 * 给指定对象的私有属性或最终属性赋值
+	 */
+	public static Object useField(Object object,String name,Object...value) throws IllegalAccessException,NoSuchFieldException,IllegalArgumentException{}
+	/**
+	 * 最佳路由解析器
+	 */
+	public static Map<String,String> parseRouter(Map<String,Object> router){}
+	/**
+	 * 解析指定资源配置代码
+	 */
+	public static Map<String,Map<String,String>> loadConfig(List<String> lines){}
+	/**
+	 * 读取并解析指定字符集指定资源配置文件
+	 */
+	public static Map<String,Map<String,String>> loadConfig(File file,String charset) throws IOException{}
+	/**
+	 * 读取并解析指定资源配置文件
+	 */
+	public static Map<String,Map<String,String>> loadConfig(File file) throws IOException{}
+	/**
+	 * 文件和文件夹变动监视器
+	 */
+	public static class Watch{
+		public void overflow(Object context){}
+		public void create(Object context,String path){}
+		public void delete(Object context,String path){}
+		public void modify(Object context,String path){}
+	}
+	/**
+	 * 监视指定目录下文件和文件夹变动
+	 */
+	public static void watchFilesChange(Path path,int time,Watch watch) throws IOException,InterruptedException{}
+	/**
+	 * 监视指定目录下文件和文件夹变动
+	 */
+	public static void watchFilesChange(File file,int time,Watch watch) throws IOException,InterruptedException{}
+	/**
+	 * 获取指定目录下媒体资源资料
+	 */
+	public static Set<Map<String,Object>> getMediaTable(File root,Map<String,Map<String,String>> cfg) throws IOException{}
+	/**
+	 * 使用过滤器获取指定目录下媒体资源资料
+	 */
+	public static Set<Map<String,Object>> getMediaTable(final File root,Map<String,Map<String,String>> cfg,File filter) throws IOException{}
+	/**
+	 * 媒体资源资料
+	 */
+	public static class Table{
+		public Table(String idName,String tbName){}
+		public Table(String idName,String tbName,String outPath){}
+		public String idName(){}
+		public String tbName(){}
+		public String outPath(){}
+		public Set<Map<String,Object>> table(){}
+		public boolean make() throws IOException{}
+		public boolean init(Set<Map<String,Object>> set) throws IOException{}
+		public boolean save(Set<Map<String,Object>> set){}
+		public boolean drop(final Set<String> ids){}
+		public boolean drop(final String id){}
+	}
+	/**
+	 * 监视媒体资源文件的变动
+	 */
+	public static void watchTableFiles(final File root,final Map<String,Map<String,String>> cfg,final Table table) throws IOException,InterruptedException{}
+}
+</code></pre>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.lang;
+public class Jsdb{
+	public Jsdb(String json) throws ScriptException,IOException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Jsdb(Map<String,Map<String,Object>> config) throws ScriptException,IOException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Jsdb(final String root,final Map<String,Object> jsdb) throws ScriptException,IOException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table add(Map<String,Object> tb,boolean cover) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table add(Map<String,Object> tb) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table[] add(List<Map<String,Object>> tbs,boolean cover) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table[] add(List<Map<String,Object>> tbs) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table[] add(String json,boolean cover) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table[] add(String json) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table add(String tbName,String idName,String timeName,Integer maxCache,String digest,String cipher,Map<String,Object> attribute,Map<String,String> index,String finish,boolean cover) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table add(String tbName,String idName,String timeName,Integer maxCache,String digest,String cipher,Map<String,Object> attribute,Map<String,String> index,String finish) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table add(String tbName,String idName,String timeName,Integer maxCache,String digest,String cipher,Map<String,Object> attribute,boolean cover) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table add(String tbName,String idName,String timeName,Integer maxCache,String digest,String cipher,Map<String,Object> attribute) throws IOException,ScriptException,ClassNotFoundException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table drop(final String tbName) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public void lose() throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table clear(final String tbName) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Map<String,Table> empty() throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public String[] tbs() throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public boolean has(final String tbName) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Table get(final String tbName) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public Map<String,Object> tr(String tbName,String id) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,ScriptException,IOException{}
+	public Map<String,Object> tr(String tbName,String id,boolean last) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,ScriptException,IOException{}
+	public Map<String,Object>[] trs(String tbName,String tdName,String key) throws InvalidKeyException,IllegalBlockSizeException,BadPaddingException,ScriptException,IOException{}
+	public String[] ids(final String tbName,final String tdName,final String key) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public File[] hots(final String tbName,final String tdName,final String regex) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public String[] keys(final String tbName,final String tdName,final String regex) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+	public class Table{
+		public String tbName(){}
+		public void tbName(String tbName) throws IOException{}
+		public String idName(){}
+		public void idName(String idName) throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public String timeName(){}
+		public void timeName(String timeName) throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public int maxCache(){}
+		public void maxCache(int maxCache) throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public String digest(){}
+		public void digest(String digest) throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,ScriptException{}
+		public String cipher(){}
+		public void cipher(String cipher) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Map<String,Object> attribute(){}
+		public void attribute(Map<String,Object> attribute) throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Object attribute(String attribute) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public void attribute(String name,Object data) throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public String finish(){}
+		public void finish(String finish) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Map<String,String> index(){}
+		public boolean hasIndex(String td){}
+		public void emptyIndex() throws IOException{}
+		public void clearIndex(String tdName) throws IOException{}
+		public void loseIndex() throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public void dropIndex(String tdName) throws IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public boolean dropIndex(String tdName,String key) throws IOException{}
+		public void index(Map<String,String> index) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public void index(String tdName,String split) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public void index(String id,Map<String,Object> tr,boolean cover) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public String[] split(String id,long task,String tdName,Object obj) throws InstantiationException,IllegalAccessException,ClassNotFoundException{}
+		public Map<String,Object> join(final String id,final Map<String,Object> tr,final boolean cover) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object> join(String id,Map<String,Object> tr) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object> join(String id,String json,boolean cover) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object> join(String id,String json) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object> join(Map<String,Object> tr,boolean cover) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object> join(Map<String,Object> tr) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object>[] join(List<Map<String,Object>> trs,boolean cover) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object>[] join(List<Map<String,Object>> trs) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object>[] join(String json,boolean cover) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public Map<String,Object>[] join(String json) throws ClassNotFoundException,IOException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException,InstantiationException,IllegalAccessException,ScriptException{}
+		public String[] list() throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public boolean have(String id) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Map<String,Object> last(final String id) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Long lastTime(String id) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Map<String,Object> take(String id,boolean last) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Map<String,Object> take(String id) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Long takeTime(String id,boolean last) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Long takeTime(String id) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public boolean dump(final String id) throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Table drop() throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Table clear() throws IOException,ScriptException,InvalidKeyException,IllegalBlockSizeException,BadPaddingException{}
+		public Jsdb jsdb(){}
+	}
+	public static interface Split{
+		String[] split(Map<String,Object> index,Table table,String id,long task,String name,Object data);
+	}
+	public static class NoneIndex implements Split{
+		@Override public String[] split(Map<String,Object> index,Table table,String id,long task,String name,Object data){}
+	}
+	public static class NoneSplit implements Split{
+		@Override public String[] split(Map<String,Object> index,Table table,String id,long task,String name,Object data){}
+	}
+	public static class BlankSplit implements Split{
+		@Override public String[] split(Map<String,Object> index,Table table,String id,long task,String name,Object data){}
+	}
+	public static class MarkSplit implements Split{
+		@Override public String[] split(Map<String,Object> index,Table table,String id,long task,String name,Object data){}
+	}
+	public static interface Finish{
+		void finish(long task);
+	}
+}
+</code></pre>
+</body>
+</html>

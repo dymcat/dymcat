@@ -1,0 +1,11 @@
+into($.srcroot+"/#/web.js");
+if($.end=="html"){
+	if($.uripath=="own"){
+		into($.srcpath+"/&.js");
+		setHtmlContent({
+			$:$.srcpath+"/&.html"
+		},{
+			title:"个人中心"
+		});
+	}
+}

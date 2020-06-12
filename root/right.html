@@ -1,0 +1,83 @@
+{{?$.owner}}
+<div class="area area-top">
+	<a href="own.html"><div class="div-scene {{?web.own('scene')}}div-user-scene{{??}}div-none-scene{{?}}">
+		{{%var unknown=!web.own("sex")?"资源库/@/image//user.png":web.own("sex")=="1"?"资源库/@/image//boy.png":"资源库/@/image//girl.png";}}
+		<div><img class="img-user-photo" src="{{=web.own('photo')||unknown}}" onerror="this.src='{{=unknown}}';"/></div>
+		<div>{{=web.own("nick")||web.own("name")||web.own("login")||web.own("email")||web.own("phone")||web.own("idCard")||""}}{{?web.own("sex")}} <b>{{=web.own("sex")=="1"?"♂":"♀"}}</b>{{?}}{{?web.own("birth")}} {{=(function(birth){
+			birth=new Date(birth.toString().replace(/-/g,"/")+" 00:00:00");
+			var now=new Date();
+			return now.getFullYear()-birth.getFullYear()-(parseInt(""+now.getMonth()+now.getDate())-parseInt(""+birth.getMonth()+birth.getDate())>0?0:1);
+		}(web.own("birth")))}}{{?}}</div>
+	</div></a>
+{{?web.own("info")}}
+	<div style="padding:10px;text-indent:2em;font-size:smaller;">{{=web.own("info")}}</div>
+{{?}}
+</div>
+{{??}}
+<div class="area area-top">
+{{%var page="index";}}
+{{#def.login}}
+</div>
+{{?}}
+<div class="area around" style="padding:5px;">
+{{%for(var i=0;i<20;i++){}}
+	<a class="radius shadow tr" style="float:left;margin:5px;padding:5px;background-color:rgba({{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(1,10)/10}});">{{=Tool.randomGB3755(lang.random(1,6))}}</a>
+{{%}}}
+</div>
+<div class="area" style="padding:5px;">
+{{%for(var i=0;i<9;i++){}}
+	<a><li class="tr" style="padding:5px;{{?i==0}}color:deeppink;{{??i==1}}color:hotpink;{{??i==2}}color:lightpink;{{?}}">{{=i+1}}.{{=Tool.randomGB3755(lang.random(7,14))}}</li></a>
+{{%}}}
+</div>
+<div class="area" style="padding:5px;"><div>
+	<a href="http://www.u5u0.com" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">有我有你</li></a>
+	<a href="http://www.dymcat.com" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">呆木猫</li></a>
+	<a href="http://www.dymdog.com" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">呆木狗</li></a>
+	
+	<a href="http://www.xinnet.com" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">新网</li></a>
+	<a href="http://cloud.tencent.com" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">腾讯云</li></a>
+	<a href="http://www.qiniu.com" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">七牛云</li></a>
+	
+	<a href="https://docs.oracle.com/javase/8/docs/api" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">Java8API</li></a>
+	<a href="https://www.oracle.com/technetwork/articles/java/jf14-nashorn-2126515.html" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">Nashorn</li></a>
+	<a href="https://netty.io/4.1/api/index.html" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">NettyAPI</li></a>
+	
+	<a href="https://www.ibm.com/developerworks/cn" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">IBM技术</li></a>
+	<a href="https://developer.mozilla.org/zh-CN/docs/Web" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">火狐技术</li></a>
+	<a href="http://www.w3school.com.cn" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">W3School</li></a>
+	
+	<a href="https://lzw.me/links" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">志文链接</li></a>
+	<a href="http://lzw.me/pages/css3" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">志文CSS3</li></a>
+	<a href="http://lzw.me/w3school" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">志文W3C</li></a>
+	
+	<a href="http://lzw.me/pages/ecmascript" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">ECMA5</li></a>
+	<a href="http://lzw.me/pages/color" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">Color</li></a>
+	<a href="http://lzw.me/pages/raphael" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">Raphael</li></a>	
+	
+	<a href="https://www.css88.com/doc/underscore" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">underscore</li></a>
+	<a href="http://deerchao.net/tutorials/regex/regex.htm" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">regex</li></a>
+	<a href="http://bonsaiden.github.io/JavaScript-Garden/zh" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">JS秘密花园</li></a>
+	
+	<a href="http://www.xiaowangzi.org" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">小王子</li></a>
+	<a href="https://www.jianshu.com" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">简书</li></a>
+	<a href="https://qianduan.group" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">前端外刊</li></a>
+	
+	<a href="https://www.easyicon.net" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">字体库</li></a>
+	<a href="https://www.fontke.com/tool/convfont" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">字体转换</li></a>
+	<a href="http://www.php.cn/manual/view/35521.html" target="_blank"><li class="tr" style="float:left;width:33.3333333333%;line-height:30px;padding:3px 0;text-align:center;">HTTP协议</li></a>
+</div></div>
+<div class="area" style="padding:5px;">
+	<a href="" target="_blank"><img class="tr" src="资源库/@/image//link.png" style="float:right;width:100px;height:100px;"/></a>
+	<a href="" target="_blank"><img class="tr" src="资源库/@/image//logo.png" style="float:left;width:150px;height:70px;"/></a>
+	<a href="http://www.miitbeian.gov.cn" target="_blank"><li class="tr" style="float:left;width:150px;margin-top:10px;text-align:center;">鄂ICP备16011244号</li></a>
+</div>
+<!--(<head<)-->
+<style>
+	.div-scene{padding:20px 0;text-align:center;}
+	.div-scene div{line-height:40px;font-weight:bolder;font-size:larger;text-shadow:0 0 5px rgb(96,96,96);}
+	.div-scene div b{font-size:xx-large;}
+	.div-none-scene{background:linear-gradient(-45deg,rgba(255,255,255,0.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.2) 50%,rgba(255,255,255,0.2) 75%,transparent 75%,transparent);background-size:40px 40px;background-color:rgba({{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(1,10)/10}});}
+	.div-user-scene{background-image:url({{=web.own('scene')}});background-repeat:no-repeat;background-position:center;background-size:cover;}
+	.img-user-photo{width:120px;height:120px;border-radius:120px;}
+</style>
+<!--(>head>)-->

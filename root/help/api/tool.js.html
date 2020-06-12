@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+	div.item{outline:solid 2px skyblue;}
+	pre.text{font-size:larger;font-weight:bold;line-height:25px;padding-left:10px;margin-bottom:-15px;}
+</style>
+</head>
+<body>
+<h1><center>API(web.js)</center></h1>
+
+<div class="item">
+	<h3>执行非事务性SQL语句</h3>
+	<pre class="text">
+exeSQL(file,name,args);
+	</pre>
+	<pre class="line-numbers"><code class="language-javascript">
+exeSQL("sys/user/sql.xml","edit",{id:1,name:"张三"});
+	</code></pre>
+</div>
+
+<div class="item">
+	<h3>执行事务性SQL语句(多头SQL被执行，如果至少一条执行失败，则回滚)</h3>
+	<pre class="text">
+exeSQL(file,name,args,atom);
+exeSQL(file,name,args,atom);
+backConn(atom);
+	</pre>
+	<pre class="line-numbers"><code class="language-javascript">
+var atom="abc";
+exeSQL("sys/user/sql.xml","edit",{id:1,name:"张三"},atom);
+exeSQL("sys/user/sql.xml","edit",{id:1,name:"张三"},atom);
+backConn(atom);
+	</code></pre>
+</div>
+
+
+
+
+
+
+<pre
+  class="language-javascript"
+  data-jsonp="https://api.github.com/repos/leaverou/prism/contents/prism.js"
+  data-callback="cb"
+  >
+</pre>
+<pre data-src="@/style/common.css" data-download-link data-download-link-label="下载"></pre>
+	<pre class="line-numbers" data-line="1,3-5,8"><code class="language-markup"><!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="favicon.png" />
+	<title>Keep markup ▲ Prism plugins</title>
+	<base href="../.." />
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="themes/prism.css" data-noprefix />
+
+	<script src="prefixfree.min.js"></script>
+</head>
+<body class="language-markup">
+<header>
+	<h2>Unescaped markup</h2>
+	<p>Write markup without having to escape anything.</p>
+</header>
+
+<section>
+	<h1>How <mark>to</mark> use</h1>
+	<p>Instead of using <code>&lt;pre>&lt;code></code> elements, use <code>&lt;script type="text/plain"></code>:</p>
+</section>
+
+<section>
+	<h1>Examples</h1>
+
+	<p>With <code>&lt;script type="text/plain"></code>:</p>
+
+	<script type="text/plain"><div><span>Foo</span></div></script>
+</section>
+
+<section>
+	<h1>FAQ</h1>
+
+	<p>Why not use the HTML <code>&lt;template></code> tag?</p>
+
+	<p>Because it is a PITA to get its <code>textContent</code> and needs to be pointlessly cloned.
+		Feel free to implement it yourself and send a pull request though, if you are so inclined.</p>
+
+	<p>Can I use this inline?</p>
+
+	<p>Not out of the box, because I figured it’s more of a hassle to type <code>&lt;script type="text/plain"></code> than escape the 1-2 <code>&lt;</code> characters you need to escape in inline code.
+	Also inline code is not as frequently copy-pasted, which was the major source of annoyance that got me to write this plugin.</p>
+</section>
+</body>
+</html>
+	--></code></pre>
+	<pre class="line-numbers"><code class="language-css">
+@gradient: linear-gradient(135deg,  #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%);
+.example-gradient {
+	background: -moz-linear-gradient(-45deg,  #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%); /* FF3.6+ */
+	background: -webkit-linear-gradient(-45deg,  #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(-45deg,  #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(-45deg,  #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* IE10+ */
+	background: linear-gradient(135deg,  #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* W3C */
+}
+@angle: 3rad;
+.example-angle {
+	transform: rotate(.4turn)
+}
+@nice-blue: #5B83AD;
+.example-color {
+	color: hsla(102, 53%, 42%, 0.4);
+}
+@easing: cubic-bezier(0.1,0.3,1,.4);
+.example-easing {
+	transition-timing-function: ease;
+}
+@time: 1s;
+.example-time {
+	transition-duration: 2s;
+}
+	</code></pre>
+	<pre class="line-numbers"><code class="language-clike">
+#include <iostream>
+
+int main(int argc, char *argv[]) {
+
+  /* An annoying "Hello World" example */
+  for (auto i = 0; i < 0xFFFF; i++)
+    cout << "Hello, World!" << endl;
+
+  char c = '\n';
+  unordered_map <string, vector<string> > m;
+  m["key"] = "\\\\"; // this is an error
+
+  return -2e3 + 12l;
+}
+	</code></pre>
+	<pre class="line-numbers"><code class="language-javascript">
+function $initHighlight(block, cls) {
+  try {
+    if (cls.search(/\bno\-highlight\b/) != -1)
+      return process(block, true, 0x0F) +
+             ` class="${cls}"`;
+  } catch (e) {
+    /* handle exception */
+  }
+  for (var i = 0 / 2; i < classes.length; i++) {
+    if (checkCondition(classes[i]) === undefined)
+      console.log('undefined');
+  }
+}
+
+export  $initHighlight;
+	</code></pre>
+	<pre class="command-line" data-user="user" data-host="127.0.0.1" data-output="2,6"><code class="language-batch">
+#!/bin/bash
+
+###### CONFIG
+ACCEPTED_HOSTS="/root/.hag_accepted.conf"
+BE_VERBOSE=false
+
+if [ "$UID" -ne 0 ]
+then
+ echo "Superuser rights required"
+ exit 2
+fi
+
+genApacheConf(){
+ echo -e "# Host ${HOME_DIR}$1/$2 :"
+}
+	</code></pre>
+	<pre class="line-numbers"><code class="language-http">
+POST /task?id=1 HTTP/1.1
+Host: example.org
+Content-Type: application/json; charset=utf-8
+Content-Length: 137
+
+{
+  "status": "ok",
+  "extended": true,
+  "results": [
+    {"value": 0, "type": "int64"},
+    {"value": 1.0e+3, "type": "decimal"}
+  ]
+}
+	</code></pre>
+	<pre class="line-numbers"><code class="language-ini">
+; boilerplate
+[package]
+name = "some_name"
+authors = ["Author"]
+description = "This is \
+a description"
+
+[[lib]]
+name = ${NAME}
+default = True
+auto = no
+counter = 1_000
+	</code></pre>
+	<pre class="line-numbers"><code class="language-java">
+/**
+ * @author John Smith <john.smith@example.com>
+*/
+package l2f.gameserver.model;
+
+public abstract class L2Char extends L2Object {
+  public static final Short ERROR = 0x0001;
+
+  public void moveTo(int x, int y, int z) {
+    _ai = null;
+    log("Should not be called");
+    if (1 > 5) { // wtf!?
+      return;
+    }
+  }
+}
+	</code></pre>
+	<pre class="line-numbers"><code class="language-json">
+[
+  {
+    "title": "apples",
+    "count": [12000, 20000],
+    "description": {"text": "...", "sensitive": false}
+  },
+  {
+    "title": "oranges",
+    "count": [17500, null],
+    "description": {"text": "...", "sensitive": false}
+  }
+]
+	</code></pre>
+	<pre class="line-numbers"><code class="language-powershell">
+$ echo $EDITOR
+vim
+$ git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+$ git push
+Everything up-to-date
+$ echo 'All
+> done!'
+All
+done!
+	</code></pre>
+	<pre class="line-numbers"><code class="language-properties">
+# .properties
+! Exclamation mark = comments, too
+
+key1 = value1
+key2 : value2
+key3   value3
+key\ spaces multiline\
+            value4
+empty_key
+! Key can contain escaped chars
+\:\= = value5
+	</code></pre>
+	<pre class="line-numbers"><code class="language-sql">
+CREATE <mark>TABLE</mark> "topic" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "forum_id" integer NOT NULL,
+    "subject" varchar(255) NOT NULL
+);
+ALTER TABLE "topic"
+ADD CONSTRAINT forum_id FOREIGN KEY ("forum_id")
+REFERENCES "forum" ("id");
+
+-- Initials
+insert into "topic" ("forum_id", "subject")
+values (2, 'D''artagnian');
+	</code></pre>
+</body>
+</html>

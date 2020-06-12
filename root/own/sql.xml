@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<own>
+<sql name="user.data.get" type="map">
+	select u.*,ud.* from tb_user u left join tb_user_data ud on ud.user=u.id where {=sql.str("u.id='",web.own("id"),"'")}
+</sql>
+<sql name="user.skin.save" type="bool">
+	update tb_user set skin={=sql.str("'",$.skin,"'")} where id={=sql.str("'",web.own("id"),"'")}
+</sql>
+</own>

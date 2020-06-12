@@ -1,0 +1,58 @@
+<div class="area tab-tb tab-btn">
+	<div class="tab-th th">
+		<a title="个人设置" class="tab now">设置</a>
+	</div>
+	<div class="tab-td">
+		<div class="tab now">
+			<div class="link-btn">
+				<a>修改密码</a>
+				<a>修改登录名</a>
+				<a>绑定邮箱</a>
+				<a>绑定手机号</a>
+				<a>绑定身份证</a>
+				<a>绑定银行卡</a>
+				<hr/>
+				<a href="logout.html" onclick="localStorage.removeItem('login_automatic');">退出登录</a>
+{{?"'@@@@@@'@@@@@@@'@@@@@@@@'".indexOf("'"+web.own("id")+"'")==-1}}
+				<a href="logkill.html" onclick="localStorage.removeItem('login_automatic');">注销账号</a>
+{{?}}
+			</div>
+			<table class="data-list">
+				<tr><th class="th">新消息提醒</th></tr>
+				<tr><td><label>接收新消息通知<input type="checkbox" name="show-notify" value="1" checked="checked" style="float:right;"/></label></td></tr>
+				<tr><td><label>通知中显示详情<input type="checkbox" name="show-notify-info" value="1" checked="checked" style="float:right;"/></label></td></tr>
+			</table>
+			<table class="data-list visite-limit">
+				<tr><th class="th" colspan="5">访问权限</th></tr>
+				<tr><td>形象</td><td align="right"><label><input type="radio" name="my-face" value="1" checked="checked"/>公开</label></td><td align="right"><label><input type="radio" name="my-face" value="2"/>关注可见</label></td><td align="right"><label><input type="radio" name="my-face" value="3"/>好友可见</label></td><td align="right"><label><input type="radio" name="my-face" value="4"/>隐私</label><select><option value="1" selected="selected">公开</option><option value="2">关注可见</option><option value="3">好友可见</option><option value="4">隐私</option></select></td></tr>
+				<tr><td>性别</td><td align="right"><label><input type="radio" name="my-sex" value="1"/>公开</label></td><td align="right"><label><input type="radio" name="my-sex" value="2" checked="checked"/>关注可见</label></td><td align="right"><label><input type="radio" name="my-sex" value="3"/>好友可见</label></td><td align="right"><label><input type="radio" name="my-sex" value="4"/>隐私</label><select><option value="1">公开</option><option value="2" selected="selected">关注可见</option><option value="3">好友可见</option><option value="4">隐私</option></select></td></tr>
+				<tr><td>年龄</td><td align="right"><label><input type="radio" name="my-age" value="1"/>公开</label></td><td align="right"><label><input type="radio" name="my-age" value="2"/>关注可见</label></td><td align="right"><label><input type="radio" name="my-age" value="3" checked="checked"/>好友可见</label></td><td align="right"><label><input type="radio" name="my-age" value="4"/>隐私</label><select><option value="1">公开</option><option value="2">关注可见</option><option value="3" selected="selected">好友可见</option><option value="4">隐私</option></select></td></tr>
+				<tr><td>资料</td><td align="right"><label><input type="radio" name="my-data" value="1"/>公开</label></td><td align="right"><label><input type="radio" name="my-data" value="2"/>关注可见</label></td><td align="right"><label><input type="radio" name="my-data" value="3"/>好友可见</label></td><td align="right"><label><input type="radio" name="my-data" value="4" checked="checked"/>隐私</label><select><option value="1">公开</option><option value="2">关注可见</option><option value="3">好友可见</option><option value="4" selected="selected">隐私</option></select></td></tr>
+			</table>
+		</div>
+	</div>
+	<div class="tab-ft">
+		<a title="保存" class="sfont-confirm" onclick="">保存</a>
+		<a title="重置" class="sfont-return" onclick="">重置</a>
+	</div>
+</div>
+<!--(<head<)-->
+<style>
+	.link-btn h4{margin:10px 0;text-align:center;}
+	.link-btn a{display:block;float:left;width:50%;line-height:50px;text-align:center;}
+	@-moz-document url-prefix(){
+		.link-btn a{width:49%;}
+		.link-btn a:nth-of-type(odd){float:right;}
+	}
+	.visite-limit td select{display:none;}
+	@media (max-width:450px){
+		.visite-limit td label{display:none;}
+		.visite-limit td select{display:inline;}
+	}
+</style>
+<!--(>head>)-->
+<!--(<foot<)-->
+<script>
+
+</script>
+<!--(>foot>)-->

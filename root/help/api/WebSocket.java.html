@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.netty;
+public class WebSocket{
+	public long delay(){}
+	public int maxContentLength(){}
+	public int version(){}
+	public String subprotocol(){}
+	public boolean allowExtensions(){}
+	public Map<CharSequence,Object> header(){}
+	public int maxFramePayloadLength(){}
+	public boolean performMasking(){}
+	public boolean allowMaskMismatch(){}
+	public void onBefore(Channel channel,WebSocketFrame frame){}
+	public boolean onClose(Channel channel,CloseWebSocketFrame frame){}
+	public void onPong(Channel channel,PongWebSocketFrame frame){}
+	public void onBytes(Channel channel,BinaryWebSocketFrame frame){}
+	public void onString(Channel channel,TextWebSocketFrame frame){}
+	public void onAfter(Channel channel,WebSocketFrame frame){}
+	public void onResponse(Channel channel,FullHttpResponse response){}
+	public void success(ChannelHandlerContext context,FullHttpResponse response){}
+	public void failure(ChannelHandlerContext context,WebSocketHandshakeException exception){}
+	public void active(ChannelHandlerContext context){}
+	public void inactive(ChannelHandlerContext context){}
+	public void future(Channel channel){}
+	public Map<String,Map<String,Object>> setup(){}
+	public SslContext context(){}
+	public void init(){}
+	public void uriError(String uri,URISyntaxException exception){}
+	public void connectError(URI uri,InterruptedException exception){}
+	public void connectError(SocketAddress address,InterruptedException exception){}
+	public void error(ChannelHandlerContext context,Throwable cause){}
+	public final WebSocket connect(String scheme,String host,int port){}
+	public final WebSocket connect(String scheme,String host,int port,Object header){}
+	public final WebSocket connect(final URI uri){}
+	public final WebSocket connect(final URI uri,Object header){}
+	public final HttpHeaders headers=customHeaders(header());
+	public static HttpHeaders customHeaders(Map<CharSequence,Object> header){}
+	public static void sendClose(Channel channel) throws InterruptedException{}
+	public static void sendPing(Channel channel){}
+	public static void sendBytes(Channel channel,ByteBuf content){}
+	public static void sendBytes(Channel channel,byte[] content){}
+	public static void sendString(Channel channel,ByteBuf content){}
+	public static void sendString(Channel channel,byte[] content){}
+	public static void sendString(Channel channel,String content){}
+}
+</code></pre>
+</body>
+</html>

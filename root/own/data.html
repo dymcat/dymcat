@@ -1,0 +1,218 @@
+<div class="area area-top tab-tb tab-btn">
+	<form action="own/data.submit" method="POST" enctype="multipart/form-data">
+		<div class="tab-th th">
+			<a title="我的资料" class="tab now info-tab" id="tab-data">资料</a>
+			<a title="编辑资料" class="btn edit-btn sfont-editable" id="edit-btn-data"></a>
+			<a title="形象照" class="tab info-tab" id="tab-photo">形象照</a>
+			<a title="选择形象照" class="btn edit-btn sfont-select-photo" id="edit-btn-photo"><input type="file" accept=".jpg,.jpeg,.png,.bmp"/></a>
+			<a title="背景图" class="tab info-tab" id="tab-scene">背景图</a>
+			<input type="hidden" name="_upload_size_scene" value="5M"/>
+			<input type="hidden" name="_upload_type_scene" value="jpg|jpeg|png|bmp"/>
+			<!--<input type="hidden" name="_upload_door_scene" value=""/>-->
+			<input type="hidden" name="_upload_path_scene" value="upload/@"/>
+			<input type="hidden" name="_upload_name_scene" value="scene/{{=web.own('id')}}"/>
+			<input type="hidden" name="_upload_cover_scene" value="true"/>
+			<a title="选择背景图" class="btn edit-btn sfont-select-scene" id="edit-btn-scene"><input type="file" accept=".jpg,.jpeg,.png,.bmp" name="scene"/></a>
+		</div>
+		<div class="tab-td">
+			<div class="tab now data-info">
+				{{%var v=web.take("owner");}}
+				{{?v.saveTime}}<dl><dt>保存时间</dt><dd><input type="text" name="saveTime" value="{{=v.saveTime||''}}" readonly="readonly"/></dd><em id="_error_saveTime_"></em></dl>{{?}}
+				<dl><dt>ID</dt><dd><input type="text" name="user" value="{{=v.id||''}}" required="required" maxlength="36" readonly="readonly"/></dd><em id="_error_user_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.name?'block':'none'}};"><dt>姓名</dt><dd><input type="text" name="name" value="{{=v.name||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_name_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.sex?'block':'none'}};"><dt>性别</dt><dd><select class="tinyint" tinyint="user$sex" name="sex" data="{{=v.sex||''}}" disabled="disabled"></select></dd><em id="_error_sex_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.birth?'block':'none'}};"><dt>生日</dt><dd><input type="date" name="birth" value="{{=v.birth||''}}" disabled="disabled"/></dd><em id="_error_birth_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.nick?'block':'none'}};"><dt>昵称</dt><dd><input type="text" name="nick" value="{{=v.nick||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_nick_"></em></dl>
+				<dl class="dl-textarea" style="display:{{=v.info?'block':'none'}};"><dt>简介</dt><dd><textarea name="info" readonly="readonly">{{=v.info||''}}</textarea></dd><em id="_error_info_"></em></dl>
+				<dl style="display:none;"><dt>形象照</dt><dd><input type="text" name="photo" maxlength="255"/></dd><em id="_error_photo_"></em></dl>
+				<!--
+				<dl><dt>背景图</dt><dd><input type="text" name="scene" value="{{=v.scene||''}}" maxlength="255"/></dd><em id="_error_scene_"></em></dl>
+				-->
+				<dl class="dl-field" style="display:{{=v.nation?'block':'none'}};"><dt>民族</dt><dd><select class="tinyint" tinyint="user_data$nation" name="nation" data="{{=v.nation||''}}" disabled="disabled"></select></dd><em id="_error_nation_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.blood?'block':'none'}};"><dt>血型</dt><dd><select class="tinyint" tinyint="user_data$blood" name="blood" data="{{=v.blood||''}}" disabled="disabled"></select></dd><em id="_error_blood_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.zodiac?'block':'none'}};"><dt>生肖</dt><dd><select class="tinyint" tinyint="user_data$zodiac" name="zodiac" data="{{=v.zodiac||''}}" disabled="disabled"></select></dd><em id="_error_zodiac_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.constellation?'block':'none'}};"><dt>星座</dt><dd><select class="tinyint" tinyint="user_data$constellation" name="constellation" data="{{=v.constellation||''}}" disabled="disabled"></select></dd><em id="_error_constellation_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.character?'block':'none'}};"><dt>性格</dt><dd><select class="tinyint" tinyint="user_data$character" name="character" data="{{=v.character||''}}" disabled="disabled"></select></dd><em id="_error_character_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.marital?'block':'none'}};"><dt>婚况</dt><dd><select class="tinyint" tinyint="user_data$marital" name="marital" data="{{=v.marital||''}}" disabled="disabled"></select></dd><em id="_error_marital_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.height?'block':'none'}};"><dt>身高</dt><dd><input type="number" name="height" value="{{=v.height||''}}" min="0" pattern="[0-9]+" disabled="disabled"/><i>厘米</i></dd><em id="_error_height_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.weight?'block':'none'}};"><dt>体重</dt><dd><input type="number" name="weight" value="{{=v.weight||''}}" min="0" pattern="[0-9]+" disabled="disabled"/><i>千克</i></dd><em id="_error_weight_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.habit?'block':'none'}};"><dt>习惯</dt><dd><input type="text" name="habit" value="{{=v.habit||''}}" maxlength="255" disabled="disabled"/></dd><em id="_error_habit_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.hobby?'block':'none'}};"><dt>爱好</dt><dd><input type="text" name="hobby" value="{{=v.hobby||''}}" maxlength="255" disabled="disabled"/></dd><em id="_error_hobby_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.pet?'block':'none'}};"><dt>宠物</dt><dd><select class="tinyint" tinyint="user_data$pet" name="pet" data="{{=v.pet||''}}" disabled="disabled"></select></dd><em id="_error_pet_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.city?'block':'none'}};"><dt>城市</dt><dd><input type="text" name="city" value="{{=v.city||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_city_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.school?'block':'none'}};"><dt>学校</dt><dd><input type="text" name="school" value="{{=v.school||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_school_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.education?'block':'none'}};"><dt>学历</dt><dd><select class="tinyint" tinyint="user_data$education" name="education" data="{{=v.education||''}}" disabled="disabled"></select></dd><em id="_error_education_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.company?'block':'none'}};"><dt>公司</dt><dd><input type="text" name="company" value="{{=v.company||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_company_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.vocation?'block':'none'}};"><dt>职业</dt><dd><input type="text" name="vocation" value="{{=v.vocation||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_vocation_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.income?'block':'none'}};"><dt>收入</dt><dd><input type="number" name="income" value="{{=v.income||''}}" min="0" pattern="[0-9]+" disabled="disabled"/><i>元</i></dd><em id="_error_income_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.house?'block':'none'}};"><dt>房产</dt><dd><select class="tinyint" tinyint="user_data$house" name="house" data="{{=v.house||''}}" disabled="disabled"></select></dd><em id="_error_house_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.car?'block':'none'}};"><dt>汽车</dt><dd><select class="tinyint" tinyint="user_data$car" name="car" data="{{=v.car||''}}" disabled="disabled"></select></dd><em id="_error_car_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.address?'block':'none'}};"><dt>地址</dt><dd><input type="text" name="address" value="{{=v.address||''}}" maxlength="255" disabled="disabled"/></dd><em id="_error_address_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.position?'block':'none'}};"><dt>位置</dt><dd><input type="text" name="position" value="{{=v.position||''}}" maxlength="255" disabled="disabled"/></dd><em id="_error_position_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.postal?'block':'none'}};"><dt>邮编</dt><dd><input type="text" name="postal" value="{{=v.postal||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_postal_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.weibo?'block':'none'}};"><dt>微博</dt><dd><input type="text" name="weibo" value="{{=v.weibo||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_weibo_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.wechat?'block':'none'}};"><dt>微信</dt><dd><input type="text" name="wechat" value="{{=v.wechat||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_wechat_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.qq?'block':'none'}};"><dt>QQ</dt><dd><input type="text" name="qq" value="{{=v.qq||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_qq_"></em></dl>
+				<dl class="dl-field" style="display:{{=v.msn?'block':'none'}};"><dt>MSN</dt><dd><input type="text" name="msn" value="{{=v.msn||''}}" maxlength="32" disabled="disabled"/></dd><em id="_error_msn_"></em></dl>
+			</div>
+			<div class="tab" style="text-align:center;">
+				{{%var unknown=!web.own("sex")?"资源库/@/image//user.png":web.own("sex")=="1"?"资源库/@/image//boy.png":"资源库/@/image//girl.png";}}
+				<img id="image-photo" data="{{=web.own('photo')||unknown}}" src="{{=web.own('photo')||unknown}}" onerror="this.src='{{=unknown}}';"/>
+			</div>
+			<div class="tab div-scene {{?web.own('scene')}}div-user-scene{{??}}div-none-scene{{?}}" id="image-scene"></div>
+		</div>
+		<div class="tab-ft">
+			<a title="保存" class="sfont-confirm" id="save-button">保存</a>
+			<a title="重置资料" class="sfont-return" id="reset-button">重置资料</a>
+		</div>
+	</form>
+</div>
+<!--(<head<)-->
+<link href="资源库/@/cropper/cropper.min.css" rel="stylesheet"/>
+<style>
+	.edit-btn{display:none;width:30px;height:48px;font-size:x-large;color:orange;border-bottom:solid 1px orange;overflow:hidden;}
+	.edit-btn input[type="file"]{position:relative;top:-40px;left:-50px;height:50px;font-size:1000px;opacity:0;}
+	#edit-btn-data{float:left;padding:10px 56px 0 36px;}
+	#edit-btn-photo{float:left;padding:10px 64px 0 44px;}
+	#edit-btn-scene{float:left;padding:10px 64px 0 44px;}
+	#image-photo{max-width:100%;border-radius:50%;}
+	.cropper-view-box,.cropper-face{border-radius:50%;}
+	.div-scene{height:250px;}
+	.div-none-scene{background:linear-gradient(-45deg,rgba(255,255,255,0.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.2) 50%,rgba(255,255,255,0.2) 75%,transparent 75%,transparent);background-size:40px 40px;background-color:rgba({{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(1,10)/10}});}
+	.div-user-scene{background-image:url({{=web.own('scene')}});background-repeat:no-repeat;background-position:center;background-size:cover;}
+</style>
+<!--(>head>)-->
+<!--(<foot<)-->
+<script src="资源库/@/cropper/cropper.min.js"></script>
+<script>
+	function getImageURLByFile(file){
+		return window.createObjectURL?window.createObjectURL(file):window.URL?window.URL.createObjectURL(file):window.webkitURL?window.webkitURL.createObjectURL(file):null;
+	}
+	function createRoundedCanvas(canvas,source){
+		var width=source.width;
+		var height=source.height;
+		canvas.width=width;
+		canvas.height=height;
+		var context=canvas.getContext("2d");
+		context.beginPath();
+		context.arc(width/2,height/2,Math.min(width,height)/2,0,2*Math.PI);
+		context.strokeStyle="rgba(0,0,0,0)";
+		context.stroke();
+		context.clip();
+		context.drawImage(source,0,0,width,height);
+	}
+</script>
+<script>
+	$("#edit-btn-photo input[type='file']").change(function(){
+		var $photo=$("#image-photo");
+		$photo.cropper({aspectRatio:1/1,zoomOnWheel:false,toggleDragModeOnDblclick:false});
+		$photo.cropper("replace",getImageURLByFile(this.files[0]));
+		$photo.parent().parent().find("input[name='photo']").val("<>");
+	});
+	$("#edit-btn-scene input[type='file']").change(function(){
+		var $scene=$("#image-scene");
+		$scene.removeClass("div-none-scene");
+		$scene.addClass("div-user-scene");
+		$scene.css("background-image","url("+getImageURLByFile(this.files[0])+")");
+	});
+	$("#tab-data").click(function(){
+		$(".info-tab").show();
+		$(this).hide();
+		$(".edit-btn").hide();
+		$("#edit-btn-data").show();
+		$("#reset-button").html("重置资料");
+		$("#reset-button").attr("title","重置资料");
+	});
+	$("#tab-photo").click(function(){
+		$(".info-tab").show();
+		$(this).hide();
+		$(".edit-btn").hide();
+		$("#edit-btn-photo").show();
+		$("#reset-button").html("重置形象照");
+		$("#reset-button").attr("title","重置形象照");
+	});
+	$("#tab-scene").click(function(){
+		$(".info-tab").show();
+		$(this).hide();
+		$(".edit-btn").hide();
+		$("#edit-btn-scene").show();
+		$("#reset-button").html("重置背景图");
+		$("#reset-button").attr("title","重置背景图");
+	});
+	$("#tab-data").hide();
+	$("#edit-btn-data").show();
+	$("#edit-btn-data").click(function(){
+		if(!$(this).attr("flag")){
+			$(this).attr("flag","true");
+			$(this).removeClass("sfont-editable");
+			$(this).addClass("sfont-preview");
+			$(this).attr("title","预览资料");
+			$(".dl-textarea").show();
+			$(".dl-textarea").find("textarea[readonly='readonly']").removeAttr("readonly");
+			$(".dl-field").show();
+			$(".dl-field").find("input[disabled='disabled'],select[disabled='disabled']").removeAttr("disabled");
+		}else{
+			$(this).removeAttr("flag");
+			$(this).removeClass("sfont-preview");
+			$(this).addClass("sfont-editable");
+			$(this).attr("title","编辑资料");
+			$(".dl-textarea").find("textarea").attr("readonly","readonly");
+			$(".dl-textarea").each(function(){
+				if($(this).find("textarea").val()==""){$(this).hide();}
+			});
+			$(".dl-field").find("input,select").attr("disabled","disabled");
+			$(".dl-field").each(function(){
+				var $tag=$(this).find("input,select");
+				if($tag.length==1){
+					if($tag.val()==""){$(this).hide();}
+				}else{
+					$tag=$(this).find("input[type='radio']:checked,input[type='checkbox']:checked");
+					if($tag.length==0){$(this).hide();}
+				}
+			});
+		}
+	});
+</script>
+<script>
+	$("#reset-button").click(function(){
+		var $form=$(this).parent().parent();
+		var $photo=$form.find("input[name='photo']");
+		var $scene=$form.find("input[name='scene']");
+		if($(this).html()=="重置资料"){
+			$photo.removeAttr("name");
+			$scene.removeAttr("name");
+			$form[0].reset();
+			$photo.attr("name","photo");
+			$scene.attr("name","scene");
+		}else if($(this).html()=="重置形象照"){
+			$photo.val("");
+			$("#image-photo").attr("src",$("#image-photo").attr("data"));
+			$("#image-photo").removeClass("cropper-hidden");
+			$("#image-photo").parent().find("div.cropper-container").remove();
+		}else if($(this).html()=="重置背景图"){
+			$scene.val("");
+			var $scene=$("#image-scene");
+{{?web.own("scene")}}
+			$scene.removeClass("div-none-scene");
+			$scene.addClass("div-user-scene");
+			$scene.css("background-image","url({{=web.own('scene')}})");
+{{??}}
+			$scene.removeClass("div-user-scene");
+			$scene.addClass("div-none-scene");
+			$scene.css("background-image","");
+{{?}}
+		}
+	});
+	$("#save-button").click(function(){
+		var $form=$(this).parent().parent();
+		var $photo=$form.find("input[name='photo']");
+		if($photo.val()=="<>"){
+			var roundedCanvas=document.createElement("canvas");
+			createRoundedCanvas(roundedCanvas,$("#image-photo").cropper("getCroppedCanvas",{width:200,height:200}));
+			var src=roundedCanvas.toDataURL();
+			$photo.val(src.substring(src.indexOf(";base64,")+8));
+		}
+		$form.submit();
+	});
+</script>
+<!--(>foot>)-->

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title level="{{=$.level||0}}">{{=$.title||'<!--(<title>)-->'}}</title>
+<base href="{{=$.urlbase||'/'}}"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,height=device-height,user-scalable=yes,initial-scale=1,minimum-scale=1,maximum-scale=10"/>
+<meta name="x5-page-mode" content="app"/>
+<meta name="browsermode" content="application"/>
+<meta name="renderer" content="webkit"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<meta http-equiv="Cache-Control" content="no-transform"/>
+<link href="资源库/@/sfont/sfont.css" rel="stylesheet"/>
+<link href="@/style/common.css" rel="stylesheet"/>
+<style id="body-color-style">
+{{=$.body_color_style||''}}
+</style>
+<style id="area-color-style">
+{{=$.area_color_style||''}}
+</style>
+{{=$.head||'<!--(<head>)-->'}}
+</head>
+<body>
+<div style="height:100%;display:flex;justify-content:center;align-items:center;">
+	<div class="area" style="width:100%;max-width:400px;">
+{{%var page="login";}}
+{{#def.body}}
+	</div>
+</div>
+<iframe name="hidden-form-iframe" style="display:none;"></iframe>
+</body>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>window.jQuery||document.write("<script src='资源库/@/jquery/jquery-1.12.4.min.js'><\/script>")</script>
+<!--[if lt IE 9]>
+<script src="资源库/@/polyfill/html5shiv/html5shiv.min.js"></script>
+<script src="资源库/@/polyfill/respond/respond.min.js"></script>
+<![endif]-->
+<script>
+/***<tab<***/
+	$(".tab-th").on("click",".tab",function(){
+		$(this).parent().parent().find(".now").removeClass("now");
+		$(this).addClass("now");
+		var now=this;
+		var index=0;
+		$(this).parent().find(".tab").each(function(i){
+			if(this==now){index=i;}
+			var run=$(this).attr("run");
+			if(run){eval(run);}
+		});
+		$(this).parent().parent().find(".tab-td .tab").eq(index).addClass("now");
+	});
+/***>tab>***/
+/***<form error message<***/
+	function showErrorMessage(message){
+		for(var name in message){
+			$("em#_error_"+name+"_").html(message[name]);
+		}
+	}
+/***>form error message>***/
+</script>
+{{=$.foot||'<!--(<foot>)-->'}}
+</html>

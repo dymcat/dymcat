@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.netty;
+public class HttpServer{
+	public Map<String,Object> http(){}
+	public Map<String,Object> https(){}
+	public Map<String,Object> proxy(){}
+	public boolean debug(){}
+	public String print(){}
+	public String i18n(){}
+	public String mime(){}
+	public String type(){}
+	public String charset(){}
+	public String mobile(){}
+	public boolean babel(){}
+	public boolean eval(){}
+	public String into(){}
+	public String maxage(){}
+	public String timeout(){}
+	public String user(){}
+	public String index(){}
+	public String favicon(){}
+	public String err(){}
+	public Map<String,Object> parse(){}
+	public String mvc(){}
+	public String web(){}
+	public String at(){}
+	public String air(){}
+	public String file(){}
+	public String folder(){}
+	public String backup(){}
+	public String filter(){}
+	public Map<String,Object> source(){}
+	public Map<String,String> upload(){}
+	public String level(){}
+	public Map<String,Map<String,Object>> setup(){}
+	public SslContext context(){}
+	public void init(boolean ssl,String host,int port){}
+	public void done(boolean ssl,String host,int port){}
+	public void handler(ChannelPipeline pipeline){}
+	public void logging(ChannelHandlerContext context,NioSocketChannel channel){}
+	public void error(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,Throwable cause){}
+	public boolean scan(ChannelHandlerContext context,HttpRequest request) throws Exception{}
+	public boolean censor(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public boolean over(final ChannelHandlerContext context,final HttpRequest request,final Map<String,Object> parameter) throws Exception{}
+	public void reflect(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public void function(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public void script(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public void router(final ChannelHandlerContext context,final HttpRequest request,final Map<String,Object> parameter) throws Exception{}
+	public void service(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public void get(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public void post(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public void response(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public void windup(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter) throws Exception{}
+	public int maxstep(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,String end){}
+	public String downname(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,File file){}
+	public String cacheset(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,File file){}
+	public int chunkset(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,File file){}
+	public void progress(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,File file,ChannelProgressiveFuture future,long progress,long total){}
+	public void complete(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,File file,ChannelProgressiveFuture future){}
+	public void postbody(ChannelHandlerContext context,HttpRequest request,boolean multipart){}
+	public int brush(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,FileUpload fileUpload,Map<String,String> configField){}
+	public String flush(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,FileUpload fileUpload,Map<String,String> configField,String fileName) throws IOException{}
+	public String batch(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,FileUpload fileUpload,Map<String,String> configField) throws IOException{}
+	public void follow(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,Attribute attribute){}
+	public void follow(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,FileUpload fileUpload){}
+	public void finish(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,Attribute attribute){}
+	public void finish(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter,FileUpload fileUpload){}
+	public void parseEndError(ChannelHandlerContext context,HttpRequest request,EndOfDataDecoderException exception){}
+	public void parseDestroyError(ChannelHandlerContext context,HttpRequest request,IllegalReferenceCountException exception){}
+	public String subprotocols(ChannelHandlerContext context,HttpRequest request){}
+	public boolean allowExtensions(ChannelHandlerContext context,HttpRequest request){}
+	public int maxFramePayloadLength(ChannelHandlerContext context,HttpRequest request){}
+	public boolean allowMaskMismatch(ChannelHandlerContext context,HttpRequest request){}
+	public void active(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter){}
+	public void inactive(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter){}
+	public void onOpen(ChannelHandlerContext context,HttpRequest request,Map<String,Object> parameter){}
+	public void onBefore(ChannelHandlerContext context,WebSocketFrame frame){}
+	public boolean onClose(ChannelHandlerContext context,CloseWebSocketFrame frame){}
+	public boolean onPing(ChannelHandlerContext context,PingWebSocketFrame frame){}
+	public void onBytes(ChannelHandlerContext context,BinaryWebSocketFrame frame){}
+	public void onString(ChannelHandlerContext context,TextWebSocketFrame frame){}
+	public void onAfter(ChannelHandlerContext context,WebSocketFrame frame){}
+	public void snap(HttpResponse response,Object content){}
+	public final Object withSession(final ChannelHandlerContext context,final HttpRequest request,HttpResponseStatus status,Object cookie){}
+	public final void download(ChannelHandlerContext context,HttpRequest request,Map<CharSequence,Object> header,Object cookie,String type,File file,int chunk,ChannelProgressiveFutureListener listener) throws IOException{}
+	public final void response(ChannelHandlerContext context,HttpRequest request,Map<CharSequence,Object> header,Object cookie,String type,byte[] content){}
+	public final void response(ChannelHandlerContext context,HttpRequest request,Map<CharSequence,Object> header,Object cookie,String type,byte[][] content){}
+	public final void response(ChannelHandlerContext context,HttpRequest request,HttpResponseStatus status,Map<CharSequence,Object> header,Object cookie,String type,String content){}
+	public final void response(ChannelHandlerContext context,HttpRequest request,int status,Map<CharSequence,Object> header,Object cookie,String type,String content){}
+	public final void redirect(ChannelHandlerContext context,final HttpRequest request,int status,final String redirect){}
+	public final void redirect(ChannelHandlerContext context,HttpRequest request,String redirect){}
+	public final void error(ChannelHandlerContext context,HttpRequest request,Object status,Object content){}
+	public final Map<String,Object> uriview(ChannelHandlerContext context,HttpRequest request,String uriview){}
+	public final String urlbase(HttpRequest request){}
+	public final String srcroot(ChannelHandlerContext context,HttpRequest request,String name){}
+	public final String[] uri2src(ChannelHandlerContext context,HttpRequest request,String uri){}
+	public final String i18n(String language,String text,Object...data){}
+	public final String mime(String fileName){}
+	public final ChannelFuture enter(EventLoopGroup listener,EventLoopGroup executor,final boolean ssl,final String host,final int port) throws InterruptedException{}
+	public final HttpServer start(){}
+	public static void sendBytes(ChannelHandlerContext context,ByteBuf content){}
+	public static void sendBytes(ChannelHandlerContext context,byte[] content){}
+	public static void sendString(ChannelHandlerContext context,ByteBuf content){}
+	public static void sendString(ChannelHandlerContext context,byte[] content){}
+	public static void sendString(ChannelHandlerContext context,String content){}
+	public static String getToken(ChannelHandlerContext context,String session,Integer mingle){}
+	public static void addCookie(ChannelHandlerContext context,HttpHeaders headers,Map<String,Object> map){}
+	public static HttpResponse getResponse(ChannelHandlerContext context,HttpRequest request,HttpResponseStatus status,Map<CharSequence,Object> header,Object cookie,String type,String charset,ByteBuf content){}
+	public static HttpResponse response(ChannelHandlerContext context,HttpRequest request,HttpResponseStatus status,Map<CharSequence,Object> header,Object cookie,String type,String charset,ByteBuf content){}
+	public static HttpResponse download(ChannelHandlerContext context,HttpRequest request,Map<CharSequence,Object> header,Object cookie,String type,String charset,File file,int chunk,ChannelProgressiveFutureListener listener) throws IOException{}
+	public static boolean isKeepAlive(HttpRequest request){}
+	public static String getCookieValue(HttpRequest request,String name){}
+	public final boolean hasGlobal(String name){}
+	public final Object getGlobal(String name){}
+	public final void setGlobal(String name,Object data){}
+	public final Object dropGlobal(String name){}
+	public static class Data{
+		public HttpServer server;
+		public ChannelHandlerContext context;
+		public ChannelPromise promise;
+		public WebSocketServerHandshaker websocket;
+		public HttpRequest request;
+		public HttpPostRequestDecoder decoder;
+		public Map<String,Object> pars;
+		public String[] args;
+		public ScheduledFuture timeout;
+		public String parse;
+		public String language;
+		public String charset;
+		public boolean mobile;
+		public String session;
+		public Object cookie;
+		public Map<CharSequence,Object> header;
+		public int status;
+		public String type;
+		public String end;
+		public String redirect;
+		public Object content;
+		public boolean backup;
+		public File file;
+		public File folder;
+		public String urlbase;
+		public String uridoor;
+		public String uriview;
+		public String uripath;
+		public String srcroot;
+		public String srcbase;
+		public String srcview;
+		public String srcpath;
+		public static Data create(Map<String,Object> map) throws NoSuchFieldException,IllegalAccessException{}
+		public static void update(Map<String,Object> map,Data data) throws IllegalAccessException{}
+	}
+}
+</code></pre>
+</body>
+</html>

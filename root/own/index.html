@@ -1,0 +1,52 @@
+<div class="area plane transparent around link-group">
+{{~$.left_menu:v:i}}
+{{%var r=lang.random(64,192),g=lang.random(64,192),b=lang.random(64,192),a=lang.random(1,10)/10;}}
+	<a class="tr" style="background-color:rgba({{=r}},{{=g}},{{=b}},{{=a}});" href="{{=v.platePath||''}}/{{=v.entryPath||''}}"><table>
+{{?v.entryName==v.groupName}}
+		<tr><td><i>{{=v.entryIcon||''}}</i>{{=v.entryName||''}}</td></tr>
+{{??}}
+		<tr><td><i>{{=v.groupIcon||''}}</i>{{=v.groupName||''}}</td></tr>
+		<tr><td><i>{{=v.entryIcon||''}}</i>{{=v.entryName||''}}</td></tr>
+{{?}}
+	</table></a>
+{{~}}
+</div>
+<!--(<user-image<)-->
+<div class="area area-none apeak plane">
+	<div class="div-scene {{?web.own('scene')}}div-user-scene{{??}}div-none-scene{{?}}">
+{{%var unknown=!web.own("sex")?"资源库/@/image//user.png":web.own("sex")=="1"?"资源库/@/image//boy.png":"资源库/@/image//girl.png";}}
+		<div><img class="img-user-photo" src="{{=web.own('photo')||unknown}}" onerror="this.src='{{=unknown}}';"/></div>
+		<div>
+{{=web.own("nick")||web.own("name")||web.own("login")||web.own("email")||web.own("phone")||web.own("idCard")||""}}{{?web.own("sex")}} <b>{{=web.own("sex")=="1"?"♂":"♀"}}</b>{{?}}{{?web.own("birth")}} {{=(function(birth){
+	birth=new Date(birth.toString().replace(/-/g,"/")+" 00:00:00");
+	var now=new Date();
+	return now.getFullYear()-birth.getFullYear()-(parseInt(""+now.getMonth()+now.getDate())-parseInt(""+birth.getMonth()+birth.getDate())>0?0:1);
+}(web.own("birth")))}}{{?}}
+		</div>
+	</div>
+{{?web.own("info")}}
+	<div style="padding:10px;text-indent:2em;font-size:smaller;">{{=web.own("info")}}</div>
+{{?}}
+</div>
+<!--(>user-image>)-->
+<!--(<head<)-->
+<style>
+	#page-body{overflow:auto;}
+	#page-left{height:auto;}
+	#page-main{height:auto;overflow:visible;}
+</style>
+<style>
+	.div-scene{height:250px;padding:40px 0;text-align:center;}
+	.div-scene div{line-height:40px;font-weight:bolder;font-size:larger;text-shadow:0 0 5px rgb(96,96,96);}
+	.div-scene div b{font-size:xx-large;}
+	.div-none-scene{background:linear-gradient(-45deg,rgba(255,255,255,0.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.2) 50%,rgba(255,255,255,0.2) 75%,transparent 75%,transparent);background-size:40px 40px;background-color:rgba({{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(64,192)}},{{=lang.random(1,10)/10}});}
+	.div-user-scene{background-image:url({{=web.own('scene')}});background-repeat:no-repeat;background-position:center;background-size:cover;}
+	.img-user-photo{width:120px;height:120px;border-radius:120px;}
+</style>
+<style>
+	.link-group a{margin:2vw;width:150px;border-radius:20px;box-shadow:0 0 20px rgba(0,0,0,0.5);}
+	.link-group a table{width:100%;height:100px;text-align:center;}
+	.link-group a td{font-size:smaller;}
+	.link-group a tr:last-child td{font-size:larger;}
+</style>
+<!--(>head>)-->

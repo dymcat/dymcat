@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.netty;
+public class ProxyServer{
+	public Map<String,Object> http(){}
+	public Map<String,Object> https(){}
+	public String level(){}
+	public Map<String,Map<String,Object>> setup(){}
+	public long delay(){}
+	public long period(){}
+	public int timeout(){}
+	public int login(){}
+	public int mingle(){}
+	public Map<String,Map<String,Object>> remote(){}
+	public void init(boolean ssl,String host,int port) throws IOException{}
+	public void done(boolean ssl,String host,int port){}
+	public void logging(ChannelHandlerContext context,NioSocketChannel channel){}
+	public SocketAddress selector(boolean ssl){}
+	public final Map<SocketAddress,Boolean> RemoteHttpAddressMapper=Collections.synchronizedMap(new LinkedHashMap<SocketAddress,Boolean>(4,0.75f,true));
+	public final Map<SocketAddress,Boolean> RemoteHttpsAddressMapper=Collections.synchronizedMap(new LinkedHashMap<SocketAddress,Boolean>(4,0.75f,true));
+	public final ChannelFuture enter(EventLoopGroup listener,EventLoopGroup executor,final boolean ssl,String host,int port) throws IOException,InterruptedException{}
+	public final ProxyServer start(){}
+}
+</code></pre>
+</body>
+</html>

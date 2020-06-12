@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/"/>
+<meta charset="UTF-8"/>
+<link href="资源库/@/prism/prism.all.css" rel="stylesheet"/>
+<script src="资源库/@/prism/prism.all.js"></script>
+<style>
+.code-toolbar pre code{overflow-y:hidden;}
+</style>
+</head>
+<body>
+<pre class="line-numbers"><code class="language-clike">
+package com.dymcat.netty;
+public class MsgAlloter{
+	public final Map<ChannelOutboundInvoker,Long> temp=new ConcurrentHashMap<ChannelOutboundInvoker,Long>();
+	public final Map<String,ChannelOutboundInvoker> pass=new ConcurrentHashMap<String,ChannelOutboundInvoker>();
+	public void join(ChannelOutboundInvoker channel){}
+	public void join(ChannelOutboundInvoker channel,String uuid){}
+	public void dump(ChannelOutboundInvoker channel){}
+	public void clear(){}
+	public int timeout(){}
+	public int length(){}
+	public boolean await(){}
+	public int random(){}
+	public void fail(ChannelOutboundInvoker channel,Throwable cause){}
+	public void read(ChannelOutboundInvoker channel,Map<String,Object> data){}
+	public Map<String,Object> read(ChannelOutboundInvoker channel,byte[] message){}
+	public void send(ChannelOutboundInvoker channel,Map<String,Object> message){}
+	public void send(ChannelOutboundInvoker channel,byte[] content){}
+	public final Map<String,Object> release(int own,int you){}
+	public final boolean hasGlobal(String name){}
+	public final Object getGlobal(String name){}
+	public final void setGlobal(String name,Object data){}
+	public final Object dropGlobal(String name){}
+}
+</code></pre>
+</body>
+</html>

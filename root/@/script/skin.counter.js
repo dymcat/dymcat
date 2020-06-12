@@ -1,0 +1,1 @@
+var color_skin_counter={};
