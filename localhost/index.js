@@ -1,0 +1,2 @@
+$.content="localhost";
+print($.urlbase);

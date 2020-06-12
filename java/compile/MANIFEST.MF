@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Class-Path: .
+  java/compile/dymcat.lang.jar
+  java/compile/netty-buffer-4.1.44.Final.jar
+  java/compile/netty-codec-4.1.44.Final.jar
+  java/compile/netty-codec-http-4.1.44.Final.jar
+  java/compile/netty-common-4.1.44.Final.jar
+  java/compile/netty-handler-4.1.44.Final.jar
+  java/compile/netty-resolver-4.1.44.Final.jar
+  java/compile/netty-transport-4.1.44.Final.jar
+Main-Class: com.dymcat.netty.NettyStart

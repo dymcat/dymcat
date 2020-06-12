@@ -1,0 +1,414 @@
+{
+/*****<HttpServer<*****/
+	/*HTTP服务器*/
+	http:{
+		status:true
+		,ssl:false
+		,host:null
+		,port:80
+	}
+	/*HTTPS服务器*/
+	,https:{
+		status:false
+		,ssl:true
+		,host:null
+		,port:443
+	}
+	/*WEB代理服务器*/
+	,proxy:{
+		status:false
+		,delay:1000
+		,period:1000*6
+		,address:"localhost:32100"
+		,conn_timeout:1000
+		,read_timeout:1000
+		,token:"dymcat"
+		,method:"AES"
+		,cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"
+	}
+	/*是否启用Debug模式，该模式会在控制台输出调式信息*/
+	,debug:true
+	/*系统日志输出所在文件夹*/
+	,print:"log"
+	/*国际化配置文件所在文件夹*/
+	,i18n:"i18n"
+	/*MimeType(HTTP响应Content-Type)配置文件路径*/
+	,mime:"mime.ini"
+	/*默认响应Content-Type，此配置不建议变更*/
+	,type:"text/html"
+	/*文本资源字符集*/
+	,charset:"UTF-8"
+	/*移动端标识，请求头域User-Agent中包含以下字符串被认为是移动端请求*/
+	,mobile:"Mobile|Phone|Pad|Pod|IOS|Android|Symbian|BlackBerry"
+	/*加载脚本文件前是否转换语法*/
+	,babel:false
+	/*加载脚本文件后是否立即执行*/
+	,eval:true
+	/*脚本初始化植入代码片段*/
+	,into:null
+	/*客户端保存Session的Cookie有效期，S秒|M分|H时|D天*/
+	,maxage:"2H"
+	/*异步响应超时时间，S秒|M分|H时|D天*/
+	,timeout:"30S"
+	/*WebSocket连接的用户字段名，使连接对象关联到用户ID，如果创建连接时没有附加这个字段，则默认关联到SessionID*/
+	,user:"user"
+	/*首页(默认页面)路径，当URI(URL去除协议://IP|域名:端口之后的部分)为空字符串或/时，会使用这个页面*/
+	,index:"index.html"
+	/*页面小图标静态路径，建议使用ico小图片，也可以在前端页面上加<link href="图片路径" type="image/x-icon" rel="shortcut icon"/>*/
+	,favicon:"@/favicon.ico"
+	/*错误页面(含通配符，?表示err或错误码)路径*/
+	,err:"err/?.html"
+	/*请求解析方式：nature|script|function|reflect*/
+	,parse:{
+		script:["script.html","script/*"]
+		,function:["function.html","function/*"]
+		,reflect:["reflect.html","reflect/*"]
+	}
+	/*请求Java反射拦截层包名前缀*/
+	,mvc:"com.dymcat.mvc"
+	/*默认代码所在文件夹*/
+	,web:"web"
+	/*静态资源文件夹，如果URI中含有/此配置/，将被视为静态资源*/
+	,at:"@"
+	/*系统脚本文件所在目录*/
+	,air:"#"
+	/*文件过滤器脚本文件名*/
+	,file:"file"
+	/*文件夹过滤器脚本文件名*/
+	,folder:"folder"
+	/*请求后续处理脚本文件名*/
+	,backup:"backup"
+	/*请求Java反射过滤器方法名*/
+	,filter:"filter"
+	/*URI根路径映射物理路径配置项，"#":true将映射本机文件系统所有根目录*/
+	,source:{
+		"#":false
+		,"":"root"
+		,static:"?/static"
+		,upload:"?/upload"
+		,资源库:"C:/WORK/资源库"
+		,"*":{
+			static:"static"
+			,upload:"upload"
+		}
+		/*http://localhost:80*/
+		,"localhost":{
+			"":"localhost"
+		}
+		/*http://local.com:80*/
+		,"local.com":{
+			"":"local.com"
+		}
+		/*http://www.local.com:80*/
+		,"www.local.com":{
+			"":"www.local.com"
+		}
+		/*http://127.0.0.1:80/context*/
+		,"/context":{
+			"":"context"
+		}
+	}
+	/*上传文件时客户端可配置项，这些配置项在页面上使用时，必须放在相应<input type="file"/>的前面才能生效*/
+	,upload:{
+		/*
+		 <!--配置可接收任何文件-->
+		 <input type="hidden" name="_upload_type_item1" value="*"/>
+		 <input type="file" name="item1"/>
+		 <!--配置只接收指定类型的文件-->
+		 <input type="hidden" name="_upload_type_item2" value="jpg|jpeg|png|bmp"/>
+		 <input type="file" name="item2"/>
+		*/
+		type:"_upload_type_"
+		/*
+		 <!--配置最大可接收多大的文件，K|M|G|T-->
+		 <input type="hidden" name="_upload_size_item1" value="5M"/>
+		 <input type="file" name="item1"/>
+		*/
+		,size:"_upload_size_"
+		/*
+		 <!--配置上传权限-->
+		 <input type="hidden" name="_upload_door_item1" value="sys/upload.html"/>
+		 <input type="file" name="item1"/>
+		*/
+		,door:"_upload_door_"
+		/*
+		 <!--上传后，写进磁盘的文件目录-->
+		 <input type="hidden" name="_upload_path_item1" value="upload/@"/>
+		 <input type="file" name="item1"/>
+		*/
+		,path:"_upload_path_"
+		/*
+		 <!--上传后，以原文件名写进磁盘-->
+		 <input type="hidden" name="_upload_name_item1" value=""/>
+		 <input type="file" name="item1"/>
+		 <!--上传后，以指定名称写进磁盘-->
+		 <input type="hidden" name="_upload_name_item2" value="demo.jpg"/>
+		 <input type="file" name="item2"/>
+		*/
+		,name:"_upload_name_"
+		/*
+		 <!--上传后，遇到同名文件，是否覆盖之-->
+		 <input type="hidden" name="_upload_cover_item1" value="false"/>
+		 <input type="file" name="item1"/>
+		*/
+		,cover:"_upload_cover_"
+		/*
+		 <!--上传失败，返回的错误信息，这个不是表单元素，可以放在上传控件的后面-->
+		 <input type="file" name="item1"/>
+		 <div>{{=$._upload_error_item1}}</div>
+		*/
+		,error:"_upload_error_"
+	}
+	/*Netty服务日志级别，null|TRACE|DEBUG|INFO|WARN|ERROR*/
+	,level:null
+	/*Netty服务设定项*/
+	,setup:null
+	/*SslContext*/
+	,context:null
+	/*匹配后台JS文件的最大步骤数*/
+	,maxstep:7
+	/*指定下载时的文件名*/
+	,downname:undefined
+	/*指定下载后客户端缓存时间*/
+	,cacheset:undefined
+	/*文件下载分片大小*/
+	,chunkset:undefined
+	/*创建WebSocket连接的子协议*/
+	,subprotocols:null
+	/*创建WebSocket连接时是否允许扩展*/
+	,allowExtensions:true
+	/*创建WebSocket连接的最大帧有效长度*/
+	,maxFramePayloadLength:undefined
+	/*创建WebSocket连接时是否允许面具不匹配*/
+	,allowMaskMismatch:false
+	/*WebSocket消息*/
+	,push:{
+		/*是否启用 WebSocket消息 这个功能*/
+		status:true
+		/*这个功能相关文件的根目录*/
+		,root:"push"
+		/*默认回调执行脚本文件*/
+		,file:"echo"
+		/*默认回调方法名称*/
+		,func:"run"
+	}
+	/*静态页面生成规则*/
+	,solid:{
+		status:false
+		/*静态页面全局根目录*/
+		,"#root":"solid"
+		/*静态页面全局有效期限，S秒|M分|H时|D天*/
+		,"#time":"12H"
+		/*
+			例一 ->	sys/demo/info.html?id=${id}
+			例二 ->	sys/demo/info/${id}.html
+			生成 ->	solid/sys/demo/info/#${id}.html
+		*/
+		,"sys/demo/info.html":{
+			args:["id"]
+			,pars:{
+				id:null
+			}
+		}
+		/*
+			例一 ->	sys/demo.html?type=${type}&name=${name}
+			例二 ->	sys/demo/1.html?type=${type}&name=${name}
+			例三 ->	sys/demo/10/1.html?type=${type}&name=${name}
+			例四 ->	sys/demo/${type}/10/1.html?name=${name}
+			生成 ->	solid/sys/demo/index/#${type}#${name}#${size}#${index}.html
+		*/
+		,"sys/demo/index.html":{
+			args:["index","size/index","type/size/index","type/name/size/index"]
+			,pars:{
+				type:null
+				,name:null
+				,size:10
+				,index:1
+			}
+		}
+	}
+/*****>HttpServer>*****/
+/*****<Jsdb<*****/
+	/*系统缓存*/
+	,jsdb:{
+		status:true
+		/*
+		,server:{
+			port:32321
+			,remote:{
+				client_11:{method:"AES",cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"}
+				,client_22:{method:"AES",cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"}
+				,client_33:{method:"AES",cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"}
+			}
+		}
+		,client:{
+			address:"localhost:32321"
+			,conn_timeout:1000
+			,read_timeout:1000
+			,token:"client_11"
+			,method:"AES"
+			,cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"
+		}
+		*/
+		,frame:{
+			root:"jsdb/!"
+			,digest:"SHA"
+			,cipher:"Blowfish"
+		}
+		,table:{
+			root:"jsdb/@"
+			,digest:"MD5"
+			,cipher:"AES"
+		}
+		,index:{
+			root:"jsdb/#"
+			,digest:"MD2"
+			,NoneIndex:"com.dymcat.lang.Jsdb$NoneIndex"
+			,NoneSplit:"com.dymcat.lang.Jsdb$NoneSplit"
+			,BlankSplit:"com.dymcat.lang.Jsdb$BlankSplit"
+			,MarkSplit:{
+				class:"com.dymcat.lang.Jsdb$MarkSplit"
+				,mark:"|"
+			}
+		}
+	}
+/*****>Jsdb>*****/
+/*****<Jdbc<*****/
+	/*数据库及连接池*/
+	,jdbc:[{
+		status:true
+		,name:"h2"
+		,jar:"java/runtime/h2-1.4.200.jar"
+		,root:"./db/"
+		,webPort:[14100,14199]
+		,tcpPort:null
+		,tcpHost:null
+		,user:null
+		,pwd:null
+		,spare:2
+		,work_life:2
+		,wait_life:30
+		,top:false
+	},{
+		status:false
+		,name:"sqlite"
+		,jar:"java/runtime/sqlite-jdbc-3.27.2.1.jar"
+		,driver:"org.sqlite.JDBC"
+		,url:"jdbc:sqlite:sqlite.db"
+		,user:""
+		,pwd:null
+		,spare:2
+		,work_life:2
+		,wait_life:30
+		,top:false
+	},{
+		status:false
+		,name:"hsqldb"
+		,jar:"java/runtime/hsqldb.jar"
+		,driver:"org.hsqldb.jdbcDriver"
+		,url:"jdbc:hsqldb:mem:hsqldb"
+		,user:null
+		,pwd:null
+		,spare:2
+		,work_life:2
+		,wait_life:30
+		,top:false
+	},{
+		status:false
+		,name:"derby"
+		,jar:"java/runtime/derby.jar"
+		,driver:"org.apache.derby.jdbc.EmbeddedDriver"
+		,url:"jdbc:derby:derby;create=true"
+		,user:null
+		,pwd:null
+		,spare:2
+		,work_life:2
+		,wait_life:30
+		,top:false
+	},{
+		status:false
+		,name:"mariadb"
+		,jar:"java/runtime/mariadb-java-client-2.5.4.jar"
+		,driver:"org.mariadb.jdbc.Driver"
+		,url:"jdbc:mariadb://localhost:3306/db_mariadb"
+		,user:"root"
+		,pwd:""
+		,spare:2
+		,work_life:2
+		,wait_life:30
+		,top:true
+	},{
+		status:false
+		,name:"mysqldb"
+		,jar:"java/runtime/mysql-connector-java-8.0.16.jar"
+		,driver:"com.mysql.cj.jdbc.Driver"
+		,url:"jdbc:mysql://localhost:3306/mysqldb"
+		,user:"root"
+		,pwd:""
+		,spare:2
+		,work_life:2
+		,wait_life:30
+		,top:false
+	}]
+/*****>Jdbc>*****/
+/*****<Javafx<*****/
+	/*是否调用浏览器访问首页*/
+	,browser:true
+	/*是否使用WebView浏览器*/
+	,webview:false
+	/*WebView浏览器依赖的Java文件*/
+	,javafx_java:"java/javafx"
+/*****>Javafx>*****/
+/*****<Mail<*****/
+	/*Mail依赖的Java文件*/
+	,mail_java:"java/mail"
+	/*Mail发件人账号*/
+	,mail_account:"e6e0c16c505s@163.com"
+	/*Mail发件人授权密码*/
+	,mail_password:"e6e0c16c505s"
+/*****>Mail>*****/
+/*****<SMS<*****/
+	/*SMS依赖的Java文件*/
+	,sms_java:"java/sms"
+/*****>SMS>*****/
+/*****<web.js<*****/
+	/*JS模板引擎路径*/
+	,doT:"/#/doT.min.js"
+	/*SQL辅助工具路径*/
+	,sql:"/#/sql.js"
+	/*代码转移标记*/
+	,edge:[
+		{bef:"/\\*\\*\\(",aft:"\\)\\*\\*/"}
+		,{bef:"<!--\\(",aft:"\\)-->"}
+	]
+	/*默认皮肤*/
+	,default_skin:[255,192,127,127,192,255,255,10]
+	/*渐变色样式模板*/
+	,body_color_style:function(){/*
+		body{
+			background:-webkit-linear-gradient(315deg,rgba(<rgb lt>),rgba(<rgb rb>));
+			background:linear-gradient(135deg,rgba(<rgb lt>),rgba(<rgb rb>));
+		}
+	*/}
+	/*雾化感样式模板*/
+	,area_cloud_style:function(){/*
+		.area{background-color:rgba(<rgba>);}
+		.area,.area *{color:rgb(0,0,0);border-color:rgb(96,96,96);}
+		.area :-webkit-autofill{-webkit-text-fill-color:rgb(0,0,0);}
+		.area .th,.area .tb th{background-color:rgba(<rgb-64>,0.3)!important;}
+		.area .td,.area .tb td{background-color:rgba(<rgb-64>,0.1)!important;}
+		.area a:hover,.area input[type="button"]:hover,.area input[type="reset"]:hover,.area input[type="submit"]:hover,.area input[type="image"]:hover,.area dl dd:hover{background-color:rgba(<rgb-64>,0.2);}
+		.area .tr:hover,.area .tb tr:hover,.area .trp:hover .trc{background-color:rgba(<rgb-64>,0.2)!important;}
+	*/}
+	/*玻璃感样式模板*/
+	,area_glass_style:function(){/*
+		.area{background-color:rgba(<rgba>);}
+		.area,.area *{color:rgb(255,255,255);border-color:rgb(160,160,160);}
+		.area :-webkit-autofill{-webkit-text-fill-color:rgb(255,255,255);}
+		.area .th,.area .tb th{background-color:rgba(<rgb+64>,0.3)!important;}
+		.area .td,.area .tb td{background-color:rgba(<rgb+64>,0.1)!important;}
+		.area a:hover,.area input[type="button"]:hover,.area input[type="reset"]:hover,.area input[type="submit"]:hover,.area input[type="image"]:hover,.area dl dd:hover{background-color:rgba(<rgb+64>,0.2);}
+		.area .tr:hover,.area .tb tr:hover,.area .trp:hover .trc{background-color:rgba(<rgb+64>,0.2)!important;}
+	*/}
+/*****>web.js>*****/
+}

@@ -1,0 +1,7 @@
+
+com.dymcat.lang
+dymcat\java\compile\dymcat.lang.jar
+
+com.dymcat.netty
+dymcat\java\compile\dymcat.netty.jar
+dymcat\java\compile\MANIFEST.MF

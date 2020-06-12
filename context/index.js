@@ -1,0 +1,2 @@
+$.content="context";
+print($.urlbase);

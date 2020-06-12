@@ -1,0 +1,39 @@
+{
+/*****<ProxyServer<*****/
+	/*HTTP服务器*/
+	http:{
+		status:true
+		,ssl:false
+		,host:null
+		,port:80
+	}
+	/*HTTPS服务器*/
+	,https:{
+		status:false
+		,ssl:true
+		,host:null
+		,port:443
+	}
+	/*Netty服务日志级别，null|TRACE|DEBUG|INFO|WARN|ERROR*/
+	,level:null
+	/*Netty服务设定项*/
+	,setup:null
+	/*首次执行延迟时间*/
+	,delay:1000
+	/*接连两次间隔时间*/
+	,period:1000*6
+	/*探测连接超时时间*/
+	,timeout:1000
+	/*客户端登录端口*/
+	,login:32100
+	/*集群主机统一混淆码*/
+	,mingle:1314
+	/*请求转发主机*/
+	,remote:{
+		client_00:{method:"AES",cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"}
+		,client_11:{method:"AES",cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"}
+		,client_22:{method:"AES",cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"}
+		,client_33:{method:"AES",cipher:"JnOA9G_P7Dv9MWdahz5zeA~~"}
+	}
+/*****>ProxyServer>*****/
+}
