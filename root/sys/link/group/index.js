@@ -1,0 +1,9 @@
+into($.srcroot+"/#/web.js");
+if($.end=="html"){
+	web.arg2par($.args.length==1?"lead":null);
+	$.pars.rank=2;
+	into($.srcbase+"/&.js");
+	setListHtmlContent(null,{
+		title:"群组级链接列表"
+	},web.exeSQL("list"));
+}

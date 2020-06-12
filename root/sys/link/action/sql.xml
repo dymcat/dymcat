@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<link>
+<sql part="query">
+	select{([
+		tb.id,
+		tb.rank,
+		tb.lead,
+		tb.path,
+		tb.name,
+		tb.icon,
+		tb.sort,
+		tb.status,
+		tb.modifyUser,
+		tb.modifyTime,
+		tb.createUser,
+		tb.createTime,
+		e.path entryPath,
+		e.name entryName,
+		e.icon entryIcon,
+		e.sort entrySort,
+		g.path groupPath,
+		g.name groupName,
+		g.icon groupIcon,
+		g.sort groupSort,
+		p.path platePath,
+		p.name plateName,
+		p.icon plateIcon,
+		p.sort plateSort,
+		mu.login modifyUserLogin,
+		cu.login createUserLogin,
+	])}from tb_link tb
+	left join tb_link e on e.id=tb.lead
+	left join tb_link g on g.id=e.lead
+	left join tb_link p on p.id=g.lead
+	left join tb_user mu on mu.id=tb.modifyUser
+	left join tb_user cu on cu.id=tb.createUser
+</sql>
+<sql name="list" type="page">
+{#def.query}
+	{([where
+		{=sql.str("tb.id='",$.id,"' and")}
+		{=sql.num("tb.rank=",$.rank," and")}
+		{=sql.str("tb.lead='",$.lead,"' and")}
+		{=sql.str("tb.path='",$.path,"' and")}
+		{=sql.str("tb.name='",$.name,"' and")}
+		{=sql.str("tb.name like '%",$._query_like_name,"%' and")}
+		{=sql.str("tb.icon='",$.icon,"' and")}
+		{=sql.num("tb.sort=",$.sort," and")}
+		{=sql.num("tb.sort>=",$._query_min_sort," and")}
+		{=sql.num("",$._query_max_sort,">=tb.sort and")}
+		{=sql.num("tb.status=",$.status," and")}
+		{=sql.str("tb.modifyUser='",$.modifyUser,"' and")}
+		{=sql.dt("tb.modifyTime='",$.modifyTime,"' and")}
+		{=sql.dt("tb.modifyTime>='",$._query_min_modifyTime,"' and")}
+		{=sql.dt("'",$._query_max_modifyTime,"'>=tb.modifyTime and")}
+		{=sql.str("tb.createUser='",$.createUser,"' and")}
+		{=sql.dt("tb.createTime='",$.createTime,"' and")}
+		{=sql.dt("tb.createTime>='",$._query_min_createTime,"' and")}
+		{=sql.dt("'",$._query_max_createTime,"'>=tb.createTime and")}
+{?lang.isString($._query_search_)}
+		({([
+			tb.name like '%{=$._query_search_}%' or
+			e.name like '%{=$._query_search_}%' or
+			g.name like '%{=$._query_search_}%' or
+			p.name like '%{=$._query_search_}%' or
+		])})and
+{?}
+	])}
+	{([order by
+{?lang.isString($._order_by_)}
+		{=$._order_by_}{?lang.isString($._order_sort_)} {=$._order_sort_}{?}
+{??}
+		plateSort,groupSort,entrySort,tb.sort
+{?}
+	])}
+</sql>
+<sql name="info" type="map">
+{#def.query}
+	where
+	{=sql.str("tb.id='",$.id,"'")}
+</sql>
+<sql name="edit" type="bool">
+	update tb_link set{([
+		{=sql.str("id='",$.id,"',","id=null,")}
+		{=sql.num("rank=",$.rank,",","rank=null,")}
+		{=sql.str("lead='",$.lead,"',","lead=null,")}
+		{=sql.str("path='",$.path,"',","path=null,")}
+		{=sql.str("name='",$.name,"',","name=null,")}
+		{=sql.str("icon='",$.icon,"',","icon=null,")}
+		{=sql.num("sort=",$.sort,",","sort=null,")}
+		{=sql.num("status=",$.status,",","status=null,")}
+		{=sql.str("modifyUser='",$.modifyUser,"',","modifyUser=null,")}
+		{=sql.dt("modifyTime='",$.modifyTime,"',","modifyTime=null,")}
+		{=sql.str("createUser='",$.createUser,"',","createUser=null,")}
+		{=sql.dt("createTime='",$.createTime,"',","createTime=null,")}
+	])}where
+	{=sql.str("id='",$.id,"'")}
+</sql>
+<sql name="add" type="bool">
+	insert into tb_link({([
+		{=sql.full($.id,"id,")}
+		{=sql.full($.rank,"rank,")}
+		{=sql.full($.lead,"lead,")}
+		{=sql.full($.path,"path,")}
+		{=sql.full($.name,"name,")}
+		{=sql.full($.icon,"icon,")}
+		{=sql.full($.sort,"sort,")}
+		{=sql.full($.status,"status,")}
+		{=sql.full($.modifyUser,"modifyUser,")}
+		{=sql.full($.modifyTime,"modifyTime,")}
+		{=sql.full($.createUser,"createUser,")}
+		{=sql.full($.createTime,"createTime,")}
+	])})values({([
+		{=sql.str("'",$.id,"',")}
+		{=sql.num("",$.rank,",")}
+		{=sql.str("'",$.lead,"',")}
+		{=sql.str("'",$.path,"',")}
+		{=sql.str("'",$.name,"',")}
+		{=sql.str("'",$.icon,"',")}
+		{=sql.num("",$.sort,",")}
+		{=sql.num("",$.status,",")}
+		{=sql.str("'",$.modifyUser,"',")}
+		{=sql.dt("'",$.modifyTime,"',")}
+		{=sql.str("'",$.createUser,"',")}
+		{=sql.dt("'",$.createTime,"',")}
+	])})
+</sql>
+<sql name="drop" type="int">
+	delete from tb_link where
+{?lang.isArray($.id)}
+	id in({([{=sql.str_arr("'",$.id,"',")}])})
+{??}
+	{=sql.str("id='",$.id,"'")}
+{?}
+</sql>
+<sql name="plate_group_entry" type="list">
+	select p.id plateId,p.name plateName,p.icon plateIcon
+	,g.id groupId,g.name groupName,g.icon groupIcon
+	,e.id entryId,e.name entryName,e.icon entryIcon
+	from tb_link p
+	join tb_link g on g.lead=p.id
+	join tb_link e on e.lead=g.id
+	where p.lead='@' and p.rank=1 and g.rank=2 and e.rank=3
+	order by p.sort,g.sort,e.sort
+</sql>
+</link>

@@ -1,0 +1,45 @@
+<div class="area data-info">
+	<form class="edit-form" action="{{=$.uripath||''}}/edit.submit" method="POST">
+		{{%var v=$._page_info_;}}
+		<dl><dt>ID</dt><dd><input type="text" name="id" value="{{=v.id||''}}" readonly="readonly"/></dd><em id="_error_id_"></em></dl>
+		<dl><dt>阶层</dt><dd><select class="tinyint" tinyint="link$rank" name="rank" data="{{=v.rank||''}}" text="false" readonly="readonly"></select></dd><em id="_error_rank_"></em></dl>
+		<dl><dt>领导</dt><dd>
+		<input type="hidden" name="last_lead" value="{{=v.lead||''}}"/>
+		<select name="lead">
+{{%var plateId=null;}}
+{{~$.leadList:m:i}}
+	{{?m.plateId!=plateId}}
+		{{%plateId=m.plateId;}}
+		{{?i==0}}
+			</optgroup>
+		{{?}}
+			<optgroup label="{{=m.plateName||''}}">
+	{{?}}
+				<option value="{{=m.groupId||''}}"{{?m.groupId==v.lead}} selected="selected"{{?}}>{{=m.groupName||''}}</option>
+{{~}}
+			</optgroup>
+		</select>
+		</dd><em id="_error_lead_"></em></dl>
+		<dl><dt>路径</dt><dd><input type="text" name="path" value="{{=v.path||''}}" required="required" maxlength="255"/></dd><em id="_error_path_"></em></dl>
+		<dl><dt>名称</dt><dd><input type="text" name="name" value="{{=v.name||''}}" required="required" maxlength="32"/></dd><em id="_error_name_"></em></dl>
+		<dl><dt>图标</dt><dd><input type="text" name="icon" value="{{=v.icon||''}}" maxlength="255"/></dd><em id="_error_icon_"></em></dl>
+		<dl><dt>排序</dt><dd><input type="number" name="sort" value="{{=v.sort||0}}" required="required" min="0" pattern="[0-9]+"/></dd><em id="_error_sort_"></em></dl>
+		<dl><dt>状态</dt><dd><select class="tinyint" tinyint="link$status" name="status" data="{{=v.status||''}}" text="false"></select></dd><em id="_error_status_"></em></dl>
+		<!--
+		<dl><dt>修改者</dt><dd><input type="text" name="modifyUser" value="{{=v.modifyUser||''}}" maxlength="36"/></dd><em id="_error_modifyUser_"></em></dl>
+		-->
+		<!--
+		<dl><dt>修改时间</dt><dd><input type="datetime-local" name="modifyTime" value="{{=v.modifyTime||''}}"/></dd><em id="_error_modifyTime_"></em></dl>
+		-->
+		<!--
+		<dl><dt>创建者</dt><dd><input type="text" name="createUser" value="{{=v.createUser||''}}" required="required" maxlength="36"/></dd><em id="_error_createUser_"></em></dl>
+		-->
+		<!--
+		<dl><dt>创建时间</dt><dd><input type="datetime-local" name="createTime" value="{{=v.createTime||''}}" required="required"/></dd><em id="_error_createTime_"></em></dl>
+		-->
+		<center>
+			<input type="submit" value="✔ 保存"/>
+			<input type="button" value="⏎ 返回" onclick="history.back();"/>
+		</center>
+	</form>
+</div>

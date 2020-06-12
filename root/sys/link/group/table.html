@@ -1,0 +1,59 @@
+<form method="POST"><table class="data-list tb"><tbody>
+	<tr>
+		<th style="white-space:nowrap;text-align:right;min-width:80px;"><label style="display:block;">
+			<input type="checkbox" style="float:left;"/>
+			<div style="padding-top:5px;">序号</div>
+		</label></th>
+		<!--
+		<th class="order" by="tb.id" sort="asc">ID</th>
+		<th class="order" by="tb.plate" sort="asc">板块</th>
+		<th class="order" by="tb.rank" sort="asc">阶层</th>
+		<th class="order" by="tb.lead" sort="asc">领导</th>
+		-->
+		<th class="order" by="tb.name" sort="asc">名称</th>
+		<th class="order" by="tb.path" sort="asc">路径</th>
+		<th class="order" by="tb.sort" sort="asc">排序</th>
+		<th class="order" by="tb.status" sort="asc">状态</th>
+		<!--
+		<th class="order" by="tb.modifyUser" sort="asc">修改者</th>
+		<th class="order" by="tb.modifyTime" sort="desc">修改时间</th>
+		<th class="order" by="tb.createUser" sort="asc">创建者</th>
+		<th class="order" by="tb.createTime" sort="desc">创建时间</th>
+		-->
+		<th align="right" style="white-space:nowrap;">
+			<a class="btn" title="查询" onclick="var $t=$('#{{=$.queryId||''}}');if($t.is(':visible')){$t.slideUp();}else{$t.slideDown();}">✈</a>
+			<a class="btn" title="添加" onclick="location.href='{{=$.uripath||''}}/add.html?lead={{=$.args.length==1?$.args[0]||'':''}}';">✚</a>
+			<a class="btn" title="移除" idName="id" uri="{{=$.uripath||''}}/drop.submit">━</a>
+		</th>
+	</tr>
+	{{~$._page_list_:v:i}}
+	<tr>
+		<td align="right"><label style="display:block;">
+			<input type="checkbox" style="float:left;" name="id" value="{{=v.id||''}}"/>
+			<div style="padding-top:5px;">{{=i+1}}</div>
+		</label></td>
+		<!--
+		<td>{{=v.id||''}}</td>
+		<td>{{=v.plateName||''}}</td>
+		<td class="tinyint" tinyint="link$rank">{{=v.rank||''}}</td>
+		<td>{{=v.lead||''}}</td>
+		-->
+		<td>{{=(v.plateName?(v.plateIcon||"")+v.plateName+" » ":"")+(v.name?(v.icon||"")+v.name:"")}}</td>
+		<td>{{=(v.platePath?v.platePath+"/":"")+(v.path||"")}}</td>
+		<td>{{=(v.plateSort||0)+" "+(v.sort||0)}}</td>
+		<td class="tinyint" tinyint="link$status">{{=v.status||''}}</td>
+		<!--
+		<td>{{=v.modifyUserLogin||''}}</td>
+		<td>{{=v.modifyTime||''}}</td>
+		<td>{{=v.createUserLogin||''}}</td>
+		<td>{{=v.createTime||''}}</td>
+		-->
+		<td align="right" style="white-space:nowrap;">
+			<a class="btn" title="详情" onclick="location.href='{{=$.uripath||''}}/info/{{=v.id||''}}.html';">☷</a>
+			<a class="btn" title="编辑" onclick="location.href='{{=$.uripath||''}}/edit/{{=v.id||''}}.html';">✎</a>
+			<a class="btn" title="删除" onclick="if(confirmDropItem()){location.href='{{=$.uripath||''}}/drop/{{=v.id||''}}.submit';}">✖</a>
+			<input type="button" value="所属条目" onclick="location.href='{{=$.uripath||''}}/../entry/{{=v.id||''}}.html';"/>
+		</td>
+	</tr>
+	{{~}}
+</tbody></table></form>

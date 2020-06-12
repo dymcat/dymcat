@@ -1,0 +1,9 @@
+into($.srcroot+"/#/web.js");
+if($.end=="html"){
+	$.pars.rank=1;
+	$.pars.lead="@";
+	into($.srcbase+"/&.js");
+	setListHtmlContent(null,{
+		title:"板块级链接列表"
+	},web.exeSQL("list"));
+}

@@ -1,0 +1,19 @@
+<div class="area data-info">
+	{{%var v=$._page_info_;}}
+	<dl><dt>ID</dt><dd><input type="text" value="{{=v.id||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>板块</dt><dd><input type="text" value="{{=v.plateName||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>阶层</dt><dd><input class="tinyint" tinyint="link$rank" type="text" value="{{=v.rank||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>领导</dt><dd><input type="text" value="{{=v.lead||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>路径</dt><dd><input type="text" value="{{=v.path||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>名称</dt><dd><input type="text" value="{{=v.name||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>图标</dt><dd><input type="text" value="{{=v.icon||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>排序</dt><dd><input type="text" value="{{=v.sort||0}}" readonly="readonly"/></dd></dl>
+	<dl><dt>状态</dt><dd><input class="tinyint" tinyint="link$status" type="text" value="{{=v.status||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>修改者</dt><dd><input type="text" value="{{=v.modifyUserLogin||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>修改时间</dt><dd><input type="text" value="{{=v.modifyTime||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>创建者</dt><dd><input type="text" value="{{=v.createUserLogin||''}}" readonly="readonly"/></dd></dl>
+	<dl><dt>创建时间</dt><dd><input type="text" value="{{=v.createTime||''}}" readonly="readonly"/></dd></dl>
+	<center>
+		<input type="button" value="⏎ 返回" onclick="history.back();"/>
+	</center>
+</div>
